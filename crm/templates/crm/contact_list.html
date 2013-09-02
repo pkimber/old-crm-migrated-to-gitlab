@@ -1,20 +1,25 @@
 {% extends "crm/base.html" %}
 
+{% block sub_title %}
+  Tickets
+{% endblock sub_title %}
+
 {% block sub_heading %}
-  Your companies
+  Tickets
 {% endblock sub_heading %}
 
 {% block content %}
   <div class="content">
     <div class="pure-g-r">
       <div class="pure-u-1">
-        <table class="pure-table">
+        <table class="pure-table pure-table-bordered">
           <thead>
             <tr>
               <th>Name</th>
               <th>email</th>
               <th>Phone</th>
               <th>URL</th>
+              <th>Ticket</th>
             </tr>
           </thead>
           <tbody>
@@ -24,10 +29,17 @@
               <td>{{ contact.mail|urlize }}</td>
               <td>{{ contact.phone }}</td>
               <td>{% if contact.url %}{{ contact.url|urlize }}{% endif %}</td>
+              <td>
+                <a href="{% url 'crm.ticket.create' %}">Create</a>
+              </td>
             </tr>
             {% endfor %}
           </tbody>
         </table>
+
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        </p>
       </div>
     </div>
   </div>

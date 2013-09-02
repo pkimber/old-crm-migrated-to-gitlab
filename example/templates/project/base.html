@@ -15,6 +15,9 @@
 
 {% block menu %}
   <li>
+    <a href="{% url "crm.home" %}">CRM</a>
+  </li>
+  <li>
     <a href="{% url "admin:index" %}">Admin</a>
   </li>
   {{ block.super }}

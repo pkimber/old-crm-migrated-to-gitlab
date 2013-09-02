@@ -26,3 +26,37 @@ class Contact(TimeStampedModel):
         return unicode('{}'.format(self.name))
 
 reversion.register(Contact)
+
+
+class Priority(models.Model):
+    """Level 0 will exclude the ticket from normal reminder lists"""
+    name = models.CharField(max_length=100, unique=True)
+    level = models.IntegerField()
+
+    class Meta:
+        ordering = ['-level', 'name']
+        verbose_name = 'Priority'
+        verbose_name_plural = 'Priorities'
+
+    def __unicode__(self):
+        return unicode('{}'.format(self.name))
+
+reversion.register(Priority)
+
+
+class Ticket(TimeStampedModel):
+    """ Contact """
+    contact = models.ForeignKey(Contact)
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    priority = models.ForeignKey(Priority)
+    date_due = models.DateField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Ticket'
+        verbose_name_plural = 'Tickets'
+
+    def __unicode__(self):
+        return unicode('{}'.format(self.name))
+
+reversion.register(Ticket)

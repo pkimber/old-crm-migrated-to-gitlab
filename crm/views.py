@@ -1,8 +1,12 @@
-from django.views.generic import ListView
+from django.views.generic import (
+    CreateView, ListView,
+)
 
 from braces.views import LoginRequiredMixin
 
-from .models import Contact
+from .models import (
+    Contact, Ticket,
+)
 
 
 class HomeListView(LoginRequiredMixin, ListView):
@@ -13,3 +17,7 @@ class HomeListView(LoginRequiredMixin, ListView):
         else:
             result = self.request.user.contact_set.all()
         return result
+
+
+class TicketCreateView(LoginRequiredMixin, CreateView):
+    model = Ticket
