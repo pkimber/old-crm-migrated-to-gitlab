@@ -1,9 +1,10 @@
 -r base.txt
 beautifulsoup4
+django-debug-toolbar
 fabric
 gitpython==0.3.1-beta2
-ipdb
 hgapi
+ipdb
 psycopg2
 pytest-django
 pyyaml

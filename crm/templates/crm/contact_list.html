@@ -1,0 +1,34 @@
+{% extends "crm/base.html" %}
+
+{% block sub_heading %}
+  Your companies
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="content">
+    <div class="pure-g-r">
+      <div class="pure-u-1">
+        <table class="pure-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>email</th>
+              <th>Phone</th>
+              <th>URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for contact in contact_list %}
+            <tr>
+              <td>{{ contact.name }}</td>
+              <td>{{ contact.mail|urlize }}</td>
+              <td>{{ contact.phone }}</td>
+              <td>{% if contact.url %}{{ contact.url|urlize }}{% endif %}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
