@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 import reversion
@@ -14,6 +15,7 @@ class Contact(TimeStampedModel):
     url = models.URLField(blank=True, null=True)
     phone = models.CharField(max_length=100, blank=True)
     mail = models.EmailField(blank=True)
+    users = models.ManyToManyField(User)
 
     class Meta:
         ordering = ['slug']
