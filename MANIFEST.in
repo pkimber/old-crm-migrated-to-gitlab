@@ -1,0 +1,9 @@
+recursive-include crm/static *
+recursive-include crm/templates *
+
+include LICENSE
+include README
+include requirements/*.txt
+include *.txt
+
+prune example/

@@ -1,0 +1,10 @@
+-r base.txt
+beautifulsoup4
+fabric
+gitpython==0.3.1-beta2
+ipdb
+hgapi
+psycopg2
+pytest-django
+pyyaml
+walkdir
