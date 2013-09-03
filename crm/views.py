@@ -14,6 +14,10 @@ from .models import (
 )
 
 
+class ContactDetailView(LoginRequiredMixin, DetailView):
+    model = Contact
+
+
 class HomeListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
@@ -28,15 +32,6 @@ class TicketCreateView(LoginRequiredMixin, CreateWithRelatedMixin, CreateView):
     form_class = TicketForm
     model = Ticket
     related_model = Contact
-
-    #def _get_contact(self):
-    #    slug = self.kwargs.get('slug')
-    #    return get_object_or_404(Invoice, pk=invoice_id)
-
-    #def form_valid(self, form):
-    #    self.object = form.save(commit=False)
-    #    self.object.invoice = self._get_invoice()
-    #    return super(InvoiceLineCreateView, self).form_valid(form)
 
 
 class TicketDetailView(LoginRequiredMixin, DetailView):

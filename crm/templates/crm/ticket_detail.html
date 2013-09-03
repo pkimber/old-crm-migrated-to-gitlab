@@ -16,17 +16,19 @@
           <tbody>
             <tr>
               <td>Ticket</td>
-              <td>{{ ticket.pk }}, {{ ticket.name }}</td>
+              <td><strong>{{ ticket.name }}</strong></td>
             </tr>
-            <tr>
+            <tr valign="top">
               <td>Contact</td>
               <td>
-                <strong>{{ ticket.contact.name }}</strong>
+                <a href="{% url 'crm.contact.detail' ticket.contact.slug %}">
+                  <strong>{{ ticket.contact.name }}</strong>
+                </a>
                 <br />
                 {{ ticket.contact.address|linebreaksbr }}
               </td>
             </tr>
-            <tr>
+            <tr valign="top">
               <td>Description</td>
               <td>{{ ticket.description|linebreaksbr }}</td>
             </tr>
