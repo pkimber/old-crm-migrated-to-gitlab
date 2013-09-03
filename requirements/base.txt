@@ -1,4 +1,5 @@
 django-braces==1.2.2
+django-related
 django-reversion==1.7
 Django==1.5.2
 south

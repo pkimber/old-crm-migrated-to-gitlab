@@ -3,7 +3,9 @@ from django.conf.urls import (
 )
 
 from .views import (
-    HomeListView, TicketCreateView,
+    HomeListView,
+    TicketCreateView,
+    TicketDetailView,
 )
 
 
@@ -13,8 +15,12 @@ urlpatterns = patterns(
         view=HomeListView.as_view(),
         name='crm.home'
         ),
-    url(regex=r'^create/$',
+    url(regex=r'^contact/(?P<slug>[-\w\d]+)/ticket/$',
         view=TicketCreateView.as_view(),
         name='crm.ticket.create'
+        ),
+    url(regex=r'^ticket/(?P<pk>\d+)/$',
+        view=TicketDetailView.as_view(),
+        name='crm.ticket.detail'
         ),
 )

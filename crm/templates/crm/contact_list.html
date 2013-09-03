@@ -30,7 +30,7 @@
               <td>{{ contact.phone }}</td>
               <td>{% if contact.url %}{{ contact.url|urlize }}{% endif %}</td>
               <td>
-                <a href="{% url 'crm.ticket.create' %}">Create</a>
+                <a href="{% url 'crm.ticket.create' contact.slug %}">Create</a>
               </td>
             </tr>
             {% endfor %}

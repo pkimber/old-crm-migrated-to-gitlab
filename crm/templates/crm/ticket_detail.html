@@ -1,0 +1,38 @@
+{% extends "crm/base.html" %}
+
+{% block sub_title %}
+  Ticket
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Ticket {{ ticket.pk }}
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="content">
+    <div class="pure-g-r">
+      <div class="pure-u-1">
+        <table class="pure-table pure-table-bordered">
+          <tbody>
+            <tr>
+              <td>Ticket</td>
+              <td>{{ ticket.pk }}, {{ ticket.name }}</td>
+            </tr>
+            <tr>
+              <td>Contact</td>
+              <td>
+                <strong>{{ ticket.contact.name }}</strong>
+                <br />
+                {{ ticket.contact.address|linebreaksbr }}
+              </td>
+            </tr>
+            <tr>
+              <td>Description</td>
+              <td>{{ ticket.description|linebreaksbr }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

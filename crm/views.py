@@ -1,11 +1,16 @@
 from django.views.generic import (
-    CreateView, ListView,
+    CreateView, DetailView, ListView,
 )
 
 from braces.views import LoginRequiredMixin
+from related.views import CreateWithRelatedMixin
 
+from .forms import (
+    TicketForm,
+)
 from .models import (
-    Contact, Ticket,
+    Contact,
+    Ticket,
 )
 
 
@@ -19,5 +24,20 @@ class HomeListView(LoginRequiredMixin, ListView):
         return result
 
 
-class TicketCreateView(LoginRequiredMixin, CreateView):
+class TicketCreateView(LoginRequiredMixin, CreateWithRelatedMixin, CreateView):
+    form_class = TicketForm
+    model = Ticket
+    related_model = Contact
+
+    #def _get_contact(self):
+    #    slug = self.kwargs.get('slug')
+    #    return get_object_or_404(Invoice, pk=invoice_id)
+
+    #def form_valid(self, form):
+    #    self.object = form.save(commit=False)
+    #    self.object.invoice = self._get_invoice()
+    #    return super(InvoiceLineCreateView, self).form_valid(form)
+
+
+class TicketDetailView(LoginRequiredMixin, DetailView):
     model = Ticket
