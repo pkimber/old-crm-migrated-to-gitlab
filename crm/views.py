@@ -22,9 +22,11 @@ class HomeListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_staff:
-            result = Contact.objects.all()
+            result = Ticket.objects.all()
         else:
-            result = self.request.user.contact_set.all()
+            result = Ticket.objects.filter(
+                contact__users__in=(self.request.user,)
+            )
         return result
 
 
