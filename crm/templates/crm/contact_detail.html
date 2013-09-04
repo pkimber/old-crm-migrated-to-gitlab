@@ -34,7 +34,12 @@
             </tr>
             <tr>
               <td><strong>Tickets</strong></td>
-              <td></td>
+              <td>
+                <a class="pure-button" href="{% url "crm.ticket.create" contact.slug %}">
+                  <i class="icon-comment"></i>
+                  New ticket...
+                </a>
+              </td>
             </tr>
             {% for ticket in contact.ticket_set.all %}
             <tr valign="top">

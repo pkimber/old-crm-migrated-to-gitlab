@@ -13,7 +13,12 @@
     <div class="pure-g-r">
       <div class="pure-u-1">
         <p>
-          Create a ticket for <strong>{{ related_object.name }}</strong>, {{ related_object.address }}
+          Create a ticket for
+          <a href="{% url 'crm.contact.detail' contact.slug %}">
+            <strong>{{ contact.name }}</strong>
+          </a>,
+          {{ contact.address }}
+          </a>
         </p>
         <form action="" method="post" class="pure-form pure-form-stacked">
           {% csrf_token %}

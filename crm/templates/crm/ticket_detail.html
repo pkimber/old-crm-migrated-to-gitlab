@@ -19,20 +19,21 @@
               <td><strong>{{ ticket.name }}</strong></td>
             </tr>
             <tr>
-              <td>Created</td>
+              <td>Priority</td>
               <td>
-                {{ ticket.created }}
-                by {{ ticket.user.username }}
+                <strong>{{ ticket.priority.name }}</strong>
+                {% if ticket.due %}
+                  by <strong>{{ ticket.due|date:"d/m/Y" }}</strong>
+                {% endif %}
               </td>
             </tr>
             <tr>
-              <td>Priority</td>
+              <td>Created</td>
               <td>
-                {{ ticket.priority.name }}
-                {% if ticket.due %}
-                  by <strong>{{ ticket.due }}</strong>
-                {% endif %}
+                {{ ticket.created|date:"d/m/Y H:i" }}
+                by {{ ticket.user.username }}
               </td>
+            </tr>
             <tr valign="top">
               <td>Contact</td>
               <td>
@@ -61,11 +62,16 @@
             </tr>
             <tr valign="top">
               <td><strong>Notes</strong></td>
-              <td></td>
+              <td>
+                <a class="pure-button" href="{% url "crm.note.create" ticket.pk %}">
+                  <i class="icon-comment"></i>
+                  Add note...
+                </a>
+              </td>
             </tr>
             {% for note in ticket.note_set.all %}
               <tr valign="top">
-                <td>{{ note.created }}</td>
+                <td>{{ note.created|date:"d/m/y H:i" }}</td>
                 <td>{{ note.description|linebreaksbr }}</td>
               </tr>
             {% endfor %}
