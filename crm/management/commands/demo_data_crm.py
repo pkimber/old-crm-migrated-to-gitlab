@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.core.management.base import BaseCommand
 
 from crm.tests.model_maker import (
@@ -38,6 +40,7 @@ And the dish ran away with the spoon!
             "Milk the cows",
             description,
             make_priority('High', 1),
+            due=datetime.today(),
         )
         make_contact(
             'ssmith',

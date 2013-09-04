@@ -34,13 +34,14 @@ def make_priority(name, level):
     )
 
 
-def make_ticket(contact, name, description, priority):
+def make_ticket(contact, name, description, priority, **kwargs):
     return clean_and_save(
         Ticket(
             contact=contact,
             name=name,
             description=description,
             priority=priority,
+            **kwargs
         )
     )
 

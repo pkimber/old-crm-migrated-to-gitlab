@@ -82,7 +82,7 @@ class Ticket(TimeStampedModel):
     name = models.CharField(max_length=100)
     description = models.TextField()
     priority = models.ForeignKey(Priority)
-    date_due = models.DateField(blank=True, null=True)
+    due = models.DateField(blank=True, null=True)
     complete = models.DateField(blank=True, null=True)
 
     class Meta:

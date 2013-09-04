@@ -16,5 +16,5 @@ class TicketForm(forms.ModelForm):
             "name",
             "description",
             "priority",
-            "date_due",
+            "due",
         )

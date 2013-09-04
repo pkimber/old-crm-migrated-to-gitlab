@@ -18,6 +18,18 @@
               <td>Ticket</td>
               <td><strong>{{ ticket.name }}</strong></td>
             </tr>
+            <tr>
+              <td>Created</td>
+              <td>{{ ticket.created }}</td>
+            </tr>
+            <tr>
+              <td>Priority</td>
+              <td>
+                {{ ticket.priority.name }}
+                {% if ticket.due %}
+                  by <strong>{{ ticket.due }}</strong>
+                {% endif %}
+              </td>
             <tr valign="top">
               <td>Contact</td>
               <td>
