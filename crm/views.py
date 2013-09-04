@@ -11,6 +11,7 @@ from .forms import (
 from .models import (
     Contact,
     Ticket,
+    UserContact,
 )
 
 
@@ -24,9 +25,8 @@ class HomeListView(LoginRequiredMixin, ListView):
         if self.request.user.is_staff:
             result = Ticket.objects.all()
         else:
-            result = Ticket.objects.filter(
-                contact__usercontact__user__in=(self.request.user,)
-            )
+            contact = UserContact.objects.get(user=self.request.user)
+            result = Ticket.objects.filter(contact=contact)
         return result
 
 
