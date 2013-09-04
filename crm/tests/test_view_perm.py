@@ -3,10 +3,8 @@ from django.test import TestCase
 
 from crm.tests.model_maker import (
     make_contact,
-    make_note,
     make_priority,
     make_ticket,
-    make_user_contact,
 )
 from login.tests.model_maker import make_user
 
@@ -16,14 +14,6 @@ class TestViewPerm(TestCase):
     def setUp(self):
         """tom has access to contact icl"""
         self.tom = make_user('tom')
-        self.icl = make_contact('icl', 'ICL')
-        make_user_contact(self.tom, self.icl)
-        self.sew = make_ticket(
-            self.icl, self.tom, 'Sew', 'Sewing', make_priority('Low', 1)
-        )
-        self.note = make_note(
-            self.sew, self.tom, 'Cut out some material and make a pillow case'
-        )
         self.client.login(
             username=self.tom.username, password=self.tom.username
         )
@@ -48,6 +38,9 @@ class TestViewPerm(TestCase):
         )
 
     def test_ticket_detail(self):
+        """
+        user 'tom' should not be able to view tickets for the 'aec' contact
+        """
         url = reverse('crm.ticket.detail', kwargs={'pk': self.dig.pk})
         response = self.client.get(url)
         self.assertEqual(
