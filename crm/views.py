@@ -29,8 +29,11 @@ class HomeListView(LoginRequiredMixin, ListView):
         if self.request.user.is_staff:
             result = Ticket.objects.all()
         else:
-            contact = UserContact.objects.get(user=self.request.user)
-            result = Ticket.objects.filter(contact=contact)
+            try:
+                contact = UserContact.objects.get(user=self.request.user)
+                result = Ticket.objects.filter(contact=contact)
+            except UserContact.DoesNotExist:
+                result = Ticket.objects.none()
         return result
 
 
@@ -107,6 +110,9 @@ class TicketDetailView(LoginRequiredMixin, DetailView):
 
     def get_object(self, *args, **kwargs):
         obj = super(TicketDetailView, self).get_object(*args, **kwargs)
-        if not self.request.user.usercontact_set.filter(contact__ticket=obj):
+        if self.request.user.is_staff:
+            pass
+        # check the user is linked to the contact for this ticket
+        elif not self.request.user.usercontact_set.filter(contact__ticket=obj):
             raise PermissionDenied()
         return obj
