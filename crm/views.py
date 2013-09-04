@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 from django.views.generic import (
     CreateView, DetailView, ListView, UpdateView
@@ -103,3 +104,9 @@ class TicketUpdateView(LoginRequiredMixin, UpdateView):
 
 class TicketDetailView(LoginRequiredMixin, DetailView):
     model = Ticket
+
+    def get_object(self, *args, **kwargs):
+        obj = super(TicketDetailView, self).get_object(*args, **kwargs)
+        if not self.request.user.usercontact_set.filter(contact__ticket=obj):
+            raise PermissionDenied()
+        return obj
