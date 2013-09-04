@@ -5,6 +5,7 @@ from django.test import TestCase
 
 from crm.tests.model_maker import (
     make_contact,
+    make_note,
     make_priority,
     make_ticket,
     make_user_contact,
@@ -22,8 +23,9 @@ class TestView(TestCase):
         self.sew = make_ticket(
             self.icl, tom, 'Sew', 'Sewing', make_priority('Low', 1)
         )
-        # tom should not have access to aec
-        make_contact('aec', 'AEC')
+        self.note = make_note(
+            self.sew, tom, 'Cut out some material and make a pillow case'
+        )
         self.client.login(
             username=tom.username, password=tom.username
         )
@@ -36,14 +38,26 @@ class TestView(TestCase):
         url = reverse('crm.contact.detail', kwargs={'slug': self.icl.slug})
         self._assert_get(url)
 
+    def test_note_create(self):
+        url = reverse('crm.note.create', kwargs={'pk': self.sew.pk})
+        self._assert_get(url)
+
+    def test_note_update(self):
+        url = reverse('crm.note.update', kwargs={'pk': self.note.pk})
+        self._assert_get(url)
+
+    def test_ticket_create(self):
+        url = reverse('crm.ticket.create', kwargs={'slug': self.icl.slug})
+        self._assert_get(url)
+
     def test_ticket_detail(self):
         url = reverse('crm.ticket.detail', kwargs={'pk': self.sew.pk})
         self._assert_get(url)
 
-    def test_ticket_edit(self):
+    def test_ticket_update(self):
         url = reverse('crm.ticket.update', kwargs={'pk': self.sew.pk})
         self._assert_get(url)
 
     def _assert_get(self, url):
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 200, response)
