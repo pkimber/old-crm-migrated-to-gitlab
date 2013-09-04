@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.db import IntegrityError
 from django.test import TestCase
 
 from crm.tests.model_maker import (
@@ -20,3 +21,16 @@ class TestContactUser(TestCase):
         user = User.objects.get(username='fred')
         user_contacts = user.usercontact_set.all()
         self.assertIn('Kimber', user_contacts[0].contact.name)
+
+    def test_one_contact_per_user(self):
+        """Make sure a user can only link to one contact"""
+        fred = make_user('fred')
+        jsmith = make_contact('jsmith', 'John Smith')
+        pkimber = make_contact('pkimber', 'Patrick Kimber')
+        make_user_contact(fred, pkimber)
+        self.assertRaises(
+            IntegrityError,
+            make_user_contact,
+            fred,
+            jsmith,
+        )
