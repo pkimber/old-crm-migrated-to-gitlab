@@ -25,7 +25,7 @@ class HomeListView(LoginRequiredMixin, ListView):
             result = Ticket.objects.all()
         else:
             result = Ticket.objects.filter(
-                contact__users__in=(self.request.user,)
+                contact__usercontact__user__in=(self.request.user,)
             )
         return result
 

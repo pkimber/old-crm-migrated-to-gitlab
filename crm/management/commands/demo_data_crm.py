@@ -5,6 +5,7 @@ from crm.tests.model_maker import (
     make_industry,
     make_priority,
     make_ticket,
+    make_user_contact,
 )
 from login.tests.model_maker import make_user
 
@@ -15,7 +16,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         fred = make_user('fred')
-        matt = make_user('matt')
+        make_user('matt')
         contact = make_contact(
             'pkimber',
             'Patrick Kimber',
@@ -25,8 +26,7 @@ class Command(BaseCommand):
             phone='01837 123 456',
             industry=make_industry('Farming'),
         )
-        contact.users.add(fred)
-        contact.users.add(matt)
+        make_user_contact(fred, contact)
         description = """Hey diddle diddle rhyme
 Hey diddle diddle, the cat and the fiddle,
 The cow jumped over the moon.

@@ -5,6 +5,7 @@ from crm.models import (
     Industry,
     Priority,
     Ticket,
+    UserContact,
 )
 
 
@@ -41,4 +42,10 @@ def make_ticket(contact, name, description, priority):
             description=description,
             priority=priority,
         )
+    )
+
+
+def make_user_contact(user, contact):
+    return clean_and_save(
+        UserContact(user=user, contact=contact)
     )

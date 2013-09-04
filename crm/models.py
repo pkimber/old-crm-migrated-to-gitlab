@@ -30,7 +30,6 @@ class Contact(TimeStampedModel):
     phone = models.CharField(max_length=100, blank=True)
     mail = models.EmailField(blank=True)
     industry = models.ForeignKey(Industry, blank=True, null=True)
-    users = models.ManyToManyField(User)
 
     class Meta:
         ordering = ['slug']
@@ -41,6 +40,24 @@ class Contact(TimeStampedModel):
         return unicode('{}'.format(self.name))
 
 reversion.register(Contact)
+
+
+class UserContact(TimeStampedModel):
+    """
+    A user is linked to a single contact.
+    More than one user can link to the same contact, but a user cannot
+    link to more than one contact.
+
+    e.g.
+    Andy - ConnexionSW
+    Fred - ConnexionSW
+    Kate - British Sugar
+    """
+    user = models.ForeignKey(User, unique=True)
+    contact = models.ForeignKey(Contact)
+
+    def __unicode__(self):
+        return unicode('{} - {}'.format(self.user.username, self.contact.name))
 
 
 class Priority(models.Model):
