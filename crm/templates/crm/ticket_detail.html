@@ -40,6 +40,18 @@
                 {{ ticket.contact.address|linebreaksbr }}
               </td>
             </tr>
+            {% if ticket.contact.mail %}
+            <tr valign="top">
+              <td>email</td>
+              <td>{{ ticket.contact.mail|urlize }}</td>
+            </tr>
+            {% endif %}
+            {% if ticket.contact.phone %}
+            <tr valign="top">
+              <td>Phone</td>
+              <td>{{ ticket.contact.phone }}</td>
+            </tr>
+            {% endif %}
             <tr valign="top">
               <td>Description</td>
               <td>{{ ticket.description|linebreaksbr }}</td>
