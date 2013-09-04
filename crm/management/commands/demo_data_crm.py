@@ -5,6 +5,7 @@ from django.core.management.base import BaseCommand
 from crm.tests.model_maker import (
     make_contact,
     make_industry,
+    make_note,
     make_priority,
     make_ticket,
     make_user_contact,
@@ -18,7 +19,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         fred = make_user('fred')
-        make_user('matt')
+        matt = make_user('matt')
         contact = make_contact(
             'pkimber',
             'Patrick Kimber',
@@ -35,13 +36,15 @@ The cow jumped over the moon.
 The little dog laughed to see such fun
 And the dish ran away with the spoon!
         """
-        make_ticket(
+        ticket = make_ticket(
             contact,
             "Milk the cows",
             description,
             make_priority('High', 1),
             due=datetime.today(),
         )
+        make_note(ticket, fred, "Finished the milking")
+        make_note(ticket, matt, "Cows eating silage")
         make_contact(
             'ssmith',
             'Sam Smith',

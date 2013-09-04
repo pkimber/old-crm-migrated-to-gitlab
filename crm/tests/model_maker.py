@@ -3,6 +3,7 @@ from base.tests.model_maker import clean_and_save
 from crm.models import (
     Contact,
     Industry,
+    Note,
     Priority,
     Ticket,
     UserContact,
@@ -25,6 +26,12 @@ def make_industry(name, **kwargs):
             name=name,
             **kwargs
         )
+    )
+
+
+def make_note(ticket, user, description):
+    return clean_and_save(
+        Note(ticket=ticket, user=user, description=description)
     )
 
 

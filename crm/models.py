@@ -96,3 +96,22 @@ class Ticket(TimeStampedModel):
         return reverse('crm.ticket.detail', args=[self.pk])
 
 reversion.register(Ticket)
+
+
+class Note(TimeStampedModel):
+    """ Contact """
+    ticket = models.ForeignKey(Ticket)
+    user = models.ForeignKey(User)
+    description = models.TextField()
+
+    class Meta:
+        verbose_name = 'Note'
+        verbose_name_plural = 'Notes'
+
+    def __unicode__(self):
+        return unicode('{}'.format(self.description))
+
+    def get_absolute_url(self):
+        return reverse('crm.ticket.detail', args=[self.ticket.pk])
+
+reversion.register(Note)

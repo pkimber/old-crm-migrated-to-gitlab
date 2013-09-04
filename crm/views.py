@@ -6,10 +6,12 @@ from braces.views import LoginRequiredMixin
 from related.views import CreateWithRelatedMixin
 
 from .forms import (
+    NoteForm,
     TicketForm,
 )
 from .models import (
     Contact,
+    Note,
     Ticket,
     UserContact,
 )
@@ -28,6 +30,12 @@ class HomeListView(LoginRequiredMixin, ListView):
             contact = UserContact.objects.get(user=self.request.user)
             result = Ticket.objects.filter(contact=contact)
         return result
+
+
+class NoteCreateView(LoginRequiredMixin, CreateWithRelatedMixin, CreateView):
+    form_class = NoteForm
+    model = Note
+    related_model = Ticket
 
 
 class TicketCreateView(LoginRequiredMixin, CreateWithRelatedMixin, CreateView):

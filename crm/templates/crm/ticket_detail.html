@@ -56,6 +56,16 @@
               <td>Description</td>
               <td>{{ ticket.description|linebreaksbr }}</td>
             </tr>
+            <tr valign="top">
+              <td><strong>Notes</strong></td>
+              <td></td>
+            </tr>
+            {% for note in ticket.note_set.all %}
+              <tr valign="top">
+                <td>{{ note.created }}</td>
+                <td>{{ note.description|linebreaksbr }}</td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
