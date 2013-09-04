@@ -1,11 +1,11 @@
 {% extends "crm/base.html" %}
 
 {% block sub_title %}
-  Create note
+  Note
 {% endblock sub_title %}
 
 {% block sub_heading %}
-  Create a note
+  Note
 {% endblock sub_heading %}
 
 {% block content %}
@@ -13,7 +13,7 @@
     <div class="pure-g-r">
       <div class="pure-u-1">
         <p>
-          Create a note for ticket:
+          Note for ticket,
           <a href="{% url 'crm.ticket.detail' ticket.pk %}">
             <strong>{{ ticket.name }}</strong>,
           </a>

@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import (
-    CreateView, DetailView, ListView,
+    CreateView, DetailView, ListView, UpdateView
 )
 
 from braces.views import LoginRequiredMixin
@@ -55,6 +55,18 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
         return super(NoteCreateView, self).form_valid(form)
 
 
+class NoteUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = NoteForm
+    model = Note
+
+    def get_context_data(self, **kwargs):
+        context = super(NoteUpdateView, self).get_context_data(**kwargs)
+        context.update(dict(
+            ticket=self.object.ticket,
+        ))
+        return context
+
+
 class TicketCreateView(LoginRequiredMixin, CreateView):
     form_class = TicketForm
     model = Ticket
@@ -75,6 +87,18 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
         self.object.contact = self._get_contact()
         self.object.user = self.request.user
         return super(TicketCreateView, self).form_valid(form)
+
+
+class TicketUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = TicketForm
+    model = Ticket
+
+    def get_context_data(self, **kwargs):
+        context = super(TicketUpdateView, self).get_context_data(**kwargs)
+        context.update(dict(
+            contact=self.object.contact,
+        ))
+        return context
 
 
 class TicketDetailView(LoginRequiredMixin, DetailView):

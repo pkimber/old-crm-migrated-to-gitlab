@@ -16,7 +16,13 @@
           <tbody>
             <tr>
               <td>Ticket</td>
-              <td><strong>{{ ticket.name }}</strong></td>
+              <td>
+                <a class="pure-button" href="{% url "crm.ticket.update" ticket.pk %}">
+                  <i class="icon-edit"></i>
+                  Edit
+                </a>
+                <strong>{{ ticket.name }}</strong>
+              </td>
             </tr>
             <tr>
               <td>Priority</td>
@@ -71,8 +77,24 @@
             </tr>
             {% for note in ticket.note_set.all %}
               <tr valign="top">
-                <td>{{ note.created|date:"d/m/y H:i" }}</td>
-                <td>{{ note.description|linebreaksbr }}</td>
+                <td>
+                </td>
+                <td>
+                  <strong>{{ note.user.username }}</strong>
+                  at
+                  {{ note.modified|date:"H:i" }}
+                  on
+                  {{ note.modified|date:"d/m/y" }}
+                  <br />
+                  {{ note.description|linebreaksbr }}
+                  {% if note.user == user %}
+                    <br />
+                    <a class="pure-button" href="{% url "crm.note.update" note.pk %}">
+                      <i class="icon-edit"></i>
+                      Edit
+                    </a>
+                  {% endif %}
+              </td>
               </tr>
             {% endfor %}
           </tbody>
