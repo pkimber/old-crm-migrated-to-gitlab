@@ -36,8 +36,11 @@
             <tr>
               <td>Created</td>
               <td>
-                {{ ticket.created|date:"d/m/Y H:i" }}
-                by {{ ticket.user.username }}
+                <strong>{{ ticket.user.username }}</strong>
+                at
+                {{ ticket.modified|date:"H:i" }}
+                on
+                {{ ticket.modified|date:"d/m/Y" }}
               </td>
             </tr>
             <tr valign="top">
@@ -62,10 +65,12 @@
               <td>{{ ticket.contact.phone }}</td>
             </tr>
             {% endif %}
-            <tr valign="top">
-              <td>Description</td>
-              <td>{{ ticket.description|linebreaksbr }}</td>
-            </tr>
+            {% if ticket.description %}
+              <tr valign="top">
+                <td>Description</td>
+                <td>{{ ticket.description|linebreaksbr }}</td>
+              </tr>
+            {% endif %}
             <tr valign="top">
               <td><strong>Notes</strong></td>
               <td>

@@ -1,11 +1,11 @@
 {% extends "crm/base.html" %}
 
 {% block sub_title %}
-  Create ticket
+  Ticket
 {% endblock sub_title %}
 
 {% block sub_heading %}
-  Create a ticket
+  Ticket
 {% endblock sub_heading %}
 
 {% block content %}
@@ -13,7 +13,7 @@
     <div class="pure-g-r">
       <div class="pure-u-1">
         <p>
-          Create a ticket for
+          Ticket for
           <a href="{% url 'crm.contact.detail' contact.slug %}">
             <strong>{{ contact.name }}</strong>
           </a>,

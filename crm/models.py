@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -83,7 +81,7 @@ class Ticket(TimeStampedModel):
     contact = models.ForeignKey(Contact)
     user = models.ForeignKey(User)
     name = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     priority = models.ForeignKey(Priority)
     due = models.DateField(blank=True, null=True)
     complete = models.DateField(blank=True, null=True)
