@@ -1,14 +1,10 @@
+from django.shortcuts import get_object_or_404
 from django.views.generic import (
     CreateView, DetailView, ListView,
 )
 
 from braces.views import LoginRequiredMixin
-from related.views import CreateWithRelatedMixin
 
-from .forms import (
-    NoteForm,
-    TicketForm,
-)
 from .models import (
     Contact,
     Note,
@@ -32,16 +28,32 @@ class HomeListView(LoginRequiredMixin, ListView):
         return result
 
 
-class NoteCreateView(LoginRequiredMixin, CreateWithRelatedMixin, CreateView):
-    form_class = NoteForm
+class NoteCreateView(LoginRequiredMixin, CreateView):
     model = Note
-    related_model = Ticket
+
+    def _get_ticket_pk(self):
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Ticket, pk=pk)
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.company = self._get_ticket_pk()
+        self.object.user = self.request.user
+        return super(NoteCreateView, self).form_valid(form)
 
 
-class TicketCreateView(LoginRequiredMixin, CreateWithRelatedMixin, CreateView):
-    form_class = TicketForm
+class TicketCreateView(LoginRequiredMixin, CreateView):
     model = Ticket
-    related_model = Contact
+
+    def _get_contact_slug(self):
+        slug = self.kwargs.get('slug')
+        return get_object_or_404(Contact, slug=slug)
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.company = self._get_contact_slug()
+        self.object.user = self.request.user
+        return super(TicketCreateView, self).form_valid(form)
 
 
 class TicketDetailView(LoginRequiredMixin, DetailView):

@@ -29,6 +29,7 @@
                   <strong>{{ ticket.name }}</strong>
                 </a>
                 created {{ ticket.created }}
+                by {{ ticket.user.username }}
                 <br />
                 {{ ticket.description|linebreaksbr }}
               </td>

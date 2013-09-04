@@ -38,6 +38,7 @@ And the dish ran away with the spoon!
         """
         ticket = make_ticket(
             contact,
+            matt,
             "Milk the cows",
             description,
             make_priority('High', 1),

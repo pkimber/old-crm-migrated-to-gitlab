@@ -79,6 +79,7 @@ reversion.register(Priority)
 class Ticket(TimeStampedModel):
     """ Contact """
     contact = models.ForeignKey(Contact)
+    user = models.ForeignKey(User)
     name = models.CharField(max_length=100)
     description = models.TextField()
     priority = models.ForeignKey(Priority)

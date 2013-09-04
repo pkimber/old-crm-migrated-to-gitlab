@@ -20,7 +20,10 @@
             </tr>
             <tr>
               <td>Created</td>
-              <td>{{ ticket.created }}</td>
+              <td>
+                {{ ticket.created }}
+                by {{ ticket.user.username }}
+              </td>
             </tr>
             <tr>
               <td>Priority</td>

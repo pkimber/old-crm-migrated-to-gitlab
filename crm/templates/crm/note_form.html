@@ -1,0 +1,22 @@
+{% extends "crm/base.html" %}
+
+{% block sub_title %}
+  Create note
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Create a note
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="content">
+    <div class="pure-g-r">
+      <div class="pure-u-1">
+        <p>
+          Create a note for <strong>{{ related_object.name }}</strong>
+        </p>
+        {% include '_form.html' %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}
