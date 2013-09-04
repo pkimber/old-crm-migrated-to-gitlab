@@ -17,17 +17,14 @@ class TestView(TestCase):
 
     def setUp(self):
         """tom has access to contact icl"""
-        tom = make_user('tom')
+        self.tom = make_user('tom')
         self.icl = make_contact('icl', 'ICL')
-        make_user_contact(tom, self.icl)
+        make_user_contact(self.tom, self.icl)
         self.sew = make_ticket(
-            self.icl, tom, 'Sew', 'Sewing', make_priority('Low', 1)
+            self.icl, self.tom, 'Sew', 'Sewing', make_priority('Low', 1)
         )
         self.note = make_note(
-            self.sew, tom, 'Cut out some material and make a pillow case'
-        )
-        self.client.login(
-            username=tom.username, password=tom.username
+            self.sew, self.tom, 'Cut out some material and make a pillow case'
         )
 
     def test_home(self):
@@ -59,5 +56,12 @@ class TestView(TestCase):
         self._assert_get(url)
 
     def _assert_get(self, url):
+        # User must be logged in to access this URL
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302, response)
+        # Log the user in so they can access this URL
+        self.client.login(
+            username=self.tom.username, password=self.tom.username
+        )
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200, response)
