@@ -22,13 +22,16 @@ from .models import (
 class ContactDetailView(LoginRequiredMixin, DetailView):
     model = Contact
 
-    def get_object(self, *args, **kwargs):
-        obj = super(ContactDetailView, self).get_object(*args, **kwargs)
+    def _check_perm(self, contact):
         if self.request.user.is_staff:
             pass
         # check the user is linked to the contact
-        elif not self.request.user.usercontact_set.filter(contact=obj):
+        elif not self.request.user.usercontact_set.filter(contact=contact):
             raise PermissionDenied()
+
+    def get_object(self, *args, **kwargs):
+        obj = super(ContactDetailView, self).get_object(*args, **kwargs)
+        self._check_perm(obj)
         return obj
 
 
@@ -50,14 +53,17 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
     form_class = NoteForm
     model = Note
 
-    def _get_ticket(self):
-        pk = self.kwargs.get('pk')
-        ticket = get_object_or_404(Ticket, pk=pk)
+    def _check_perm(self, ticket):
         if self.request.user.is_staff:
             pass
         # check the user is linked to the contact for this ticket
         elif not self.request.user.usercontact_set.filter(contact__ticket=ticket):
             raise PermissionDenied()
+
+    def _get_ticket(self):
+        pk = self.kwargs.get('pk')
+        ticket = get_object_or_404(Ticket, pk=pk)
+        self._check_perm(ticket)
         return ticket
 
     def get_context_data(self, **kwargs):
@@ -78,8 +84,16 @@ class NoteUpdateView(LoginRequiredMixin, UpdateView):
     form_class = NoteForm
     model = Note
 
+    def _check_perm(self, ticket):
+        if self.request.user.is_staff:
+            pass
+        # check the user is linked to the contact for this ticket
+        elif not self.request.user.usercontact_set.filter(contact__ticket=ticket):
+            raise PermissionDenied()
+
     def get_context_data(self, **kwargs):
         context = super(NoteUpdateView, self).get_context_data(**kwargs)
+        self._check_perm(self.object.ticket)
         context.update(dict(
             ticket=self.object.ticket,
         ))
@@ -123,11 +137,14 @@ class TicketUpdateView(LoginRequiredMixin, UpdateView):
 class TicketDetailView(LoginRequiredMixin, DetailView):
     model = Ticket
 
-    def get_object(self, *args, **kwargs):
-        obj = super(TicketDetailView, self).get_object(*args, **kwargs)
+    def _check_perm(self, ticket):
         if self.request.user.is_staff:
             pass
         # check the user is linked to the contact for this ticket
-        elif not self.request.user.usercontact_set.filter(contact__ticket=obj):
+        elif not self.request.user.usercontact_set.filter(contact__ticket=ticket):
             raise PermissionDenied()
+
+    def get_object(self, *args, **kwargs):
+        obj = super(TicketDetailView, self).get_object(*args, **kwargs)
+        self._check_perm(obj)
         return obj

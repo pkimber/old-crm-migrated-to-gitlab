@@ -3,6 +3,7 @@ from django.test import TestCase
 
 from crm.tests.model_maker import (
     make_contact,
+    make_note,
     make_priority,
     make_ticket,
 )
@@ -22,6 +23,9 @@ class TestViewPerm(TestCase):
         self.aec = make_contact('aec', 'AEC')
         self.dig = make_ticket(
             self.aec, self.zed, 'Dig', 'Dig garden', make_priority('High', 1)
+        )
+        self.note = make_note(
+            self.dig, self.zed, 'Plant some carrots and some peas'
         )
 
     def test_home(self):
@@ -46,6 +50,10 @@ class TestViewPerm(TestCase):
 
     def test_note_create(self):
         url = reverse('crm.note.create', kwargs={'pk': self.dig.pk})
+        self._assert_perm_denied(url)
+
+    def test_note_update(self):
+        url = reverse('crm.note.update', kwargs={'pk': self.note.pk})
         self._assert_perm_denied(url)
 
     def test_ticket_detail(self):
