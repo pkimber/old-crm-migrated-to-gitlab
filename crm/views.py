@@ -52,7 +52,13 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
 
     def _get_ticket(self):
         pk = self.kwargs.get('pk')
-        return get_object_or_404(Ticket, pk=pk)
+        ticket = get_object_or_404(Ticket, pk=pk)
+        if self.request.user.is_staff:
+            pass
+        # check the user is linked to the contact for this ticket
+        elif not self.request.user.usercontact_set.filter(contact__ticket=ticket):
+            raise PermissionDenied()
+        return ticket
 
     def get_context_data(self, **kwargs):
         context = super(NoteCreateView, self).get_context_data(**kwargs)
