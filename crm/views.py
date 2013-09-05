@@ -19,8 +19,7 @@ from .models import (
 )
 
 
-class ContactDetailView(LoginRequiredMixin, DetailView):
-    model = Contact
+class CheckPermMixin(object):
 
     def _check_perm(self, contact):
         if self.request.user.is_staff:
@@ -28,6 +27,10 @@ class ContactDetailView(LoginRequiredMixin, DetailView):
         # check the user is linked to the contact
         elif not self.request.user.usercontact_set.filter(contact=contact):
             raise PermissionDenied()
+
+
+class ContactDetailView(LoginRequiredMixin, CheckPermMixin, DetailView):
+    model = Contact
 
     def get_object(self, *args, **kwargs):
         obj = super(ContactDetailView, self).get_object(*args, **kwargs)
@@ -49,21 +52,14 @@ class HomeListView(LoginRequiredMixin, ListView):
         return result
 
 
-class NoteCreateView(LoginRequiredMixin, CreateView):
+class NoteCreateView(LoginRequiredMixin, CheckPermMixin, CreateView):
     form_class = NoteForm
     model = Note
-
-    def _check_perm(self, ticket):
-        if self.request.user.is_staff:
-            pass
-        # check the user is linked to the contact for this ticket
-        elif not self.request.user.usercontact_set.filter(contact__ticket=ticket):
-            raise PermissionDenied()
 
     def _get_ticket(self):
         pk = self.kwargs.get('pk')
         ticket = get_object_or_404(Ticket, pk=pk)
-        self._check_perm(ticket)
+        self._check_perm(ticket.contact)
         return ticket
 
     def get_context_data(self, **kwargs):
@@ -80,36 +76,22 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
         return super(NoteCreateView, self).form_valid(form)
 
 
-class NoteUpdateView(LoginRequiredMixin, UpdateView):
+class NoteUpdateView(LoginRequiredMixin, CheckPermMixin, UpdateView):
     form_class = NoteForm
     model = Note
 
-    def _check_perm(self, ticket):
-        if self.request.user.is_staff:
-            pass
-        # check the user is linked to the contact for this ticket
-        elif not self.request.user.usercontact_set.filter(contact__ticket=ticket):
-            raise PermissionDenied()
-
     def get_context_data(self, **kwargs):
         context = super(NoteUpdateView, self).get_context_data(**kwargs)
-        self._check_perm(self.object.ticket)
+        self._check_perm(self.object.ticket.contact)
         context.update(dict(
             ticket=self.object.ticket,
         ))
         return context
 
 
-class TicketCreateView(LoginRequiredMixin, CreateView):
+class TicketCreateView(LoginRequiredMixin, CheckPermMixin, CreateView):
     form_class = TicketForm
     model = Ticket
-
-    def _check_perm(self, contact):
-        if self.request.user.is_staff:
-            pass
-        # check the user is linked to the contact
-        elif not self.request.user.usercontact_set.filter(contact=contact):
-            raise PermissionDenied()
 
     def _get_contact(self):
         slug = self.kwargs.get('slug')
@@ -131,29 +113,23 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
         return super(TicketCreateView, self).form_valid(form)
 
 
-class TicketUpdateView(LoginRequiredMixin, UpdateView):
+class TicketUpdateView(LoginRequiredMixin, CheckPermMixin, UpdateView):
     form_class = TicketForm
     model = Ticket
 
     def get_context_data(self, **kwargs):
         context = super(TicketUpdateView, self).get_context_data(**kwargs)
+        self._check_perm(self.object.contact)
         context.update(dict(
             contact=self.object.contact,
         ))
         return context
 
 
-class TicketDetailView(LoginRequiredMixin, DetailView):
+class TicketDetailView(LoginRequiredMixin, CheckPermMixin, DetailView):
     model = Ticket
-
-    def _check_perm(self, ticket):
-        if self.request.user.is_staff:
-            pass
-        # check the user is linked to the contact for this ticket
-        elif not self.request.user.usercontact_set.filter(contact__ticket=ticket):
-            raise PermissionDenied()
 
     def get_object(self, *args, **kwargs):
         obj = super(TicketDetailView, self).get_object(*args, **kwargs)
-        self._check_perm(obj)
+        self._check_perm(obj.contact)
         return obj

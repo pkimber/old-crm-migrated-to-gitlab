@@ -67,6 +67,10 @@ class TestViewPerm(TestCase):
         url = reverse('crm.ticket.detail', kwargs={'pk': self.dig.pk})
         self._assert_perm_denied(url)
 
+    def test_ticket_update(self):
+        url = reverse('crm.ticket.update', kwargs={'pk': self.dig.pk})
+        self._assert_perm_denied(url)
+
     def _assert_perm_denied(self, url):
         response = self.client.get(url)
         self.assertEqual(
