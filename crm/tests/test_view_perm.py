@@ -11,6 +11,7 @@ from login.tests.model_maker import make_user
 
 
 class TestViewPerm(TestCase):
+    """user 'tom' should not be able to view the 'aec' contact"""
 
     def setUp(self):
         """tom has access to contact icl"""
@@ -42,9 +43,6 @@ class TestViewPerm(TestCase):
         )
 
     def test_contact_detail(self):
-        """
-        user 'tom' should not be able to view tickets for the 'aec' contact
-        """
         url = reverse('crm.contact.detail', kwargs={'slug': self.aec.slug})
         self._assert_perm_denied(url)
 
@@ -61,9 +59,6 @@ class TestViewPerm(TestCase):
         self._assert_perm_denied(url)
 
     def test_ticket_detail(self):
-        """
-        user 'tom' should not be able to view tickets for the 'aec' contact
-        """
         url = reverse('crm.ticket.detail', kwargs={'pk': self.dig.pk})
         self._assert_perm_denied(url)
 
