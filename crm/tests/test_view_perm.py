@@ -37,17 +37,27 @@ class TestViewPerm(TestCase):
             )
         )
 
+    def test_contact_detail(self):
+        """
+        user 'tom' should not be able to view tickets for the 'aec' contact
+        """
+        url = reverse('crm.contact.detail', kwargs={'slug': self.aec.slug})
+        self._assert_perm_denied(url)
+
     def test_ticket_detail(self):
         """
         user 'tom' should not be able to view tickets for the 'aec' contact
         """
         url = reverse('crm.ticket.detail', kwargs={'pk': self.dig.pk})
+        self._assert_perm_denied(url)
+
+    def _assert_perm_denied(self, url):
         response = self.client.get(url)
         self.assertEqual(
             response.status_code,
             403,
-            "status {}: user '{}' should not have access to tickets "
-            "for contact '{}'".format(
-                response.status_code, self.tom.username, self.dig.contact.slug
+            "status {}: user '{}' should not have access "
+            "to this url: '{}'".format(
+                response.status_code, self.tom.username, url
             )
         )

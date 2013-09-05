@@ -22,6 +22,15 @@ from .models import (
 class ContactDetailView(LoginRequiredMixin, DetailView):
     model = Contact
 
+    def get_object(self, *args, **kwargs):
+        obj = super(ContactDetailView, self).get_object(*args, **kwargs)
+        if self.request.user.is_staff:
+            pass
+        # check the user is linked to the contact
+        elif not self.request.user.usercontact_set.filter(contact=obj):
+            raise PermissionDenied()
+        return obj
+
 
 class HomeListView(LoginRequiredMixin, ListView):
 
