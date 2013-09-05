@@ -56,6 +56,10 @@ class TestViewPerm(TestCase):
         url = reverse('crm.note.update', kwargs={'pk': self.note.pk})
         self._assert_perm_denied(url)
 
+    def test_ticket_create(self):
+        url = reverse('crm.ticket.create', kwargs={'slug': self.aec.slug})
+        self._assert_perm_denied(url)
+
     def test_ticket_detail(self):
         """
         user 'tom' should not be able to view tickets for the 'aec' contact

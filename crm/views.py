@@ -104,9 +104,18 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
     form_class = TicketForm
     model = Ticket
 
+    def _check_perm(self, contact):
+        if self.request.user.is_staff:
+            pass
+        # check the user is linked to the contact
+        elif not self.request.user.usercontact_set.filter(contact=contact):
+            raise PermissionDenied()
+
     def _get_contact(self):
         slug = self.kwargs.get('slug')
-        return get_object_or_404(Contact, slug=slug)
+        contact = get_object_or_404(Contact, slug=slug)
+        self._check_perm(contact)
+        return contact
 
     def get_context_data(self, **kwargs):
         context = super(TicketCreateView, self).get_context_data(**kwargs)
