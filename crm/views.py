@@ -4,9 +4,13 @@ from django.views.generic import (
     CreateView, DetailView, ListView, UpdateView
 )
 
-from braces.views import LoginRequiredMixin
+from braces.views import (
+    LoginRequiredMixin,
+    StaffuserRequiredMixin,
+)
 
 from .forms import (
+    ContactForm,
     NoteForm,
     TicketForm,
 )
@@ -36,6 +40,11 @@ class ContactDetailView(LoginRequiredMixin, CheckPermMixin, DetailView):
         obj = super(ContactDetailView, self).get_object(*args, **kwargs)
         self._check_perm(obj)
         return obj
+
+
+class ContactUpdateView(LoginRequiredMixin, StaffuserRequiredMixin, UpdateView):
+    form_class = ContactForm
+    model = Contact
 
 
 class HomeListView(LoginRequiredMixin, ListView):

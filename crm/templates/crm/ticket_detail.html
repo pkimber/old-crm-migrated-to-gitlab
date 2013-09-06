@@ -14,7 +14,7 @@
       <table class="pure-table pure-table-bordered">
         <tbody>
           <tr>
-            <td>Ticket</td>
+            <td>Ticket {{ ticket.pk }}</td>
             <td>
               <a href="{% url "crm.ticket.update" ticket.pk %}">
                 <i class="icon-edit"></i>

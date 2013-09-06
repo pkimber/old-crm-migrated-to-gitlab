@@ -15,7 +15,12 @@
         <tbody>
           <tr>
             <td>Contact</td>
-            <td><strong>{{ contact.name }}</strong></td>
+            <td>
+              <a href="{% url "crm.contact.update" contact.slug %}">
+                <i class="icon-edit"></i>
+                <strong>{{ contact.name }}</strong>
+              </a>
+            </td>
           </tr>
           <tr valign="top">
             <td>Address</td>

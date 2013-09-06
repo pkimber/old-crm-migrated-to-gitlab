@@ -1,0 +1,21 @@
+{% extends "crm/base.html" %}
+
+{% block sub_title %}
+  Contact
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Contact
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="pure-g-r">
+    <div class="pure-u-1">
+      Contact
+      <a href="{% url 'crm.contact.detail' contact.slug %}">
+        {{ contact.name }}
+      </a>
+      {% include '_form.html' %}
+    </div>
+  </div>
+{% endblock content %}

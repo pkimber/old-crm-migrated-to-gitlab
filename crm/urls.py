@@ -4,6 +4,7 @@ from django.conf.urls import (
 
 from .views import (
     ContactDetailView,
+    ContactUpdateView,
     HomeListView,
     NoteCreateView,
     NoteUpdateView,
@@ -22,6 +23,10 @@ urlpatterns = patterns(
     url(regex=r'^contact/(?P<slug>[-\w\d]+)/$',
         view=ContactDetailView.as_view(),
         name='crm.contact.detail'
+        ),
+    url(regex=r'^contact/(?P<slug>[-\w\d]+)/edit/$',
+        view=ContactUpdateView.as_view(),
+        name='crm.contact.update'
         ),
     url(regex=r'^ticket/(?P<pk>\d+)/note/add/$',
         view=NoteCreateView.as_view(),
