@@ -31,7 +31,11 @@ def make_industry(name, **kwargs):
 
 def make_note(ticket, user, description):
     return clean_and_save(
-        Note(ticket=ticket, user=user, description=description)
+        Note(
+            ticket=ticket,
+            user=user,
+            description=description,
+        )
     )
 
 

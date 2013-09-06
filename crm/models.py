@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -117,5 +119,8 @@ class Note(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('crm.ticket.detail', args=[self.ticket.pk])
+
+    def modified_today(self):
+        return self.created.date() == datetime.today().date()
 
 reversion.register(Note)
