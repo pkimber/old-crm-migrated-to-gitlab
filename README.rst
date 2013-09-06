@@ -21,6 +21,7 @@ has been created for you).
   echo "unset DJANGO_SETTINGS_MODULE" >> $VIRTUAL_ENV/bin/postdeactivate
 
   add2virtualenv ../base
+  add2virtualenv ../invoice
   add2virtualenv ../login
   add2virtualenv .
   deactivate
@@ -39,6 +40,7 @@ Check the imports are in the correct order e.g:
 
   /home/patrick/repo/dev/app/crm
   /home/patrick/repo/dev/app/login
+  /home/patrick/repo/dev/app/invoice
   /home/patrick/repo/dev/app/base
 
 Testing
@@ -67,7 +69,9 @@ Usage
   py.test -x && \
       touch temp.db && rm temp.db && \
       django-admin.py syncdb --noinput && django-admin.py migrate --all --noinput && \
-      django-admin.py demo_data_login && django-admin.py demo_data_crm && \
+      django-admin.py demo_data_login && \
+      django-admin.py demo_data_crm && \
+      django-admin.py demo_data_invoice && \
       django-admin.py runserver
 
 Release
