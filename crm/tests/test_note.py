@@ -17,7 +17,7 @@ class TestNote(TestCase):
     def setUp(self):
         icl = make_contact('icl', 'ICL')
         sew = make_ticket(
-            icl, make_user('tom'), 'Sew', 'Sewing', make_priority('Low', 1)
+            icl, make_user('tom'), 'Sew', make_priority('Low', 1)
         )
         self.note = make_note(
             sew,

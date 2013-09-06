@@ -23,7 +23,7 @@ class TestViewPerm(TestCase):
         self.zed = make_user('zed')
         self.aec = make_contact('aec', 'AEC')
         self.dig = make_ticket(
-            self.aec, self.zed, 'Dig', 'Dig garden', make_priority('High', 1)
+            self.aec, self.zed, 'Dig', make_priority('High', 1)
         )
         self.note = make_note(
             self.dig, self.zed, 'Plant some carrots and some peas'

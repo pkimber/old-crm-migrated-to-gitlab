@@ -40,8 +40,8 @@ And the dish ran away with the spoon!
             contact,
             matt,
             "Milk the cows",
-            description,
             make_priority('High', 1),
+            description=description,
             due=datetime.today(),
         )
         make_note(ticket, fred, "Finished the milking")
@@ -50,5 +50,11 @@ And the dish ran away with the spoon!
             'ssmith',
             'Sam Smith',
             industry=make_industry('Leisure'),
+        )
+        ticket = make_ticket(
+            contact,
+            fred,
+            "Feed the pigs",
+            make_priority('Medium', 2),
         )
         print("Created 'crm' demo data...")

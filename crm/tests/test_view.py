@@ -21,7 +21,7 @@ class TestView(TestCase):
         self.icl = make_contact('icl', 'ICL')
         make_user_contact(self.tom, self.icl)
         self.sew = make_ticket(
-            self.icl, self.tom, 'Sew', 'Sewing', make_priority('Low', 1)
+            self.icl, self.tom, 'Sew', make_priority('Low', 1)
         )
         self.note = make_note(
             self.sew, self.tom, 'Cut out some material and make a pillow case'
