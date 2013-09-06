@@ -30,6 +30,9 @@ class Contact(TimeStampedModel):
     phone = models.CharField(max_length=100, blank=True)
     mail = models.EmailField(blank=True)
     industry = models.ForeignKey(Industry, blank=True, null=True)
+    hourly_rate = models.DecimalField(
+        blank=True, null=True, max_digits=8, decimal_places=2
+    )
 
     class Meta:
         ordering = ['slug']
