@@ -11,16 +11,14 @@
 {% block content %}
   <div class="pure-g-r">
     <div class="pure-u-1">
-      <p>
-        Note for ticket
-        <a href="{% url 'crm.ticket.detail' ticket.pk %}">
-          {{ ticket.pk }}, <strong>{{ ticket.name }}</strong>
-        </a>
-        contact
-        <a href="{% url 'crm.contact.detail' ticket.contact.slug %}">
-          {{ticket.contact.name }}
-        </a>
-      </p>
+      Note for ticket
+      <a href="{% url 'crm.ticket.detail' ticket.pk %}">
+        {{ ticket.pk }}, <strong>{{ ticket.name }}</strong>
+      </a>
+      contact
+      <a href="{% url 'crm.contact.detail' ticket.contact.slug %}">
+        {{ticket.contact.name }}
+      </a>
       {% include '_form.html' %}
     </div>
   </div>

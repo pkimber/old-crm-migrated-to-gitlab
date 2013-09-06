@@ -44,6 +44,10 @@ class Contact(TimeStampedModel):
     def __unicode__(self):
         return unicode('{}'.format(self.name))
 
+    def get_absolute_url(self):
+        return reverse('crm.contact.detail', args=[self.slug])
+
+
 reversion.register(Contact)
 
 

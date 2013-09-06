@@ -11,10 +11,6 @@
 {% block content %}
   <div class="pure-g-r">
     <div class="pure-u-1">
-      Contact
-      <a href="{% url 'crm.contact.detail' contact.slug %}">
-        {{ contact.name }}
-      </a>
       {% include '_form.html' %}
     </div>
   </div>

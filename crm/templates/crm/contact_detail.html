@@ -36,34 +36,36 @@
             <td>email</td>
             <td>{{ contact.mail|urlize }}</td>
           </tr>
+          {% if contact.ticket_set.all %}
           <tr>
             <td><strong>Tickets</strong></td>
-            <td>
-            </td>
+            <td></td>
           </tr>
+          {% endif %}
           {% for ticket in contact.ticket_set.all %}
-          <tr valign="top">
-            <td>{{ ticket.id }}</td>
-            <td>
-              <a href="{% url 'crm.ticket.detail' ticket.pk %}">
-                <strong>{{ ticket.name }}</strong>
-              </a>
-              <br />
-              {{ ticket.description }}
-            </td>
-          </tr>
+            <tr valign="top">
+              <td>{{ ticket.id }}</td>
+              <td>
+                <a href="{% url 'crm.ticket.detail' ticket.pk %}">
+                  <strong>{{ ticket.name }}</strong>
+                </a>
+                <br />
+                {{ ticket.description }}
+              </td>
+            </tr>
           {% endfor %}
         </tbody>
       </table>
-      <br />
-      <a class="pure-button" href="{% url "crm.ticket.create" contact.slug %}">
-        <i class="icon-ticket"></i>
-        New ticket...
-      </a>
-      <a class="pure-button" href="{% url "invoice.time.contact.list" contact.slug %}">
-        <i class="icon-time"></i>
-        View time
-      </a>
+      <p>
+        <a class="pure-button" href="{% url "crm.ticket.create" contact.slug %}">
+          <i class="icon-ticket"></i>
+          New ticket...
+        </a>
+        <a class="pure-button" href="{% url "invoice.time.contact.list" contact.slug %}">
+          <i class="icon-time"></i>
+          View time
+        </a>
+      </p>
     </div>
   </div>
 {% endblock content %}

@@ -33,6 +33,11 @@ class CheckPermMixin(object):
             raise PermissionDenied()
 
 
+class ContactCreateView(LoginRequiredMixin, StaffuserRequiredMixin, CreateView):
+    form_class = ContactForm
+    model = Contact
+
+
 class ContactDetailView(LoginRequiredMixin, CheckPermMixin, DetailView):
     model = Contact
 

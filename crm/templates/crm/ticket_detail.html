@@ -66,11 +66,12 @@
               <td>{{ ticket.description|linebreaksbr }}</td>
             </tr>
           {% endif %}
-          <tr valign="top">
-            <td><strong>Notes</strong></td>
-            <td>
-            </td>
-          </tr>
+          {% if ticket.note_set.all %}
+            <tr valign="top">
+              <td><strong>Notes</strong></td>
+              <td></td>
+            </tr>
+          {% endif %}
           {% for note in ticket.note_set.all %}
             <tr valign="top">
               <td>
