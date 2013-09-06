@@ -13,9 +13,9 @@
     <div class="pure-g-r">
       <div class="pure-u-1">
         <p>
-          Note for ticket,
+          Note for ticket
           <a href="{% url 'crm.ticket.detail' ticket.pk %}">
-            <strong>{{ ticket.name }}</strong>,
+            {{ ticket.pk }}, <strong>{{ ticket.name }}</strong>
           </a>
           contact
           <a href="{% url 'crm.contact.detail' ticket.contact.slug %}">

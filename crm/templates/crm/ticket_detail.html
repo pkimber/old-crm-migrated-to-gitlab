@@ -17,11 +17,10 @@
             <tr>
               <td>Ticket</td>
               <td>
-                <a class="pure-button" href="{% url "crm.ticket.update" ticket.pk %}">
+                <a href="{% url "crm.ticket.update" ticket.pk %}">
                   <i class="icon-edit"></i>
-                  Edit
+                  <strong>{{ ticket.name }}</strong>
                 </a>
-                <strong>{{ ticket.name }}</strong>
               </td>
             </tr>
             <tr>
@@ -36,11 +35,8 @@
             <tr>
               <td>Created</td>
               <td>
+                {{ ticket.modified|date:"d/m/Y H:i" }}
                 <strong>{{ ticket.user.username }}</strong>
-                at
-                {{ ticket.modified|date:"H:i" }}
-                on
-                {{ ticket.modified|date:"d/m/Y" }}
               </td>
             </tr>
             <tr valign="top">
@@ -74,10 +70,6 @@
             <tr valign="top">
               <td><strong>Notes</strong></td>
               <td>
-                <a class="pure-button" href="{% url "crm.note.create" ticket.pk %}">
-                  <i class="icon-comment"></i>
-                  Add note...
-                </a>
               </td>
             </tr>
             {% for note in ticket.note_set.all %}
@@ -87,13 +79,13 @@
                   <strong>{{ note.user.username }}</strong>
                 </td>
                 <td>
-                  {{ note.description|linebreaksbr }}
                   {% if note.user == user and note.modified_today %}
-                    <br />
-                    <a class="pure-button" href="{% url "crm.note.update" note.pk %}">
+                    <a href="{% url "crm.note.update" note.pk %}">
                       <i class="icon-edit"></i>
-                      Edit
+                      {{ note.description|linebreaksbr }}
                     </a>
+                  {% else %}
+                    {{ note.description|linebreaksbr }}
                   {% endif %}
               </td>
               </tr>
@@ -107,7 +99,11 @@
           </a>
           <a class="pure-button" href="{% url "invoice.time.create" ticket.pk %}">
             <i class="icon-time"></i>
-            Add time record
+            Add time
+          </a>
+          <a class="pure-button" href="{% url "invoice.time.list" ticket.pk %}">
+            <i class="icon-time"></i>
+            View time
           </a>
         </p>
       </div>

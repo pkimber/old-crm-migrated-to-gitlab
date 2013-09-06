@@ -23,7 +23,7 @@
           <tbody>
             {% for ticket in ticket_list %}
               <tr valign="top">
-                <td>{{ ticket.id }}</td>
+                <td>{{ ticket.pk }}</td>
                 <td>
                   <a href="{% url 'crm.ticket.detail' ticket.pk %}">
                     <strong>{{ ticket.name }}</strong>

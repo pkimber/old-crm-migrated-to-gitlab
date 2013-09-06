@@ -23,7 +23,7 @@ urlpatterns = patterns(
         view=ContactDetailView.as_view(),
         name='crm.contact.detail'
         ),
-    url(regex=r'^ticket/(?P<pk>\d+)/note/$',
+    url(regex=r'^ticket/(?P<pk>\d+)/note/add/$',
         view=NoteCreateView.as_view(),
         name='crm.note.create'
         ),
@@ -31,7 +31,7 @@ urlpatterns = patterns(
         view=NoteUpdateView.as_view(),
         name='crm.note.update'
         ),
-    url(regex=r'^contact/(?P<slug>[-\w\d]+)/ticket/$',
+    url(regex=r'^contact/(?P<slug>[-\w\d]+)/ticket/add/$',
         view=TicketCreateView.as_view(),
         name='crm.ticket.create'
         ),
