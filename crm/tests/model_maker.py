@@ -29,12 +29,13 @@ def make_industry(name, **kwargs):
     )
 
 
-def make_note(ticket, user, description):
+def make_note(ticket, user, name, **kwargs):
     return clean_and_save(
         Note(
             ticket=ticket,
             user=user,
-            description=description,
+            name=name,
+            **kwargs
         )
     )
 

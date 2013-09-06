@@ -82,9 +82,13 @@
                   {% if note.user == user and note.modified_today %}
                     <a href="{% url "crm.note.update" note.pk %}">
                       <i class="icon-edit"></i>
-                      {{ note.description|linebreaksbr }}
+                      {{ note.name }}
                     </a>
                   {% else %}
+                    <strong>{{ note.name }}</strong>
+                  {% endif %}
+                  {% if note.description %}
+                    <br />
                     {{ note.description|linebreaksbr }}
                   {% endif %}
               </td>
