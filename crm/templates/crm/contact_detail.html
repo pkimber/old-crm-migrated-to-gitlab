@@ -9,58 +9,56 @@
 {% endblock sub_heading %}
 
 {% block content %}
-  <div class="content">
-    <div class="pure-g-r">
-      <div class="pure-u-1">
-        <table class="pure-table pure-table-bordered">
-          <tbody>
-            <tr>
-              <td>Contact</td>
-              <td><strong>{{ contact.name }}</strong></td>
-            </tr>
-            <tr valign="top">
-              <td>Address</td>
-              <td>
-                {{ contact.address|linebreaksbr }}
-              </td>
-            </tr>
-            <tr>
-              <td>Phone</td>
-              <td><strong>{{ contact.phone }}</strong></td>
-            </tr>
-            <tr>
-              <td>email</td>
-              <td>{{ contact.mail|urlize }}</td>
-            </tr>
-            <tr>
-              <td><strong>Tickets</strong></td>
-              <td>
-              </td>
-            </tr>
-            {% for ticket in contact.ticket_set.all %}
-            <tr valign="top">
-              <td>{{ ticket.id }}</td>
-              <td>
-                <a href="{% url 'crm.ticket.detail' ticket.pk %}">
-                  <strong>{{ ticket.name }}</strong>
-                </a>
-                <br />
-                {{ ticket.description }}
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        <br />
-        <a class="pure-button" href="{% url "crm.ticket.create" contact.slug %}">
-          <i class="icon-ticket"></i>
-          New ticket...
-        </a>
-        <a class="pure-button" href="{% url "invoice.time.contact.list" contact.slug %}">
-          <i class="icon-time"></i>
-          View time
-        </a>
-      </div>
+  <div class="pure-g-r">
+    <div class="pure-u-1">
+      <table class="pure-table pure-table-bordered">
+        <tbody>
+          <tr>
+            <td>Contact</td>
+            <td><strong>{{ contact.name }}</strong></td>
+          </tr>
+          <tr valign="top">
+            <td>Address</td>
+            <td>
+              {{ contact.address|linebreaksbr }}
+            </td>
+          </tr>
+          <tr>
+            <td>Phone</td>
+            <td><strong>{{ contact.phone }}</strong></td>
+          </tr>
+          <tr>
+            <td>email</td>
+            <td>{{ contact.mail|urlize }}</td>
+          </tr>
+          <tr>
+            <td><strong>Tickets</strong></td>
+            <td>
+            </td>
+          </tr>
+          {% for ticket in contact.ticket_set.all %}
+          <tr valign="top">
+            <td>{{ ticket.id }}</td>
+            <td>
+              <a href="{% url 'crm.ticket.detail' ticket.pk %}">
+                <strong>{{ ticket.name }}</strong>
+              </a>
+              <br />
+              {{ ticket.description }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <br />
+      <a class="pure-button" href="{% url "crm.ticket.create" contact.slug %}">
+        <i class="icon-ticket"></i>
+        New ticket...
+      </a>
+      <a class="pure-button" href="{% url "invoice.time.contact.list" contact.slug %}">
+        <i class="icon-time"></i>
+        View time
+      </a>
     </div>
   </div>
 {% endblock content %}

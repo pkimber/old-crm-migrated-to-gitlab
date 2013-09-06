@@ -9,108 +9,106 @@
 {% endblock sub_heading %}
 
 {% block content %}
-  <div class="content">
-    <div class="pure-g-r">
-      <div class="pure-u-1">
-        <table class="pure-table pure-table-bordered">
-          <tbody>
-            <tr>
-              <td>Ticket</td>
-              <td>
-                <a href="{% url "crm.ticket.update" ticket.pk %}">
-                  <i class="icon-edit"></i>
-                  <strong>{{ ticket.name }}</strong>
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>Priority</td>
-              <td>
-                <strong>{{ ticket.priority.name }}</strong>
-                {% if ticket.due %}
-                  by <strong>{{ ticket.due|date:"d/m/Y" }}</strong>
-                {% endif %}
-              </td>
-            </tr>
-            <tr>
-              <td>Created</td>
-              <td>
-                {{ ticket.modified|date:"d/m/Y H:i" }}
-                <strong>{{ ticket.user.username }}</strong>
-              </td>
-            </tr>
+  <div class="pure-g-r">
+    <div class="pure-u-1">
+      <table class="pure-table pure-table-bordered">
+        <tbody>
+          <tr>
+            <td>Ticket</td>
+            <td>
+              <a href="{% url "crm.ticket.update" ticket.pk %}">
+                <i class="icon-edit"></i>
+                <strong>{{ ticket.name }}</strong>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>Priority</td>
+            <td>
+              <strong>{{ ticket.priority.name }}</strong>
+              {% if ticket.due %}
+                by <strong>{{ ticket.due|date:"d/m/Y" }}</strong>
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <td>Created</td>
+            <td>
+              {{ ticket.modified|date:"d/m/Y H:i" }}
+              <strong>{{ ticket.user.username }}</strong>
+            </td>
+          </tr>
+          <tr valign="top">
+            <td>Contact</td>
+            <td>
+              <a href="{% url 'crm.contact.detail' ticket.contact.slug %}">
+                <strong>{{ ticket.contact.name }}</strong>
+              </a>
+              <br />
+              {{ ticket.contact.address|linebreaksbr }}
+            </td>
+          </tr>
+          {% if ticket.contact.mail %}
+          <tr valign="top">
+            <td>email</td>
+            <td>{{ ticket.contact.mail|urlize }}</td>
+          </tr>
+          {% endif %}
+          {% if ticket.contact.phone %}
+          <tr valign="top">
+            <td>Phone</td>
+            <td>{{ ticket.contact.phone }}</td>
+          </tr>
+          {% endif %}
+          {% if ticket.description %}
             <tr valign="top">
-              <td>Contact</td>
+              <td>Description</td>
+              <td>{{ ticket.description|linebreaksbr }}</td>
+            </tr>
+          {% endif %}
+          <tr valign="top">
+            <td><strong>Notes</strong></td>
+            <td>
+            </td>
+          </tr>
+          {% for note in ticket.note_set.all %}
+            <tr valign="top">
               <td>
-                <a href="{% url 'crm.contact.detail' ticket.contact.slug %}">
-                  <strong>{{ ticket.contact.name }}</strong>
-                </a>
-                <br />
-                {{ ticket.contact.address|linebreaksbr }}
+                {{ note.modified|date:"d/m/y H:i" }}
+                <strong>{{ note.user.username }}</strong>
               </td>
-            </tr>
-            {% if ticket.contact.mail %}
-            <tr valign="top">
-              <td>email</td>
-              <td>{{ ticket.contact.mail|urlize }}</td>
-            </tr>
-            {% endif %}
-            {% if ticket.contact.phone %}
-            <tr valign="top">
-              <td>Phone</td>
-              <td>{{ ticket.contact.phone }}</td>
-            </tr>
-            {% endif %}
-            {% if ticket.description %}
-              <tr valign="top">
-                <td>Description</td>
-                <td>{{ ticket.description|linebreaksbr }}</td>
-              </tr>
-            {% endif %}
-            <tr valign="top">
-              <td><strong>Notes</strong></td>
               <td>
-              </td>
-            </tr>
-            {% for note in ticket.note_set.all %}
-              <tr valign="top">
-                <td>
-                  {{ note.modified|date:"d/m/y H:i" }}
-                  <strong>{{ note.user.username }}</strong>
-                </td>
-                <td>
-                  {% if note.user == user and note.modified_today %}
-                    <a href="{% url "crm.note.update" note.pk %}">
-                      <i class="icon-edit"></i>
-                      {{ note.name }}
-                    </a>
-                  {% else %}
+                {% if note.user == user and note.modified_today %}
+                  <a href="{% url "crm.note.update" note.pk %}">
+                    <i class="icon-edit"></i>
                     <strong>{{ note.name }}</strong>
-                  {% endif %}
-                  {% if note.description %}
-                    <br />
-                    {{ note.description|linebreaksbr }}
-                  {% endif %}
-              </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        <p>
-          <a class="pure-button" href="{% url "crm.note.create" ticket.pk %}">
-            <i class="icon-comment"></i>
-            Add note...
-          </a>
-          <a class="pure-button" href="{% url "invoice.time.create" ticket.pk %}">
-            <i class="icon-time"></i>
-            Add time
-          </a>
-          <a class="pure-button" href="{% url "invoice.time.ticket.list" ticket.pk %}">
-            <i class="icon-time"></i>
-            View time
-          </a>
-        </p>
-      </div>
+                  </a>
+                {% else %}
+                  <strong>{{ note.name }}</strong>
+                {% endif %}
+                {% if note.description %}
+                  <br />
+                  {{ note.description|linebreaksbr }}
+                {% endif %}
+            </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <p>
+        <a class="pure-button" href="{% url "crm.note.create" ticket.pk %}">
+          <i class="icon-comment"></i>
+          Add note...
+        </a>
+        <a class="pure-button" href="{% url "invoice.time.create" ticket.pk %}">
+          <i class="icon-time"></i>
+          Add time
+        </a>
+        <a class="pure-button" href="{% url "invoice.time.ticket.list" ticket.pk %}">
+          <i class="icon-time"></i>
+          View time
+        </a>
+      </p>
     </div>
   </div>
 {% endblock content %}

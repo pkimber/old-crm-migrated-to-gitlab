@@ -29,7 +29,7 @@
                     <strong>{{ ticket.name }}</strong>
                   </a>
                   created {{ ticket.created|date:"d/m/Y" }}
-                  by {{ ticket.user.username }}
+                  by <strong>{{ ticket.user.username }}</strong>
                   <br />
                   {{ ticket.description|linebreaksbr }}
                 </td>
@@ -38,7 +38,7 @@
                   {% if ticket.due %}
                     <br />
                     due
-                    {{ ticket.due|date:"d/m/Y" }}
+                    <strong>{{ ticket.due|date:"d/m/Y" }}</strong>
                   {% endif %}
                 </td>
               </tr>

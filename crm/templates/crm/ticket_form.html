@@ -9,39 +9,37 @@
 {% endblock sub_heading %}
 
 {% block content %}
-  <div class="content">
-    <div class="pure-g-r">
-      <div class="pure-u-1">
-        <p>
-          Ticket for
-          <a href="{% url 'crm.contact.detail' contact.slug %}">
-            <strong>{{ contact.name }}</strong>
-          </a>,
-          {{ contact.address }}
-          </a>
-        </p>
-        <form action="" method="post" class="pure-form pure-form-stacked">
-          {% csrf_token %}
-          {{ form.non_field_errors }}
-          <fieldset>
-            {% for field in form %}
-              <div class="pure-control-group">
-                {{ field.label_tag }}
-                {% for error in field.errors %}
-                  <aside class="pure-help-inline">{{ error }}</aside>
-                {% endfor %}
-                {{ field }}
-              </div>
-            {% endfor %}
-            <div class="pure-controls">
-              <input type="submit" value="Submit" class="pure-button pure-button-primary" />
+  <div class="pure-g-r">
+    <div class="pure-u-1">
+      <p>
+        Ticket for
+        <a href="{% url 'crm.contact.detail' contact.slug %}">
+          <strong>{{ contact.name }}</strong>
+        </a>,
+        {{ contact.address }}
+        </a>
+      </p>
+      <form action="" method="post" class="pure-form pure-form-stacked">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <fieldset>
+          {% for field in form %}
+            <div class="pure-control-group">
+              {{ field.label_tag }}
+              {% for error in field.errors %}
+                <aside class="pure-help-inline">{{ error }}</aside>
+              {% endfor %}
+              {{ field }}
             </div>
-          </fieldset>
-          {% for hidden in form.hidden_fields %}
-            {{ hidden }}
           {% endfor %}
-        </form>
-      </div>
+          <div class="pure-controls">
+            <input type="submit" value="Submit" class="pure-button pure-button-primary" />
+          </div>
+        </fieldset>
+        {% for hidden in form.hidden_fields %}
+          {{ hidden }}
+        {% endfor %}
+      </form>
     </div>
   </div>
 {% endblock content %}
