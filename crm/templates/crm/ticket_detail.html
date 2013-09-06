@@ -27,7 +27,7 @@
             <td>
               <strong>{{ ticket.priority.name }}</strong>
               {% if ticket.due %}
-                by <strong>{{ ticket.due|date:"d/m/Y" }}</strong>
+                <small>by {{ ticket.due|date:"d/m/Y" }}</small>
               {% endif %}
             </td>
           </tr>
@@ -75,8 +75,7 @@
           {% for note in ticket.note_set.all %}
             <tr valign="top">
               <td>
-                {{ note.modified|date:"d/m/y H:i" }}
-                <strong>{{ note.user.username }}</strong>
+                {{ note.user.username }}
               </td>
               <td>
                 {% if note.user == user and note.modified_today %}
@@ -87,6 +86,7 @@
                 {% else %}
                   <strong>{{ note.name }}</strong>
                 {% endif %}
+                <small>{{ note.modified|date:"d/m/y H:i" }}</small>
                 {% if note.description %}
                   <br />
                   {{ note.description|linebreaksbr }}

@@ -38,8 +38,10 @@
                   <a href="{% url 'crm.ticket.detail' ticket.pk %}">
                     <strong>{{ ticket.name }}</strong>
                   </a>
-                  created {{ ticket.created|date:"d/m/Y" }}
-                  by <strong>{{ ticket.user.username }}</strong>
+                  <small>
+                    created {{ ticket.created|date:"d/m/Y" }}
+                    by {{ ticket.user.username }}
+                  </small>
                   {% if ticket.description %}
                     <br />
                     {{ ticket.description|linebreaksbr }}
@@ -48,9 +50,7 @@
                 <td>
                   {{ ticket.priority.name }}
                   {% if ticket.due %}
-                    <br />
-                    due
-                    <strong>{{ ticket.due|date:"d/m/Y" }}</strong>
+                    <small>due {{ ticket.due|date:"d/m/Y" }}</small>
                   {% endif %}
                 </td>
               </tr>
