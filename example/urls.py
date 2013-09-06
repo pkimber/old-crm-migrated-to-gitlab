@@ -24,6 +24,9 @@ urlpatterns = patterns(
     url(regex=r'^crm/',
         view=include('crm.urls')
         ),
+    url(regex=r'^invoice/',
+        view=include('invoice.urls')
+        ),
     url(r'^home/user/$',
         view=RedirectView.as_view(url=reverse_lazy('crm.home')),
         name='project.home.user'
