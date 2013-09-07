@@ -114,6 +114,28 @@ class NoteUpdateView(LoginRequiredMixin, CheckPermMixin, UpdateView):
         return context
 
 
+class TicketCompleteView(LoginRequiredMixin, StaffuserRequiredMixin, DeleteView):
+
+    model = Ticket
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.set_complete(self.request.user)
+        self.object.save()
+        messages.info(
+            self.request,
+            "Ticket {}, {} completed on {}".format(
+                self.object.pk,
+                self.object.name,
+                self.object.complete.strftime('%d/%m/%Y at %H:%M'),
+            )
+        )
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return self.object.contact.get_absolute_url()
+
+
 class TicketCreateView(LoginRequiredMixin, CheckPermMixin, CreateView):
     form_class = TicketForm
     model = Ticket
@@ -136,28 +158,6 @@ class TicketCreateView(LoginRequiredMixin, CheckPermMixin, CreateView):
         self.object.contact = self._get_contact()
         self.object.user = self.request.user
         return super(TicketCreateView, self).form_valid(form)
-
-
-class TicketCompleteView(LoginRequiredMixin, StaffuserRequiredMixin, DeleteView):
-
-    model = Ticket
-
-    def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        self.object.set_complete(self.request.user)
-        self.object.save()
-        messages.info(
-            self.request,
-            "Ticket {}, {} completed on {}".format(
-                self.object.pk,
-                self.object.name,
-                self.object.complete.strftime('%d/%m/%Y at %H:%M'),
-            )
-        )
-        return HttpResponseRedirect(self.get_success_url())
-
-    def get_success_url(self):
-        return self.object.contact.get_absolute_url()
 
 
 class TicketDetailView(LoginRequiredMixin, CheckPermMixin, DetailView):

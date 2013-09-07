@@ -51,6 +51,10 @@ class TestView(TestCase):
         url = reverse('crm.note.update', kwargs={'pk': self.note.pk})
         self._assert_get(url)
 
+    def test_ticket_complete(self):
+        url = reverse('crm.ticket.complete', kwargs={'pk': self.sew.pk})
+        self._assert_get(url)
+
     def test_ticket_create(self):
         url = reverse('crm.ticket.create', kwargs={'slug': self.icl.slug})
         self._assert_get(url)
