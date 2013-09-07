@@ -30,19 +30,6 @@ class TestViewPerm(TestCase):
             self.dig, self.zed, 'Plant some carrots and some peas'
         )
 
-    def test_home(self):
-        url = reverse('crm.ticket.home')
-        response = self.client.get(url)
-        ticket_list = response.context['ticket_list']
-        contact_slugs = [item.contact.slug for item in ticket_list]
-        self.assertNotIn(
-            self.aec.slug,
-            contact_slugs,
-            "user '{}' should not have access to contact '{}'".format(
-                self.tom.username, self.aec.slug
-            )
-        )
-
     def test_contact_create(self):
         url = reverse('crm.contact.create')
         self._assert_staff_only(url)
@@ -50,6 +37,10 @@ class TestViewPerm(TestCase):
     def test_contact_detail(self):
         url = reverse('crm.contact.detail', kwargs={'slug': self.aec.slug})
         self._assert_perm_denied(url)
+
+    def test_contact_update(self):
+        url = reverse('crm.contact.update', kwargs={'slug': self.aec.slug})
+        self._assert_staff_only(url)
 
     def test_note_create(self):
         url = reverse('crm.note.create', kwargs={'pk': self.dig.pk})
@@ -66,6 +57,19 @@ class TestViewPerm(TestCase):
     def test_ticket_detail(self):
         url = reverse('crm.ticket.detail', kwargs={'pk': self.dig.pk})
         self._assert_perm_denied(url)
+
+    def test_ticket_home(self):
+        url = reverse('crm.ticket.home')
+        response = self.client.get(url)
+        ticket_list = response.context['ticket_list']
+        contact_slugs = [item.contact.slug for item in ticket_list]
+        self.assertNotIn(
+            self.aec.slug,
+            contact_slugs,
+            "user '{}' should not have access to contact '{}'".format(
+                self.tom.username, self.aec.slug
+            )
+        )
 
     def test_ticket_update(self):
         url = reverse('crm.ticket.update', kwargs={'pk': self.dig.pk})
