@@ -127,6 +127,15 @@ class TicketCreateView(LoginRequiredMixin, CheckPermMixin, CreateView):
         return super(TicketCreateView, self).form_valid(form)
 
 
+class TicketDetailView(LoginRequiredMixin, CheckPermMixin, DetailView):
+    model = Ticket
+
+    def get_object(self, *args, **kwargs):
+        obj = super(TicketDetailView, self).get_object(*args, **kwargs)
+        self._check_perm(obj.contact)
+        return obj
+
+
 class TicketUpdateView(LoginRequiredMixin, CheckPermMixin, UpdateView):
     form_class = TicketForm
     model = Ticket
@@ -138,12 +147,3 @@ class TicketUpdateView(LoginRequiredMixin, CheckPermMixin, UpdateView):
             contact=self.object.contact,
         ))
         return context
-
-
-class TicketDetailView(LoginRequiredMixin, CheckPermMixin, DetailView):
-    model = Ticket
-
-    def get_object(self, *args, **kwargs):
-        obj = super(TicketDetailView, self).get_object(*args, **kwargs)
-        self._check_perm(obj.contact)
-        return obj
