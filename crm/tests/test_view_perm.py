@@ -38,6 +38,10 @@ class TestViewPerm(TestCase):
         url = reverse('crm.contact.detail', kwargs={'slug': self.aec.slug})
         self._assert_perm_denied(url)
 
+    def test_contact_list(self):
+        url = reverse('crm.contact.list')
+        self._assert_staff_only(url)
+
     def test_contact_update(self):
         url = reverse('crm.contact.update', kwargs={'slug': self.aec.slug})
         self._assert_staff_only(url)

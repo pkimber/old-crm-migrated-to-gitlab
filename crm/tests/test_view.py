@@ -35,6 +35,10 @@ class TestView(TestCase):
         url = reverse('crm.contact.detail', kwargs={'slug': self.icl.slug})
         self._assert_get(url)
 
+    def test_contact_list(self):
+        url = reverse('crm.contact.list')
+        self._assert_get(url)
+
     def test_contact_update(self):
         url = reverse('crm.contact.update', kwargs={'slug': self.icl.slug})
         self._assert_get(url)
