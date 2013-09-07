@@ -1,4 +1,5 @@
 from datetime import datetime
+from decimal import Decimal
 
 from django.core.management.base import BaseCommand
 
@@ -20,7 +21,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         fred = make_user('fred')
         matt = make_user('matt')
-        contact = make_contact(
+        pkimber = make_contact(
             'pkimber',
             'Patrick Kimber',
             address='High Street\nExeter\nDevon',
@@ -29,7 +30,7 @@ class Command(BaseCommand):
             phone='01837 123 456',
             industry=make_industry('Farming'),
         )
-        make_user_contact(fred, contact)
+        make_user_contact(fred, pkimber)
         description = """Hey diddle diddle rhyme
 Hey diddle diddle, the cat and the fiddle,
 The cow jumped over the moon.
@@ -37,7 +38,7 @@ The little dog laughed to see such fun
 And the dish ran away with the spoon!
         """
         ticket = make_ticket(
-            contact,
+            pkimber,
             matt,
             "Milk the cows",
             make_priority('High', 1),
@@ -46,15 +47,22 @@ And the dish ran away with the spoon!
         )
         make_note(ticket, fred, "Finished the milking")
         make_note(ticket, matt, "Cows eating silage")
-        make_contact(
-            'ssmith',
-            'Sam Smith',
-            industry=make_industry('Leisure'),
-        )
         ticket = make_ticket(
-            contact,
+            pkimber,
             fred,
             "Feed the pigs",
             make_priority('Medium', 2),
+        )
+        ssmith = make_contact(
+            'ssmith',
+            'Sam Smith',
+            hourly_rate=Decimal('20.00'),
+            industry=make_industry('Leisure'),
+        )
+        ticket = make_ticket(
+            ssmith,
+            fred,
+            "Move the electric fence",
+            make_priority('Low', 2),
         )
         print("Created 'crm' demo data...")

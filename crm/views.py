@@ -47,6 +47,10 @@ class ContactDetailView(LoginRequiredMixin, CheckPermMixin, DetailView):
         return obj
 
 
+class ContactListView(LoginRequiredMixin, StaffuserRequiredMixin, ListView):
+    model = Contact
+
+
 class ContactUpdateView(LoginRequiredMixin, StaffuserRequiredMixin, UpdateView):
     form_class = ContactForm
     model = Contact

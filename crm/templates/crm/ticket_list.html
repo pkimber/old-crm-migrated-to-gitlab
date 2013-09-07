@@ -57,20 +57,36 @@
             {% endfor %}
           </tbody>
         </table>
-        <p>
-          <a class="pure-button" href="{% url "crm.contact.create" %}">
-            <i class="icon-user"></i>
-            New contact
-          </a>
-          <a class="pure-button" href="{% url "invoice.list" %}">
-            <i class="icon-gbp"></i>
-            Invoices
-          </a>
-          <a class="pure-button" href="{% url "invoice.time" %}">
-            <i class="icon-time"></i>
-            Time Records
-          </a>
-        </p>
+        {% if user.is_staff %}
+          <div class="pure-menu pure-menu-open pure-menu-horizontal">
+            <ul>
+              <li>
+                <a href="{% url "crm.contact.create" %}">
+                  <i class="icon-user"></i>
+                  New contact
+                </a>
+              </li>
+              <li>
+                <a href="{% url "crm.contact.list" %}">
+                  <i class="icon-user"></i>
+                  Contacts
+                </a>
+              </li>
+              <li>
+                <a href="{% url "invoice.list" %}">
+                  <i class="icon-gbp"></i>
+                  Invoices
+                </a>
+              </li>
+              <li>
+                <a href="{% url "invoice.time" %}">
+                  <i class="icon-time"></i>
+                  Time Records
+                </a>
+              </li>
+            </ul>
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>
