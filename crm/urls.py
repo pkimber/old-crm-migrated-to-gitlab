@@ -19,7 +19,7 @@ urlpatterns = patterns(
     '',
     url(regex=r'^$',
         view=HomeTicketListView.as_view(),
-        name='crm.home'
+        name='crm.ticket.home'
         ),
     url(regex=r'^contact/add/$',
         view=ContactCreateView.as_view(),

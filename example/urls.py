@@ -28,7 +28,7 @@ urlpatterns = patterns(
         view=include('invoice.urls')
         ),
     url(r'^home/user/$',
-        view=RedirectView.as_view(url=reverse_lazy('crm.home')),
+        view=RedirectView.as_view(url=reverse_lazy('crm.ticket.home')),
         name='project.home.user'
         ),
 )

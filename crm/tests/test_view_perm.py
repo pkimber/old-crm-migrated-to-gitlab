@@ -30,7 +30,7 @@ class TestViewPerm(TestCase):
         )
 
     def test_home(self):
-        url = reverse('crm.home')
+        url = reverse('crm.ticket.home')
         response = self.client.get(url)
         ticket_list = response.context['ticket_list']
         contact_slugs = [item.contact.slug for item in ticket_list]

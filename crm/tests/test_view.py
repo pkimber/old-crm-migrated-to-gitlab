@@ -28,7 +28,7 @@ class TestView(TestCase):
         )
 
     def test_home(self):
-        url = reverse('crm.home')
+        url = reverse('crm.ticket.home')
         self._assert_get(url)
 
     def test_contact_create(self):
