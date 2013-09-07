@@ -15,6 +15,7 @@ class TestViewPerm(TestCase):
 
     def setUp(self):
         """tom has access to contact icl"""
+        self.sam = make_user('sam', is_staff=True)
         self.tom = make_user('tom')
         self.client.login(
             username=self.tom.username, password=self.tom.username
@@ -41,6 +42,10 @@ class TestViewPerm(TestCase):
                 self.tom.username, self.aec.slug
             )
         )
+
+    def test_contact_create(self):
+        url = reverse('crm.contact.create')
+        self._assert_staff_only(url)
 
     def test_contact_detail(self):
         url = reverse('crm.contact.detail', kwargs={'slug': self.aec.slug})
@@ -74,5 +79,28 @@ class TestViewPerm(TestCase):
             "status {}: user '{}' should not have access "
             "to this url: '{}'".format(
                 response.status_code, self.tom.username, url
+            )
+        )
+
+    def _assert_staff_only(self, url):
+        response = self.client.get(url)
+        self.assertEqual(
+            response.status_code,
+            302,
+            "status {}: user '{}' should not have access "
+            "to this url: '{}'".format(
+                response.status_code, self.tom.username, url
+            )
+        )
+        self.client.login(
+            username=self.sam.username, password=self.sam.username
+        )
+        response = self.client.get(url)
+        self.assertEqual(
+            response.status_code,
+            200,
+            "status {}: staff user '{}' should have access "
+            "to this url: '{}'".format(
+                response.status_code, self.sam.username, url
             )
         )
