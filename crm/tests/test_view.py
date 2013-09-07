@@ -27,10 +27,6 @@ class TestView(TestCase):
             self.sew, self.tom, 'Cut out some material and make a pillow case'
         )
 
-    def test_home(self):
-        url = reverse('crm.ticket.home')
-        self._assert_get(url)
-
     def test_contact_create(self):
         url = reverse('crm.contact.create')
         self._assert_get(url)
@@ -53,6 +49,10 @@ class TestView(TestCase):
 
     def test_ticket_detail(self):
         url = reverse('crm.ticket.detail', kwargs={'pk': self.sew.pk})
+        self._assert_get(url)
+
+    def test_ticket_home(self):
+        url = reverse('crm.ticket.home')
         self._assert_get(url)
 
     def test_ticket_update(self):
