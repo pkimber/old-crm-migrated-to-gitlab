@@ -10,6 +10,7 @@ from .views import (
     HomeTicketListView,
     NoteCreateView,
     NoteUpdateView,
+    TicketCompleteView,
     TicketCreateView,
     TicketDetailView,
     TicketUpdateView,
@@ -45,6 +46,10 @@ urlpatterns = patterns(
     url(regex=r'^note/(?P<pk>\d+)/edit/$',
         view=NoteUpdateView.as_view(),
         name='crm.note.update'
+        ),
+    url(regex=r'^ticket/(?P<pk>\d+)/complete/$',
+        view=TicketCompleteView.as_view(),
+        name='crm.ticket.complete'
         ),
     url(regex=r'^contact/(?P<slug>[-\w\d]+)/ticket/add/$',
         view=TicketCreateView.as_view(),

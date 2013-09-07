@@ -93,7 +93,10 @@ class Ticket(TimeStampedModel):
     description = models.TextField(blank=True, null=True)
     priority = models.ForeignKey(Priority)
     due = models.DateField(blank=True, null=True)
-    complete = models.DateField(blank=True, null=True)
+    complete = models.DateTimeField(blank=True, null=True)
+    complete_user = models.ForeignKey(
+        User, blank=True, null=True, related_name='+'
+    )
 
     class Meta:
         verbose_name = 'Ticket'
@@ -104,6 +107,10 @@ class Ticket(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('crm.ticket.detail', args=[self.pk])
+
+    def set_complete(self, user):
+        self.complete = datetime.now()
+        self.complete_user = user
 
 reversion.register(Ticket)
 

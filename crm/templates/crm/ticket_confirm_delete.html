@@ -1,0 +1,30 @@
+{% extends "crm/base.html" %}
+
+{% block sub_title %}
+  Ticket complete
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Ticket complete
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="pure-g-r">
+    <div class="pure-u-1">
+      <form action="" method="post">{% csrf_token %}
+        <p>
+          Are you sure you want to complete the ticket?
+          <br />
+          <a href="{% url 'crm.ticket.detail' ticket.pk %}">
+            <strong>{{ ticket.name }}</strong>
+          </a>
+          for
+          <a href="{% url 'crm.contact.detail' ticket.contact.slug %}">
+            {{ ticket.contact.name }}
+          </a>
+        </p>
+        <input type="submit" value="Confirm" class="pure-button pure-button-primary" />
+      </form>
+    </div>
+  </div>
+{% endblock content %}

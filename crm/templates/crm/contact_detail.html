@@ -46,11 +46,25 @@
             <tr valign="top">
               <td>{{ ticket.id }}</td>
               <td>
-                <a href="{% url 'crm.ticket.detail' ticket.pk %}">
-                  <strong>{{ ticket.name }}</strong>
-                </a>
-                <br />
-                {{ ticket.description }}
+                {% if ticket.complete %}
+                  <a href="{% url 'crm.ticket.detail' ticket.pk %}">
+                    {{ ticket.name }}
+                  </a>
+                  <small>
+                    Completed on
+                    {{ ticket.complete|date:"d/m/Y" }}
+                    by {{ ticket.complete_user.username }}
+                  </small>
+                </td>
+                {% else %}
+                  <a href="{% url 'crm.ticket.detail' ticket.pk %}">
+                    <strong>{{ ticket.name }}</strong>
+                  </a>
+                  {% if ticket.description %}
+                    <br />
+                    {{ ticket.description|linebreaksbr }}
+                  {% endif %}
+                {% endif %}
               </td>
             </tr>
           {% endfor %}

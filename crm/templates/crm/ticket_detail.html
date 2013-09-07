@@ -38,6 +38,15 @@
               <strong>{{ ticket.user.username }}</strong>
             </td>
           </tr>
+          {% if ticket.complete %}
+            <tr>
+              <td><strong>Complete</strong></td>
+              <td>
+                {{ ticket.complete|date:"d/m/Y H:i" }}
+                <small>by {{ ticket.complete_user.username }}</small>
+              </td>
+            </tr>
+          {% endif %}
           <tr valign="top">
             <td>Contact</td>
             <td>
@@ -116,6 +125,14 @@
               View time
             </a>
           </li>
+          {% if not ticket.complete %}
+            <li>
+              <a href="{% url "crm.ticket.complete" ticket.pk %}">
+                <i class="icon-check"></i>
+                Complete ticket
+              </a>
+            </li>
+          {% endif %}
         </ul>
       </div>
     </div>
