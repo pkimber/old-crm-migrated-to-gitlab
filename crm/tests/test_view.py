@@ -17,7 +17,7 @@ class TestView(TestCase):
 
     def setUp(self):
         """tom has access to contact icl"""
-        self.tom = make_user('tom')
+        self.tom = make_user('tom', is_staff=True)
         self.icl = make_contact('icl', 'ICL')
         make_user_contact(self.tom, self.icl)
         self.sew = make_ticket(
@@ -29,6 +29,10 @@ class TestView(TestCase):
 
     def test_home(self):
         url = reverse('crm.home')
+        self._assert_get(url)
+
+    def test_contact_create(self):
+        url = reverse('crm.contact.create')
         self._assert_get(url)
 
     def test_contact_detail(self):
@@ -58,10 +62,19 @@ class TestView(TestCase):
     def _assert_get(self, url):
         # User must be logged in to access this URL
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 302, response)
+        self.assertEqual(
+            response.status_code,
+            302,
+            'status {}\n{}'.format(response.status_code, response),
+        )
         # Log the user in so they can access this URL
         self.client.login(
-            username=self.tom.username, password=self.tom.username
+            username=self.tom.username,
+            password=self.tom.username,
         )
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 200, response)
+        self.assertEqual(
+            response.status_code,
+            200,
+            'status {}\n{}'.format(response.status_code, response),
+        )

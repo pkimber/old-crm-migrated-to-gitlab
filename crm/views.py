@@ -52,7 +52,7 @@ class ContactUpdateView(LoginRequiredMixin, StaffuserRequiredMixin, UpdateView):
     model = Contact
 
 
-class HomeListView(LoginRequiredMixin, ListView):
+class HomeTicketListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_staff:

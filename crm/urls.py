@@ -6,7 +6,7 @@ from .views import (
     ContactCreateView,
     ContactDetailView,
     ContactUpdateView,
-    HomeListView,
+    HomeTicketListView,
     NoteCreateView,
     NoteUpdateView,
     TicketCreateView,
@@ -18,7 +18,7 @@ from .views import (
 urlpatterns = patterns(
     '',
     url(regex=r'^$',
-        view=HomeListView.as_view(),
+        view=HomeTicketListView.as_view(),
         name='crm.home'
         ),
     url(regex=r'^contact/add/$',
