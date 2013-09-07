@@ -21,13 +21,13 @@ from .forms import (
     NoteForm,
     TicketForm,
 )
-
 from .models import (
     Contact,
     Note,
     Ticket,
     UserContact,
 )
+from base.view_utils import BaseMixin
 
 
 class CheckPermMixin(object):
@@ -40,12 +40,15 @@ class CheckPermMixin(object):
             raise PermissionDenied()
 
 
-class ContactCreateView(LoginRequiredMixin, StaffuserRequiredMixin, CreateView):
+class ContactCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, CreateView):
     form_class = ContactForm
     model = Contact
 
 
-class ContactDetailView(LoginRequiredMixin, CheckPermMixin, DetailView):
+class ContactDetailView(
+        LoginRequiredMixin, CheckPermMixin, BaseMixin, DetailView):
+
     model = Contact
 
     def get_object(self, *args, **kwargs):
@@ -54,30 +57,40 @@ class ContactDetailView(LoginRequiredMixin, CheckPermMixin, DetailView):
         return obj
 
 
-class ContactListView(LoginRequiredMixin, StaffuserRequiredMixin, ListView):
+class ContactListView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
+
     model = Contact
 
 
-class ContactUpdateView(LoginRequiredMixin, StaffuserRequiredMixin, UpdateView):
+class ContactUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
+
     form_class = ContactForm
     model = Contact
 
 
-class HomeTicketListView(LoginRequiredMixin, ListView):
+class HomeTicketListView(LoginRequiredMixin, BaseMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_staff:
-            result = Ticket.objects.all()
+            result = Ticket.objects.filter(
+                complete__isnull=True
+            )
         else:
             try:
                 contact = UserContact.objects.get(user=self.request.user)
-                result = Ticket.objects.filter(contact=contact)
+                result = Ticket.objects.filter(
+                    contact=contact, complete__isnull=True
+                )
             except UserContact.DoesNotExist:
                 result = Ticket.objects.none()
         return result
 
 
-class NoteCreateView(LoginRequiredMixin, CheckPermMixin, CreateView):
+class NoteCreateView(
+        LoginRequiredMixin, CheckPermMixin, BaseMixin, CreateView):
+
     form_class = NoteForm
     model = Note
 
@@ -101,7 +114,9 @@ class NoteCreateView(LoginRequiredMixin, CheckPermMixin, CreateView):
         return super(NoteCreateView, self).form_valid(form)
 
 
-class NoteUpdateView(LoginRequiredMixin, CheckPermMixin, UpdateView):
+class NoteUpdateView(
+        LoginRequiredMixin, CheckPermMixin, BaseMixin, UpdateView):
+
     form_class = NoteForm
     model = Note
 
@@ -114,7 +129,8 @@ class NoteUpdateView(LoginRequiredMixin, CheckPermMixin, UpdateView):
         return context
 
 
-class TicketCompleteView(LoginRequiredMixin, StaffuserRequiredMixin, DeleteView):
+class TicketCompleteView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, DeleteView):
 
     model = Ticket
 
@@ -136,7 +152,9 @@ class TicketCompleteView(LoginRequiredMixin, StaffuserRequiredMixin, DeleteView)
         return self.object.contact.get_absolute_url()
 
 
-class TicketCreateView(LoginRequiredMixin, CheckPermMixin, CreateView):
+class TicketCreateView(
+        LoginRequiredMixin, CheckPermMixin, BaseMixin, CreateView):
+
     form_class = TicketForm
     model = Ticket
 
@@ -160,7 +178,9 @@ class TicketCreateView(LoginRequiredMixin, CheckPermMixin, CreateView):
         return super(TicketCreateView, self).form_valid(form)
 
 
-class TicketDetailView(LoginRequiredMixin, CheckPermMixin, DetailView):
+class TicketDetailView(
+        LoginRequiredMixin, CheckPermMixin, BaseMixin, DetailView):
+
     model = Ticket
 
     def get_object(self, *args, **kwargs):
@@ -169,7 +189,9 @@ class TicketDetailView(LoginRequiredMixin, CheckPermMixin, DetailView):
         return obj
 
 
-class TicketUpdateView(LoginRequiredMixin, CheckPermMixin, UpdateView):
+class TicketUpdateView(
+        LoginRequiredMixin, CheckPermMixin, BaseMixin, UpdateView):
+
     form_class = TicketForm
     model = Ticket
 

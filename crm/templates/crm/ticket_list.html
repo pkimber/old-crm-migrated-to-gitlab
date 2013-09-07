@@ -9,85 +9,83 @@
 {% endblock sub_heading %}
 
 {% block content %}
-  <div class="content">
-    <div class="pure-g-r">
-      <div class="pure-u-1">
-        <table class="pure-table pure-table-bordered">
-          <thead>
-            <tr>
-              <th></th>
+  <div class="pure-g-r">
+    <div class="pure-u-1">
+      <table class="pure-table pure-table-bordered">
+        <thead>
+          <tr>
+            <th></th>
+            {% if user.is_staff %}
+              <th>Contact</th>
+            {% endif %}
+            <th>Ticket</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for ticket in ticket_list %}
+            <tr valign="top">
+              <td>{{ ticket.pk }}</td>
               {% if user.is_staff %}
-                <th>Contact</th>
-              {% endif %}
-              <th>Ticket</th>
-              <th>Priority</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for ticket in ticket_list %}
-              <tr valign="top">
-                <td>{{ ticket.pk }}</td>
-                {% if user.is_staff %}
-                  <td>
-                    <a href="{% url 'crm.contact.detail' ticket.contact.slug %}">
-                      {{ ticket.contact.name }}
-                    </a>
-                  </td>
-                {% endif %}
                 <td>
-                  <a href="{% url 'crm.ticket.detail' ticket.pk %}">
-                    <strong>{{ ticket.name }}</strong>
+                  <a href="{% url 'crm.contact.detail' ticket.contact.slug %}">
+                    {{ ticket.contact.name }}
                   </a>
-                  <small>
-                    created {{ ticket.created|date:"d/m/Y" }}
-                    by {{ ticket.user.username }}
-                  </small>
-                  {% if ticket.description %}
-                    <br />
-                    {{ ticket.description|linebreaksbr }}
-                  {% endif %}
                 </td>
-                <td>
-                  {{ ticket.priority.name }}
-                  {% if ticket.due %}
-                    <small>due {{ ticket.due|date:"d/m/Y" }}</small>
-                  {% endif %}
-                </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        {% if user.is_staff %}
-          <div class="pure-menu pure-menu-open pure-menu-horizontal">
-            <ul>
-              <li>
-                <a href="{% url "crm.contact.create" %}">
-                  <i class="icon-user"></i>
-                  New contact
+              {% endif %}
+              <td>
+                <a href="{% url 'crm.ticket.detail' ticket.pk %}">
+                  <strong>{{ ticket.name }}</strong>
                 </a>
-              </li>
-              <li>
-                <a href="{% url "crm.contact.list" %}">
-                  <i class="icon-user"></i>
-                  Contacts
-                </a>
-              </li>
-              <li>
-                <a href="{% url "invoice.list" %}">
-                  <i class="icon-gbp"></i>
-                  Invoices
-                </a>
-              </li>
-              <li>
-                <a href="{% url "invoice.time" %}">
-                  <i class="icon-time"></i>
-                  Time Records
-                </a>
-              </li>
-            </ul>
-          </div>
-        {% endif %}
-      </div>
+                <small>
+                  created {{ ticket.created|date:"d/m/Y" }}
+                  by {{ ticket.user.username }}
+                </small>
+                {% if ticket.description %}
+                  <br />
+                  {{ ticket.description|linebreaksbr }}
+                {% endif %}
+              </td>
+              <td>
+                {{ ticket.priority.name }}
+                {% if ticket.due %}
+                  <small>due {{ ticket.due|date:"d/m/Y" }}</small>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% if user.is_staff %}
+        <div class="pure-menu pure-menu-open pure-menu-horizontal">
+          <ul>
+            <li>
+              <a href="{% url "crm.contact.create" %}">
+                <i class="icon-user"></i>
+                New contact
+              </a>
+            </li>
+            <li>
+              <a href="{% url "crm.contact.list" %}">
+                <i class="icon-user"></i>
+                Contacts
+              </a>
+            </li>
+            <li>
+              <a href="{% url "invoice.list" %}">
+                <i class="icon-gbp"></i>
+                Invoices
+              </a>
+            </li>
+            <li>
+              <a href="{% url "invoice.time" %}">
+                <i class="icon-time"></i>
+                Time Records
+              </a>
+            </li>
+          </ul>
+        </div>
+      {% endif %}
     </div>
   </div>
 {% endblock content %}
