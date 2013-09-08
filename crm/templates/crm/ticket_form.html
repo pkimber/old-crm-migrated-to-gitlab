@@ -1,20 +1,19 @@
 {% extends "crm/base.html" %}
 
 {% block sub_title %}
-  Ticket
+  Ticket for {{ contact.name }}
 {% endblock sub_title %}
 
 {% block sub_heading %}
-  Ticket
+  Ticket for {{ contact.name }}
 {% endblock sub_heading %}
 
 {% block content %}
   <div class="pure-g-r">
     <div class="pure-u-1">
-      Ticket for
       <a href="{% url 'crm.contact.detail' contact.slug %}">
         <strong>{{ contact.name }}</strong>
-      </a>,
+      </a>
       {{ contact.address }}
       {% include '_form.html' %}
     </div>
