@@ -28,6 +28,7 @@ class Command(BaseCommand):
             mail='mail@pkimber.net',
             url='https://pkimber.net',
             phone='01837 123 456',
+            hourly_rate=Decimal('10.00'),
             industry=make_industry('Farming'),
         )
         make_user_contact(fred, pkimber)

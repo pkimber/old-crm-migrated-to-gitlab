@@ -16,10 +16,14 @@
           <tr>
             <td>Contact</td>
             <td>
+              {% if user.is_staff %}
               <a href="{% url "crm.contact.update" contact.slug %}">
                 <i class="icon-edit"></i>
                 <strong>{{ contact.name }}</strong>
               </a>
+              {% else %}
+                {{ contact.name }}
+              {% endif %}
             </td>
           </tr>
           <tr valign="top">
