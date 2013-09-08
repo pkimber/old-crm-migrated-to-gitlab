@@ -113,25 +113,29 @@
               Add note
             </a>
           </li>
-          <li>
-            <a href="{% url "invoice.time.create" ticket.pk %}">
-              <i class="icon-time"></i>
-              Add time
-            </a>
-          </li>
+          {% if user.is_staff %}
+            <li>
+              <a href="{% url "invoice.time.create" ticket.pk %}">
+                <i class="icon-time"></i>
+                Add time
+              </a>
+            </li>
+          {% endif %}
           <li>
             <a href="{% url "invoice.time.ticket.list" ticket.pk %}">
               <i class="icon-time"></i>
               View time
             </a>
           </li>
-          {% if not ticket.complete %}
-            <li>
-              <a href="{% url "crm.ticket.complete" ticket.pk %}">
-                <i class="icon-check"></i>
-                Complete ticket
-              </a>
-            </li>
+          {% if user.is_staff %}
+            {% if not ticket.complete %}
+              <li>
+                <a href="{% url "crm.ticket.complete" ticket.pk %}">
+                  <i class="icon-check"></i>
+                  Complete ticket
+                </a>
+              </li>
+            {% endif %}
           {% endif %}
         </ul>
       </div>
