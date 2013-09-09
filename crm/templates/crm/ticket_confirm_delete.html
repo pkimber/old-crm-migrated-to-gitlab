@@ -16,7 +16,7 @@
           Are you sure you want to complete the ticket?
           <br />
           <a href="{% url 'crm.ticket.detail' ticket.pk %}">
-            <strong>{{ ticket.name }}</strong>
+            <strong>{{ ticket.title }}</strong>
           </a>
           for
           <a href="{% url 'crm.contact.detail' ticket.contact.slug %}">

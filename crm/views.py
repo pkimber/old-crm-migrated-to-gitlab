@@ -146,7 +146,7 @@ class TicketCompleteView(
             self.request,
             "Ticket {}, {} completed on {}".format(
                 self.object.pk,
-                self.object.name,
+                self.object.title,
                 self.object.complete.strftime('%d/%m/%Y at %H:%M'),
             )
         )
