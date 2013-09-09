@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from crm.models import (
     Contact,
     Note,
@@ -21,9 +23,11 @@ def contact_contractor():
     staff = get_user_staff()
     # fred has a farm
     fred = get_user_fred()
+    staff = get_user_staff()
     farm = make_contact(
         'farm',
         "Fred's Farm",
+        hourly_rate=Decimal('6.50'),
     )
     make_user_contact(fred, farm)
     fence = make_ticket(
@@ -33,6 +37,9 @@ def contact_contractor():
         fence,
         staff,
         'Forgot to order fence posts',
+    )
+    make_ticket(
+        farm, staff, 'Fertilise 17 acres', make_priority('Medium', 1)
     )
     # sara has a smallholding
     sara = get_user_sara()
