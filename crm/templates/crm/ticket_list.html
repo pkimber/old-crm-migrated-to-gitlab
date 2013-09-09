@@ -35,7 +35,7 @@
               {% endif %}
               <td>
                 <a href="{% url 'crm.ticket.detail' ticket.pk %}">
-                  <strong>{{ ticket.name }}</strong>
+                  <strong>{{ ticket.title }}</strong>
                 </a>
                 <small>
                   created {{ ticket.created|date:"d/m/Y" }}

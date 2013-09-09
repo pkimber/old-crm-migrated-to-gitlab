@@ -52,7 +52,7 @@
               <td>
                 {% if ticket.complete %}
                   <a href="{% url 'crm.ticket.detail' ticket.pk %}">
-                    {{ ticket.name }}
+                    {{ ticket.title }}
                   </a>
                   <small>
                     Completed on
@@ -62,7 +62,7 @@
                 </td>
                 {% else %}
                   <a href="{% url 'crm.ticket.detail' ticket.pk %}">
-                    <strong>{{ ticket.name }}</strong>
+                    <strong>{{ ticket.title }}</strong>
                   </a>
                   {% if ticket.description %}
                     <br />
