@@ -34,7 +34,7 @@ class NoteForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(NoteForm, self).__init__(*args, **kwargs)
-        for name in ('name', 'description'):
+        for name in ('title', 'description'):
             self.fields[name].widget.attrs.update(
                 {'class': 'pure-input-2-3'}
             )
@@ -42,7 +42,7 @@ class NoteForm(forms.ModelForm):
     class Meta:
         model = Note
         fields = (
-            "name",
+            "title",
             "description",
         )
 
@@ -51,7 +51,7 @@ class TicketForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(TicketForm, self).__init__(*args, **kwargs)
-        for name in ('name', 'description'):
+        for name in ('title', 'description'):
             self.fields[name].widget.attrs.update(
                 {'class': 'pure-input-2-3'}
             )
@@ -59,7 +59,7 @@ class TicketForm(forms.ModelForm):
     class Meta:
         model = Ticket
         fields = (
-            "name",
+            "title",
             "description",
             "priority",
             "due",

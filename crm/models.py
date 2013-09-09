@@ -89,7 +89,7 @@ class Ticket(TimeStampedModel):
     """ Contact """
     contact = models.ForeignKey(Contact)
     user = models.ForeignKey(User)
-    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     priority = models.ForeignKey(Priority)
     due = models.DateField(blank=True, null=True)
@@ -119,7 +119,7 @@ class Note(TimeStampedModel):
     """ Contact """
     ticket = models.ForeignKey(Ticket)
     user = models.ForeignKey(User)
-    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
 
     class Meta:

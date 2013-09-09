@@ -29,12 +29,12 @@ def make_industry(name, **kwargs):
     )
 
 
-def make_note(ticket, user, name, **kwargs):
+def make_note(ticket, user, title, **kwargs):
     return clean_and_save(
         Note(
             ticket=ticket,
             user=user,
-            name=name,
+            title=title,
             **kwargs
         )
     )
@@ -46,12 +46,12 @@ def make_priority(name, level):
     )
 
 
-def make_ticket(contact, user, name, priority, **kwargs):
+def make_ticket(contact, user, title, priority, **kwargs):
     return clean_and_save(
         Ticket(
             contact=contact,
             user=user,
-            name=name,
+            title=title,
             priority=priority,
             **kwargs
         )
