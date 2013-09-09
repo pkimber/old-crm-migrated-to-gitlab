@@ -1,5 +1,6 @@
-from django import forms
-
+from base.form_utils import (
+    RequiredFieldForm,
+)
 from .models import (
     Contact,
     Note,
@@ -7,7 +8,7 @@ from .models import (
 )
 
 
-class ContactForm(forms.ModelForm):
+class ContactForm(RequiredFieldForm):
 
     def __init__(self, *args, **kwargs):
         super(ContactForm, self).__init__(*args, **kwargs)
@@ -30,7 +31,7 @@ class ContactForm(forms.ModelForm):
         )
 
 
-class NoteForm(forms.ModelForm):
+class NoteForm(RequiredFieldForm):
 
     def __init__(self, *args, **kwargs):
         super(NoteForm, self).__init__(*args, **kwargs)
@@ -47,7 +48,7 @@ class NoteForm(forms.ModelForm):
         )
 
 
-class TicketForm(forms.ModelForm):
+class TicketForm(RequiredFieldForm):
 
     def __init__(self, *args, **kwargs):
         super(TicketForm, self).__init__(*args, **kwargs)
@@ -59,8 +60,8 @@ class TicketForm(forms.ModelForm):
     class Meta:
         model = Ticket
         fields = (
+            "priority",
             "title",
             "description",
-            "priority",
             "due",
         )
