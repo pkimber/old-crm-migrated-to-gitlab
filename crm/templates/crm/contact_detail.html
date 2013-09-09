@@ -37,6 +37,10 @@
             <td><strong>{{ contact.phone }}</strong></td>
           </tr>
           <tr>
+            <td>Web</td>
+            <td>{{ contact.url|urlize }}</td>
+          </tr>
+          <tr>
             <td>email</td>
             <td>{{ contact.mail|urlize }}</td>
           </tr>
