@@ -11,6 +11,9 @@ from crm.tests.model_maker import (
     make_ticket,
     make_user_contact,
 )
+from crm.tests.scenario import (
+    contact_contractor,
+)
 from login.tests.model_maker import make_user
 
 
@@ -19,6 +22,10 @@ class Command(BaseCommand):
     help = "Create demo data for 'crm'"
 
     def handle(self, *args, **options):
+        contact_contractor()
+        print("Created 'crm' demo data...")
+
+    def old_code_no_longer_used(self):
         fred = make_user('fred')
         matt = make_user('matt')
         pkimber = make_contact(
