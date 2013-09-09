@@ -18,9 +18,9 @@ from login.tests.scenario import (
 
 
 def contact_contractor():
-    fred = get_user_fred()
-    sara = get_user_sara()
     staff = get_user_staff()
+    # fred has a farm
+    fred = get_user_fred()
     farm = make_contact(
         'farm',
         "Fred's Farm",
@@ -34,6 +34,8 @@ def contact_contractor():
         staff,
         'Forgot to order fence posts',
     )
+    # sara has a smallholding
+    sara = get_user_sara()
     smallholding = make_contact(
         'smallholding',
         "Sara's Smallholding",
