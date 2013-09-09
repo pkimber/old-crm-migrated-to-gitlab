@@ -17,7 +17,12 @@ from login.tests.scenario import (
 
 
 class TestViewPerm(TestCase):
-    """user 'tom' should not be able to view the 'aec' contact"""
+    """
+    fred is a farmer who has a ticket for fencing the orchard.  There is a note
+    attached to this ticket to say we forgot to order the fence posts.
+    sara is a smallholder who shouldn't be able to see any of fred's
+    information when she is logged into the system
+    """
 
     def setUp(self):
         user_contractor()
