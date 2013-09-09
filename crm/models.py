@@ -103,7 +103,7 @@ class Ticket(TimeStampedModel):
         verbose_name_plural = 'Tickets'
 
     def __unicode__(self):
-        return unicode('{}'.format(self.name))
+        return unicode('{}'.format(self.title))
 
     def get_absolute_url(self):
         return reverse('crm.ticket.detail', args=[self.pk])
@@ -127,7 +127,7 @@ class Note(TimeStampedModel):
         verbose_name_plural = 'Notes'
 
     def __unicode__(self):
-        return unicode('{}'.format(self.name))
+        return unicode('{}'.format(self.title))
 
     def get_absolute_url(self):
         return reverse('crm.ticket.detail', args=[self.ticket.pk])
