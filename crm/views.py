@@ -30,14 +30,18 @@ from .models import (
 from base.view_utils import BaseMixin
 
 
+def check_perm(user, contact):
+    if user.is_staff:
+        pass
+    elif not user.usercontact_set.filter(contact=contact):
+        # the user is NOT linked to the contact
+        raise PermissionDenied()
+
+
 class CheckPermMixin(object):
 
     def _check_perm(self, contact):
-        if self.request.user.is_staff:
-            pass
-        # check the user is linked to the contact
-        elif not self.request.user.usercontact_set.filter(contact=contact):
-            raise PermissionDenied()
+        check_perm(self.request.user, contact)
 
 
 class ContactCreateView(
