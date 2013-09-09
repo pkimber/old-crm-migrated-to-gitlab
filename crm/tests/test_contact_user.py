@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.test import TestCase
 
@@ -6,31 +5,32 @@ from crm.tests.model_maker import (
     make_contact,
     make_user_contact,
 )
-from login.tests.model_maker import make_user
+from crm.tests.scenario import (
+    contact_contractor,
+)
+from login.tests.scenario import (
+    get_fred,
+    get_sara,
+    user_contractor,
+)
 
 
 class TestContactUser(TestCase):
 
     def test_link_user_to_contact(self):
         """Create a contact and link it to a user"""
-        contact = make_contact(
-            'pkimber',
-            'Patrick Kimber',
-        )
-        make_user_contact(make_user('fred'), contact)
-        user = User.objects.get(username='fred')
-        user_contacts = user.usercontact_set.all()
-        self.assertIn('Kimber', user_contacts[0].contact.name)
+        user_contractor()
+        contact_contractor()
+        user_contacts = get_fred().usercontact_set.all()
+        self.assertIn("Fred's Farm", user_contacts[0].contact.name)
 
     def test_one_contact_per_user(self):
         """Make sure a user can only link to one contact"""
-        fred = make_user('fred')
-        jsmith = make_contact('jsmith', 'John Smith')
-        pkimber = make_contact('pkimber', 'Patrick Kimber')
-        make_user_contact(fred, pkimber)
+        user_contractor()
+        contact_contractor()
         self.assertRaises(
             IntegrityError,
             make_user_contact,
-            fred,
-            jsmith,
+            get_sara(),
+            make_contact('zoo', 'Bristol Zoo')
         )
