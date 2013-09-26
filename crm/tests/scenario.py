@@ -27,6 +27,7 @@ def contact_contractor():
 
     sara has a smallholding
     """
+    unassigned = make_priority('Unassigned', 0)
     staff = get_user_staff()
     fred = get_user_fred()
     staff = get_user_staff()
@@ -47,6 +48,7 @@ def contact_contractor():
     make_ticket(
         farm, staff, 'Fertilise 17 acres', make_priority('Medium', 1)
     )
+    make_ticket(farm, staff, 'Fix the leaky roof', unassigned)
     # sara has a smallholding
     sara = get_user_sara()
     smallholding = make_contact(
@@ -54,6 +56,7 @@ def contact_contractor():
         "Sara's Smallholding",
     )
     make_user_contact(sara, smallholding)
+    make_ticket(smallholding, sara, 'Send paperwork to accountant', unassigned)
 
 
 def get_contact_smallholding():
