@@ -123,6 +123,7 @@ class Note(TimeStampedModel):
     description = models.TextField(blank=True, null=True)
 
     class Meta:
+        ordering=('created',)
         verbose_name = 'Note'
         verbose_name_plural = 'Notes'
 

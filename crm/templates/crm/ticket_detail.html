@@ -99,7 +99,7 @@
                 {% else %}
                   <strong>{{ note.title }}</strong>
                 {% endif %}
-                <small>{{ note.modified|date:"d/m/y H:i" }}</small>
+                <small>{{ note.created|date:"d/m/y H:i" }}</small>
                 {% if note.description %}
                   <br />
                   {{ note.description|linebreaksbr }}
