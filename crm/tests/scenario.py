@@ -20,8 +20,14 @@ from login.tests.scenario import (
 
 
 def contact_contractor():
+    """
+    fred has a farm...
+    the orchard needs fencing,
+    but we forgot to order the fence posts!
+
+    sara has a smallholding
+    """
     staff = get_user_staff()
-    # fred has a farm
     fred = get_user_fred()
     staff = get_user_staff()
     farm = make_contact(

@@ -15,7 +15,7 @@
         <strong>{{ contact.name }}</strong>
       </a>
       {{ contact.address }}
-      {% include '_form.html' %}
+      {% include '_form.html' with legend=contact.name %}
     </div>
   </div>
 {% endblock content %}

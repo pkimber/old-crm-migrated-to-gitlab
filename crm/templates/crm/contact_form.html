@@ -5,13 +5,12 @@
 {% endblock sub_title %}
 
 {% block sub_heading %}
-  Contact
 {% endblock sub_heading %}
 
 {% block content %}
   <div class="pure-g-r">
     <div class="pure-u-1">
-      {% include '_form.html' %}
+      {% include '_form.html' with legend='Contact' %}
     </div>
   </div>
 {% endblock content %}

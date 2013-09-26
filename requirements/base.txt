@@ -1,6 +1,6 @@
 django-braces==1.2.2
 django-reversion==1.7.1
 django-sendfile
-Django==1.5.2
+django==1.5.4
 reportlab
 south
