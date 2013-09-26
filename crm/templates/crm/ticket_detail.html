@@ -32,15 +32,19 @@
               {{ ticket.contact.address|linebreaksbr }}
             </td>
           </tr>
-          <tr>
-            <td>Priority</td>
-            <td>
-              <strong>{{ ticket.priority.name }}</strong>
-              {% if ticket.due %}
-                <small>by {{ ticket.due|date:"d/m/Y" }}</small>
-              {% endif %}
-            </td>
-          </tr>
+          {% if ticket.priority.level or ticket.due %}
+            <tr>
+              <td>Priority</td>
+              <td>
+                {% if ticket.priority.level %}
+                  <strong>{{ ticket.priority.name }}</strong>
+                {% endif %}
+                {% if ticket.due %}
+                  <small>by {{ ticket.due|date:"d/m/Y" }}</small>
+                {% endif %}
+              </td>
+            </tr>
+          {% endif %}
           <tr>
             <td>Created</td>
             <td>

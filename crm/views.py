@@ -80,11 +80,12 @@ class HomeTicketListView(LoginRequiredMixin, BaseMixin, ListView):
         if self.request.user.is_staff:
             result = Ticket.objects.filter(
                 complete__isnull=True,
-            ).exclude(
-                priority__level=0,
+                #).exclude(
+                #    priority__level=0,
             ).order_by(
-                'priority__level',
                 'due',
+                '-priority__level',
+                'created',
             )
         else:
             try:

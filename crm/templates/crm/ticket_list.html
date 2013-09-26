@@ -41,7 +41,7 @@
                 </small>
                 {% if ticket.description %}
                   <br />
-                  {{ ticket.description|linebreaksbr }}
+                  {{ ticket.description|linebreaksbr|urlize }}
                 {% endif %}
               </td>
               <td>
