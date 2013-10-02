@@ -76,7 +76,7 @@
           {% if ticket.description %}
             <tr valign="top">
               <td>Description</td>
-              <td>{{ ticket.description|linebreaksbr }}</td>
+              <td>{{ ticket.description|urlize|linebreaksbr }}</td>
             </tr>
           {% endif %}
           {% if ticket.note_set.all %}
@@ -102,7 +102,7 @@
                 <small>{{ note.created|date:"d/m/y H:i" }}</small>
                 {% if note.description %}
                   <br />
-                  {{ note.description|linebreaksbr }}
+                  {{ note.description|urlize|linebreaksbr }}
                 {% endif %}
             </td>
             </tr>
