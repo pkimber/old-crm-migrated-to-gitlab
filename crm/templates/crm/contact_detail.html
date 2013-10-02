@@ -25,28 +25,34 @@
                 {{ contact.name }}
               {% endif %}
             </td>
+            <td></td>
           </tr>
           <tr valign="top">
             <td>Address</td>
             <td>
               {{ contact.address|linebreaksbr }}
             </td>
+            <td></td>
           </tr>
           <tr>
             <td>Phone</td>
             <td><strong>{{ contact.phone }}</strong></td>
+            <td></td>
           </tr>
           <tr>
             <td>Web</td>
             <td>{{ contact.url|urlize }}</td>
+            <td></td>
           </tr>
           <tr>
             <td>email</td>
             <td>{{ contact.mail|urlize }}</td>
+            <td></td>
           </tr>
           {% if contact.ticket_set.all %}
           <tr>
             <td><strong>Tickets</strong></td>
+            <td></td>
             <td></td>
           </tr>
           {% endif %}
@@ -72,6 +78,14 @@
                     <br />
                     {{ ticket.description|linebreaksbr }}
                   {% endif %}
+                {% endif %}
+              </td>
+              <td>
+                {% if ticket.priority.level %}
+                  {{ ticket.priority.name }}
+                {% endif %}
+                {% if ticket.due %}
+                  <small>due {{ ticket.due|date:"d/m/Y" }}</small>
                 {% endif %}
               </td>
             </tr>

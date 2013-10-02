@@ -45,7 +45,9 @@
                 {% endif %}
               </td>
               <td>
-                {{ ticket.priority.name }}
+                {% if ticket.priority.level %}
+                  {{ ticket.priority.name }}
+                {% endif %}
                 {% if ticket.due %}
                   <small>due {{ ticket.due|date:"d/m/Y" }}</small>
                 {% endif %}
