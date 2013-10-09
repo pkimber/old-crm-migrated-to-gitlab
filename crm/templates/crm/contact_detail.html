@@ -27,6 +27,7 @@
             </td>
             <td></td>
           </tr>
+          {% if contact.address %}
           <tr valign="top">
             <td>Address</td>
             <td>
@@ -34,21 +35,28 @@
             </td>
             <td></td>
           </tr>
+          {% endif %}
+          {% if contact.phone %}
           <tr>
             <td>Phone</td>
             <td><strong>{{ contact.phone }}</strong></td>
             <td></td>
           </tr>
+          {% endif %}
+          {% if contact.url %}
           <tr>
             <td>Web</td>
             <td>{{ contact.url|urlize }}</td>
             <td></td>
           </tr>
+          {% endif %}
+          {% if contact.mail %}
           <tr>
             <td>email</td>
             <td>{{ contact.mail|urlize }}</td>
             <td></td>
           </tr>
+          {% endif %}
           {% if contact.ticket_set.all %}
           <tr>
             <td><strong>Tickets</strong></td>
