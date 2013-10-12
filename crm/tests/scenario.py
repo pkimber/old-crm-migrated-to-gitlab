@@ -54,13 +54,14 @@ def contact_contractor():
     smallholding = make_contact(
         'smallholding',
         "Sara's Smallholding",
+        hourly_rate=Decimal('10.00'),
     )
     make_user_contact(sara, smallholding)
     make_ticket(smallholding, sara, 'Send paperwork to accountant', unassigned)
 
 
 def get_contact_smallholding():
-    return Contact.objects.get(slug='smallholder')
+    return Contact.objects.get(slug='smallholding')
 
 
 def get_contact_farm():
@@ -68,12 +69,18 @@ def get_contact_farm():
 
 
 def get_note_fence_forgot():
-    fence = get_ticket_fence()
+    fence = get_ticket_fence_for_farm()
     staff = get_user_staff()
     return Note.objects.get(ticket=fence, user=staff)
 
 
-def get_ticket_fence():
+def get_ticket_fence_for_farm():
     fred = get_user_fred()
     farm = get_contact_farm()
     return Ticket.objects.get(contact=farm, user=fred)
+
+
+def get_ticket_paperwork_for_smallholding():
+    sara = get_user_sara()
+    smallholding = get_contact_smallholding()
+    return Ticket.objects.get(contact=smallholding, user=sara)

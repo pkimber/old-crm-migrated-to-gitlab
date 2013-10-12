@@ -7,7 +7,7 @@ from crm.tests.scenario import (
     contact_contractor,
     get_contact_farm,
     get_note_fence_forgot,
-    get_ticket_fence,
+    get_ticket_fence_for_farm,
 )
 from login.tests.scenario import (
     get_user_staff,
@@ -26,7 +26,7 @@ class TestView(TestCase):
         self.contact = get_contact_farm()
         self.staff = get_user_staff()
         self.note = get_note_fence_forgot()
-        self.ticket = get_ticket_fence()
+        self.ticket = get_ticket_fence_for_farm()
 
     def test_contact_create(self):
         url = reverse('crm.contact.create')

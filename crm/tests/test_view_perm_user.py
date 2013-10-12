@@ -5,7 +5,7 @@ from crm.tests.scenario import (
     contact_contractor,
     get_contact_farm,
     get_note_fence_forgot,
-    get_ticket_fence,
+    get_ticket_fence_for_farm,
 )
 from login.tests.scenario import (
     get_user_sara,
@@ -28,7 +28,7 @@ class TestViewPermUser(TestCase):
         user_default()
         contact_contractor()
         self.farm = get_contact_farm()
-        self.fence = get_ticket_fence()
+        self.fence = get_ticket_fence_for_farm()
         self.note = get_note_fence_forgot()
         self.sara = get_user_sara()
         self.client.login(

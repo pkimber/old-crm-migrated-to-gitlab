@@ -4,7 +4,7 @@ from django.test import TestCase
 from crm.tests.scenario import (
     contact_contractor,
     get_contact_farm,
-    get_ticket_fence,
+    get_ticket_fence_for_farm,
 )
 from login.tests.scenario import (
     get_user_fred,
@@ -30,7 +30,7 @@ class TestViewPermStaffOnly(TestCase):
         user_default()
         contact_contractor()
         self.farm = get_contact_farm()
-        self.fence = get_ticket_fence()
+        self.fence = get_ticket_fence_for_farm()
         self.fred = get_user_fred()
         self.client.login(
             username=self.fred.username, password=self.fred.username
