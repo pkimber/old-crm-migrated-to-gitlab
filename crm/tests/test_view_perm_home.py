@@ -6,9 +6,9 @@ from crm.tests.scenario import (
     get_contact_farm,
 )
 from login.tests.scenario import (
+    default_scenario_login,
     get_user_sara,
     user_contractor,
-    user_default,
 )
 
 
@@ -16,7 +16,7 @@ class TestViewPermHome(TestCase):
 
     def setUp(self):
         user_contractor()
-        user_default()
+        default_scenario_login()
         contact_contractor()
         self.farm = get_contact_farm()
         self.sara = get_user_sara()

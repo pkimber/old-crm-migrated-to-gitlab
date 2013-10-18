@@ -7,10 +7,10 @@ from crm.tests.scenario import (
     get_ticket_fence_for_farm,
 )
 from login.tests.scenario import (
+    default_scenario_login,
     get_user_fred,
     get_user_staff,
     user_contractor,
-    user_default,
 )
 
 
@@ -27,7 +27,7 @@ class TestViewPermStaffOnly(TestCase):
 
     def setUp(self):
         user_contractor()
-        user_default()
+        default_scenario_login()
         contact_contractor()
         self.farm = get_contact_farm()
         self.fence = get_ticket_fence_for_farm()

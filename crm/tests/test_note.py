@@ -8,8 +8,8 @@ from crm.tests.scenario import (
     get_note_fence_forgot,
 )
 from login.tests.scenario import (
+    default_scenario_login,
     user_contractor,
-    user_default,
 )
 
 
@@ -17,7 +17,7 @@ class TestNote(TestCase):
 
     def setUp(self):
         user_contractor()
-        user_default()
+        default_scenario_login()
         contact_contractor()
         self.note = get_note_fence_forgot()
 
