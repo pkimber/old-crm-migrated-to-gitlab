@@ -13,15 +13,6 @@
     <div class="pure-u-1">
       <table class="pure-table pure-table-bordered">
         <tbody>
-          <tr>
-            <td>Ticket {{ ticket.pk }}</td>
-            <td>
-              <a href="{% url "crm.ticket.update" ticket.pk %}">
-                <i class="icon-edit"></i>
-                <strong>{{ ticket.title }}</strong>
-              </a>
-            </td>
-          </tr>
           <tr valign="top">
             <td>Contact</td>
             <td>
@@ -30,6 +21,15 @@
               </a>
               <br />
               {{ ticket.contact.address|linebreaksbr }}
+            </td>
+          </tr>
+          <tr>
+            <td>Ticket {{ ticket.pk }}</td>
+            <td>
+              <a href="{% url "crm.ticket.update" ticket.pk %}">
+                <i class="icon-edit"></i>
+                <strong>{{ ticket.title }}</strong>
+              </a>
             </td>
           </tr>
           {% if ticket.priority.level or ticket.due %}
