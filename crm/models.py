@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 
@@ -62,7 +62,7 @@ class UserContact(TimeStampedModel):
     Fred - ConnexionSW
     Kate - British Sugar
     """
-    user = models.ForeignKey(User, unique=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, unique=True)
     contact = models.ForeignKey(Contact)
 
     def __unicode__(self):
@@ -88,14 +88,14 @@ reversion.register(Priority)
 class Ticket(TimeStampedModel):
     """ Contact """
     contact = models.ForeignKey(Contact)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     priority = models.ForeignKey(Priority)
     due = models.DateField(blank=True, null=True)
     complete = models.DateTimeField(blank=True, null=True)
     complete_user = models.ForeignKey(
-        User, blank=True, null=True, related_name='+'
+        settings.AUTH_USER_MODEL, blank=True, null=True, related_name='+'
     )
 
     class Meta:
@@ -118,12 +118,12 @@ reversion.register(Ticket)
 class Note(TimeStampedModel):
     """ Contact """
     ticket = models.ForeignKey(Ticket)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
 
     class Meta:
-        ordering=('created',)
+        ordering = ('created',)
         verbose_name = 'Note'
         verbose_name_plural = 'Notes'
 
