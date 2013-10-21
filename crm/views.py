@@ -80,12 +80,6 @@ class HomeTicketListView(LoginRequiredMixin, BaseMixin, ListView):
         if self.request.user.is_staff:
             result = Ticket.objects.filter(
                 complete__isnull=True,
-                #).exclude(
-                #    priority__level=0,
-            ).order_by(
-                'due',
-                '-priority__level',
-                'created',
             )
         else:
             try:
@@ -150,7 +144,7 @@ class TicketCompleteView(
         self.object.save()
         messages.info(
             self.request,
-            "Ticket {}, {} completed on {}".format(
+            "Completed ticket {}, {} on {}".format(
                 self.object.pk,
                 self.object.title,
                 self.object.complete.strftime('%d/%m/%Y at %H:%M'),

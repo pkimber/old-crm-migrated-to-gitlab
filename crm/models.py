@@ -13,7 +13,7 @@ class Industry(models.Model):
     name = models.CharField(max_length=100)
 
     class Meta:
-        ordering = ['name']
+        ordering = ('name',)
         verbose_name = 'Industry'
         verbose_name_plural = 'Industries'
 
@@ -37,7 +37,7 @@ class Contact(TimeStampedModel):
     )
 
     class Meta:
-        ordering = ['slug']
+        ordering = ('slug',)
         verbose_name = 'Contact'
         verbose_name_plural = 'Contacts'
 
@@ -75,7 +75,7 @@ class Priority(models.Model):
     level = models.IntegerField()
 
     class Meta:
-        ordering = ['-level', 'name']
+        ordering = ('-level', 'name',)
         verbose_name = 'Priority'
         verbose_name_plural = 'Priorities'
 
@@ -99,6 +99,7 @@ class Ticket(TimeStampedModel):
     )
 
     class Meta:
+        ordering = ('-complete', 'due', '-priority__level', 'created',)
         verbose_name = 'Ticket'
         verbose_name_plural = 'Tickets'
 
