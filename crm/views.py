@@ -80,12 +80,14 @@ class HomeTicketListView(LoginRequiredMixin, BaseMixin, ListView):
         if self.request.user.is_staff:
             result = Ticket.objects.filter(
                 complete__isnull=True,
+                priority__level__gt=0,
             )
         else:
             try:
                 contact = UserContact.objects.get(user=self.request.user)
                 result = Ticket.objects.filter(
-                    contact=contact, complete__isnull=True
+                    contact=contact,
+                    complete__isnull=True,
                 )
             except UserContact.DoesNotExist:
                 result = Ticket.objects.none()

@@ -89,11 +89,13 @@
                 {% endif %}
               </td>
               <td>
-                {% if ticket.priority.level %}
-                  {{ ticket.priority.name }}
-                {% endif %}
-                {% if ticket.due %}
-                  <small>due {{ ticket.due|date:"d/m/Y" }}</small>
+                {% if not ticket.complete %}
+                  {% if ticket.priority.level %}
+                    {{ ticket.priority.name }}
+                  {% endif %}
+                  {% if ticket.due %}
+                    <small>due {{ ticket.due|date:"d/m/Y" }}</small>
+                  {% endif %}
                 {% endif %}
               </td>
             </tr>
