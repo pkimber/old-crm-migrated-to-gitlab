@@ -171,4 +171,5 @@ DEBUG_TOOLBAR_CONFIG = {
 SENDFILE_BACKEND = 'sendfile.backends.development'
 SENDFILE_ROOT = 'media-private'
 
-FTP_STATIC_DIR = 'ftp_static_dir'
+FTP_STATIC_DIR = None
+FTP_STATIC_URL = None

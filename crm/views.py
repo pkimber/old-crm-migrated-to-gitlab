@@ -15,8 +15,8 @@ from braces.views import (
     LoginRequiredMixin,
     StaffuserRequiredMixin,
 )
-
 from .forms import (
+
     ContactForm,
     NoteForm,
     TicketForm,
@@ -101,7 +101,7 @@ class NoteCreateView(
     model = Note
 
     def _get_ticket(self):
-        pk = self.kwargs.get('pk')
+        pk = self.kwargs.get('pk', None)
         ticket = get_object_or_404(Ticket, pk=pk)
         self._check_perm(ticket.contact)
         return ticket
@@ -165,7 +165,7 @@ class TicketCreateView(
     model = Ticket
 
     def _get_contact(self):
-        slug = self.kwargs.get('slug')
+        slug = self.kwargs.get('slug', None)
         contact = get_object_or_404(Contact, slug=slug)
         self._check_perm(contact)
         return contact

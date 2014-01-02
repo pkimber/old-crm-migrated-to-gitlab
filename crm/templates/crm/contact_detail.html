@@ -18,7 +18,7 @@
             <td>
               {% if user.is_staff %}
               <a href="{% url "crm.contact.update" contact.slug %}">
-                <i class="icon-edit"></i>
+                <i class="fa fa-edit"></i>
                 <strong>{{ contact.name }}</strong>
               </a>
               {% else %}
@@ -106,19 +106,19 @@
         <ul>
           <li>
             <a href="{% url "crm.ticket.create" contact.slug %}">
-              <i class="icon-ticket"></i>
+              <i class="fa fa-ticket"></i>
               New ticket
             </a>
           </li>
           <li>
             <a href="{% url "invoice.contact.list" contact.slug %}">
-              <i class="icon-gbp"></i>
+              <i class="fa fa-gbp"></i>
               Invoices
             </a>
           </li>
           <li>
             <a href="{% url "invoice.time.contact.list" contact.slug %}">
-              <i class="icon-time"></i>
+              <i class="fa fa-time"></i>
               Time records
             </a>
           </li>

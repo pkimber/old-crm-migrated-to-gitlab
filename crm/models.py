@@ -47,7 +47,6 @@ class Contact(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('crm.contact.detail', args=[self.slug])
 
-
 reversion.register(Contact)
 
 
