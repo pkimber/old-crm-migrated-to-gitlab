@@ -27,7 +27,7 @@
             <td>Ticket {{ ticket.pk }}</td>
             <td>
               <a href="{% url "crm.ticket.update" ticket.pk %}">
-                <i class="icon-edit"></i>
+                <i class="fa fa-edit"></i>
                 <strong>{{ ticket.title }}</strong>
               </a>
             </td>
@@ -93,7 +93,7 @@
               <td>
                 {% if note.user == user and note.modified_today %}
                   <a href="{% url "crm.note.update" note.pk %}">
-                    <i class="icon-edit"></i>
+                    <i class="fa fa-edit"></i>
                     <strong>{{ note.title }}</strong>
                   </a>
                 {% else %}
