@@ -1,4 +1,5 @@
 {% extends "crm/base.html" %}
+{% load crm_tags %}
 
 {% block sub_title %}
   Contacts
@@ -11,6 +12,7 @@
 {% block content %}
   <div class="pure-g-r">
     <div class="pure-u-1">
+      {% if user.is_staff %}{% crm_menu %}{% endif %}
       <table class="pure-table pure-table-bordered">
         <thead>
           <tr>
