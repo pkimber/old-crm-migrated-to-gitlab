@@ -20,7 +20,7 @@ def get_readme():
 
 setup(
     name='pkimber-crm',
-    packages=['crm', 'crm.migrations', 'crm.tests', 'crm.management', 'crm.management.commands'],
+    packages=['crm', 'crm.templatetags', 'crm.migrations', 'crm.tests', 'crm.management', 'crm.management.commands'],
     package_data={
         'crm': [
             'static/*.*',
@@ -28,7 +28,7 @@ setup(
             'templates/crm/*.*',
         ],
     },
-    version='0.0.16',
+    version='0.0.17',
     description='crm',
     author='Patrick Kimber',
     author_email='code@pkimber.net',
