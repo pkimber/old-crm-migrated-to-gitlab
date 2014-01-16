@@ -64,4 +64,5 @@ class TicketForm(RequiredFieldForm):
             "title",
             "description",
             "due",
+            "user_assigned",
         )

@@ -96,6 +96,9 @@ class Ticket(TimeStampedModel):
     complete_user = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True, related_name='+'
     )
+    user_assigned = models.ForeignKey(
+        settings.AUTH_USER_MODEL, blank=True, null=True, related_name='+'
+    )
 
     class Meta:
         ordering = ('-complete', 'due', '-priority__level', 'created',)

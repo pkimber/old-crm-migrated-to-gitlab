@@ -20,7 +20,9 @@
                 <strong>{{ ticket.contact.name }}</strong>
               </a>
               <br />
-              {{ ticket.contact.address|linebreaksbr }}
+              <small>
+                {{ ticket.contact.address }}
+              </small>
             </td>
           </tr>
           <tr>
@@ -46,10 +48,16 @@
             </tr>
           {% endif %}
           <tr>
-            <td>Created</td>
+            <td>User</td>
             <td>
-              {{ ticket.modified|date:"d/m/Y H:i" }}
-              <strong>{{ ticket.user.username }}</strong>
+              {% if ticket.user_assigned %}
+                <strong>{{ ticket.user_assigned }}</strong>
+              {% endif %}
+              <small>
+                Created
+                {{ ticket.modified|date:"d/m/Y H:i" }}
+                {{ ticket.user.username }}
+              </small>
             </td>
           </tr>
           {% if ticket.complete %}
@@ -113,21 +121,21 @@
         <ul>
           <li>
             <a href="{% url "crm.note.create" ticket.pk %}">
-              <i class="icon-comment"></i>
+              <i class="fa fa-comment-o"></i>
               Add note
             </a>
           </li>
           {% if user.is_staff %}
             <li>
               <a href="{% url "invoice.time.create" ticket.pk %}">
-                <i class="icon-time"></i>
+                <i class="fa fa-clock-o"></i>
                 Add time
               </a>
             </li>
           {% endif %}
           <li>
             <a href="{% url "invoice.time.ticket.list" ticket.pk %}">
-              <i class="icon-time"></i>
+              <i class="fa fa-clock-o"></i>
               View time
             </a>
           </li>
@@ -135,7 +143,7 @@
             {% if not ticket.complete %}
               <li>
                 <a href="{% url "crm.ticket.complete" ticket.pk %}">
-                  <i class="icon-check"></i>
+                  <i class="fa fa-check-square-o"></i>
                   Complete ticket
                 </a>
               </li>
