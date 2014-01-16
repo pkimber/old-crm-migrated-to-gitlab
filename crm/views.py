@@ -81,6 +81,7 @@ class HomeTicketListView(LoginRequiredMixin, BaseMixin, ListView):
             result = Ticket.objects.filter(
                 complete__isnull=True,
                 priority__level__gt=0,
+                user_assigned=self.request.user,
             )
         else:
             try:
