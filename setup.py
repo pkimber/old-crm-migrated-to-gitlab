@@ -28,7 +28,7 @@ setup(
             'templates/crm/*.*',
         ],
     },
-    version='0.0.20',
+    version='0.0.21',
     description='crm',
     author='Patrick Kimber',
     author_email='code@pkimber.net',
