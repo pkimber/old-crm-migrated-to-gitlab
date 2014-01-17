@@ -76,6 +76,13 @@ class ContactUpdateView(
 
 class HomeTicketListView(LoginRequiredMixin, BaseMixin, ListView):
 
+    def get_context_data(self, **kwargs):
+        context = super(HomeTicketListView, self).get_context_data(**kwargs)
+        context.update(dict(
+            is_home=True,
+        ))
+        return context
+
     def get_queryset(self):
         if self.request.user.is_staff:
             result = Ticket.objects.filter(
@@ -194,6 +201,16 @@ class TicketDetailView(
         obj = super(TicketDetailView, self).get_object(*args, **kwargs)
         self._check_perm(obj.contact)
         return obj
+
+
+class TicketListView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
+
+    def get_queryset(self):
+        return Ticket.objects.filter(
+            complete__isnull=True,
+            priority__level__gt=0,
+            )[:30]
 
 
 class TicketUpdateView(

@@ -52,6 +52,10 @@ class TestViewPermStaffOnly(TestCase):
         url = reverse('crm.ticket.complete', kwargs={'pk': self.fence.pk})
         self._assert_staff_only(url)
 
+    def test_ticket_list(self):
+        url = reverse('crm.ticket.list')
+        self._assert_staff_only(url)
+
     def _assert_staff_only(self, url):
         staff = get_user_staff()
         response = self.client.get(url)

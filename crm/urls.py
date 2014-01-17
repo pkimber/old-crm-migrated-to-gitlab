@@ -13,6 +13,7 @@ from .views import (
     TicketCompleteView,
     TicketCreateView,
     TicketDetailView,
+    TicketListView,
     TicketUpdateView,
 )
 
@@ -58,6 +59,10 @@ urlpatterns = patterns(
     url(regex=r'^ticket/(?P<pk>\d+)/$',
         view=TicketDetailView.as_view(),
         name='crm.ticket.detail'
+        ),
+    url(regex=r'^ticket/$',
+        view=TicketListView.as_view(),
+        name='crm.ticket.list'
         ),
     url(regex=r'^ticket/(?P<pk>\d+)/edit/$',
         view=TicketUpdateView.as_view(),

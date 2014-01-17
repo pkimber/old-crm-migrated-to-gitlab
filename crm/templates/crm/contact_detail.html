@@ -82,6 +82,9 @@
                   <a href="{% url 'crm.ticket.detail' ticket.pk %}">
                     <strong>{{ ticket.title }}</strong>
                   </a>
+                  {% if ticket.user_assigned %}
+                    <small>{{ ticket.user_assigned }}</small>
+                  {% endif %}
                   {% if ticket.description %}
                     <br />
                     {{ ticket.description|urlize|linebreaksbr }}
@@ -96,6 +99,7 @@
                   {% if ticket.due %}
                     <small>due {{ ticket.due|date:"d/m/Y" }}</small>
                   {% endif %}
+                  <small>created {{ ticket.created|date:"d/m/Y" }}</small>
                 {% endif %}
               </td>
             </tr>

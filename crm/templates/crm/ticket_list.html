@@ -2,11 +2,13 @@
 {% load crm_tags %}
 
 {% block sub_title %}
+  {% if is_home %}My{% endif %}
   My Tickets
 {% endblock sub_title %}
 
 {% block sub_heading %}
-  My Tickets
+  {% if is_home %}My{% endif %}
+  Tickets
 {% endblock sub_heading %}
 
 {% block content %}
@@ -37,10 +39,9 @@
                 <a href="{% url 'crm.ticket.detail' ticket.pk %}">
                   <strong>{{ ticket.title }}</strong>
                 </a>
-                <small>
-                  created {{ ticket.created|date:"d/m/Y" }}
-                  by {{ ticket.user.username }}
-                </small>
+                {% if ticket.user_assigned and not is_home %}
+                  <small>{{ ticket.user_assigned }}</small>
+                {% endif %}
                 {% if ticket.description %}
                   <br />
                   {{ ticket.description|urlize|linebreaksbr }}
@@ -53,6 +54,7 @@
                 {% if ticket.due %}
                   <small>due {{ ticket.due|date:"d/m/Y" }}</small>
                 {% endif %}
+                <small>created {{ ticket.created|date:"d/m/Y" }}</small>
               </td>
             </tr>
           {% endfor %}
