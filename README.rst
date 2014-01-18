@@ -20,6 +20,7 @@ has been created for you).
   echo "export DJANGO_SETTINGS_MODULE=example.dev_patrick" >> $VIRTUAL_ENV/bin/postactivate
   echo "unset DJANGO_SETTINGS_MODULE" >> $VIRTUAL_ENV/bin/postdeactivate
 
+  add2virtualenv ../search
   add2virtualenv ../base
   add2virtualenv ../invoice
   add2virtualenv ../login
@@ -42,6 +43,7 @@ Check the imports are in the correct order e.g:
   /home/patrick/repo/dev/app/login
   /home/patrick/repo/dev/app/invoice
   /home/patrick/repo/dev/app/base
+  /home/patrick/repo/dev/app/search
 
 Testing
 =======

@@ -47,6 +47,12 @@ class Contact(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('crm.contact.detail', args=[self.slug])
 
+    def get_summary_description(self):
+        return (
+            self.name,
+            self.address,
+        )
+
 reversion.register(Contact)
 
 
@@ -110,6 +116,12 @@ class Ticket(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('crm.ticket.detail', args=[self.pk])
+
+    def get_summary_description(self):
+        return (
+            self.title,
+            self.description,
+        )
 
     def set_complete(self, user):
         self.complete = datetime.now()
