@@ -27,7 +27,7 @@ class Contact(TimeStampedModel):
     """ Contact """
     name = models.CharField(max_length=100)
     address = models.TextField(blank=True)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     url = models.URLField(blank=True, null=True)
     phone = models.CharField(max_length=100, blank=True)
     mail = models.EmailField(blank=True)
