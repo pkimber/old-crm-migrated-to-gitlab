@@ -148,6 +148,12 @@ class Note(TimeStampedModel):
     def get_absolute_url(self):
         return reverse('crm.ticket.detail', args=[self.ticket.pk])
 
+    def get_summary_description(self):
+        return (
+            self.title,
+            self.description,
+        )
+
     def modified_today(self):
         return self.created.date() == datetime.today().date()
 
