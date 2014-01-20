@@ -48,10 +48,10 @@ class Contact(TimeStampedModel):
         return reverse('crm.contact.detail', args=[self.slug])
 
     def get_summary_description(self):
-        return (
+        return filter(None, (
             self.name,
             self.address,
-        )
+        ))
 
 reversion.register(Contact)
 
@@ -118,10 +118,10 @@ class Ticket(TimeStampedModel):
         return reverse('crm.ticket.detail', args=[self.pk])
 
     def get_summary_description(self):
-        return (
+        return filter(None, (
             self.title,
             self.description,
-        )
+        ))
 
     def set_complete(self, user):
         self.complete = datetime.now()
@@ -149,10 +149,10 @@ class Note(TimeStampedModel):
         return reverse('crm.ticket.detail', args=[self.ticket.pk])
 
     def get_summary_description(self):
-        return (
+        return filter(None, (
             self.title,
             self.description,
-        )
+        ))
 
     def modified_today(self):
         return self.created.date() == datetime.today().date()
