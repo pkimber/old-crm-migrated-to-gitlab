@@ -1,8 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from crm.tests.scenario import (
-    contact_contractor,
-)
+from crm.tests.scenario import default_scenario_crm
 
 
 class Command(BaseCommand):
@@ -10,5 +8,5 @@ class Command(BaseCommand):
     help = "Create demo data for 'crm'"
 
     def handle(self, *args, **options):
-        contact_contractor()
+        default_scenario_crm()
         print("Created 'crm' demo data...")

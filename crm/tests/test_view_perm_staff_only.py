@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from crm.tests.scenario import (
-    contact_contractor,
+    default_scenario_crm,
     get_contact_farm,
     get_ticket_fence_for_farm,
 )
@@ -28,7 +28,7 @@ class TestViewPermStaffOnly(TestCase):
     def setUp(self):
         user_contractor()
         default_scenario_login()
-        contact_contractor()
+        default_scenario_crm()
         self.farm = get_contact_farm()
         self.fence = get_ticket_fence_for_farm()
         self.fred = get_user_fred()

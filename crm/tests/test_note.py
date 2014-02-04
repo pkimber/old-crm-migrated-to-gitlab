@@ -4,7 +4,7 @@ from datetime import timedelta
 from django.test import TestCase
 
 from crm.tests.scenario import (
-    contact_contractor,
+    default_scenario_crm,
     get_note_fence_forgot,
 )
 from login.tests.scenario import (
@@ -19,7 +19,7 @@ class TestNote(TestCase):
     def setUp(self):
         user_contractor()
         default_scenario_login()
-        contact_contractor()
+        default_scenario_crm()
         self.note = get_note_fence_forgot()
 
     def test_search_methods(self):

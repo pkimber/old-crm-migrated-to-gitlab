@@ -6,7 +6,7 @@ from crm.tests.model_maker import (
     make_user_contact,
 )
 from crm.tests.scenario import (
-    contact_contractor,
+    default_scenario_crm,
 )
 from login.tests.scenario import (
     default_scenario_login,
@@ -22,7 +22,7 @@ class TestContactUser(TestCase):
         """Create a contact and link it to a user"""
         user_contractor()
         default_scenario_login()
-        contact_contractor()
+        default_scenario_crm()
         user_contacts = get_user_fred().usercontact_set.all()
         self.assertIn("Fred's Farm", user_contacts[0].contact.name)
 
@@ -30,7 +30,7 @@ class TestContactUser(TestCase):
         """Make sure a user can only link to one contact"""
         user_contractor()
         default_scenario_login()
-        contact_contractor()
+        default_scenario_crm()
         self.assertRaises(
             IntegrityError,
             make_user_contact,

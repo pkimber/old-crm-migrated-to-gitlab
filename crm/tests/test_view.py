@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from crm.tests.scenario import (
-    contact_contractor,
+    default_scenario_crm,
     get_contact_farm,
     get_note_fence_forgot,
     get_ticket_fence_for_farm,
@@ -22,7 +22,7 @@ class TestView(TestCase):
     def setUp(self):
         user_contractor()
         default_scenario_login()
-        contact_contractor()
+        default_scenario_crm()
         self.contact = get_contact_farm()
         self.staff = get_user_staff()
         self.note = get_note_fence_forgot()

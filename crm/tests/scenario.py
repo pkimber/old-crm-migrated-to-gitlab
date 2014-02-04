@@ -19,7 +19,7 @@ from login.tests.scenario import (
 )
 
 
-def contact_contractor():
+def default_scenario_crm():
     """
     fred has a farm...
     the orchard needs fencing,
