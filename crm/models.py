@@ -1,3 +1,6 @@
+# -*- encoding: utf-8 -*-
+
+from __future__ import unicode_literals
 from datetime import datetime
 
 from django.conf import settings
@@ -17,8 +20,8 @@ class Industry(models.Model):
         verbose_name = 'Industry'
         verbose_name_plural = 'Industries'
 
-    def __unicode__(self):
-        return unicode('{}'.format(self.name))
+    def __str__(self):
+        return '{}'.format(self.name)
 
 reversion.register(Industry)
 
@@ -41,8 +44,8 @@ class Contact(TimeStampedModel):
         verbose_name = 'Contact'
         verbose_name_plural = 'Contacts'
 
-    def __unicode__(self):
-        return unicode('{}'.format(self.name))
+    def __str__(self):
+        return '{}'.format(self.name)
 
     def get_absolute_url(self):
         return reverse('crm.contact.detail', args=[self.slug])
@@ -70,8 +73,8 @@ class UserContact(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, unique=True)
     contact = models.ForeignKey(Contact)
 
-    def __unicode__(self):
-        return unicode('{} - {}'.format(self.user.username, self.contact.name))
+    def __str__(self):
+        return '{} - {}'.format(self.user.username, self.contact.name)
 
 
 class Priority(models.Model):
@@ -84,8 +87,8 @@ class Priority(models.Model):
         verbose_name = 'Priority'
         verbose_name_plural = 'Priorities'
 
-    def __unicode__(self):
-        return unicode('{}'.format(self.name))
+    def __str__(self):
+        return '{}'.format(self.name)
 
 reversion.register(Priority)
 
@@ -111,8 +114,8 @@ class Ticket(TimeStampedModel):
         verbose_name = 'Ticket'
         verbose_name_plural = 'Tickets'
 
-    def __unicode__(self):
-        return unicode('{}'.format(self.title))
+    def __str__(self):
+        return '{}'.format(self.title)
 
     def get_absolute_url(self):
         return reverse('crm.ticket.detail', args=[self.pk])
@@ -142,8 +145,8 @@ class Note(TimeStampedModel):
         verbose_name = 'Note'
         verbose_name_plural = 'Notes'
 
-    def __unicode__(self):
-        return unicode('{}'.format(self.title))
+    def __str__(self):
+        return '{}'.format(self.title)
 
     def get_absolute_url(self):
         return reverse('crm.ticket.detail', args=[self.ticket.pk])

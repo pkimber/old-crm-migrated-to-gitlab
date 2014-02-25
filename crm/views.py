@@ -1,3 +1,6 @@
+# -*- encoding: utf-8 -*-
+
+from __future__ import unicode_literals
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
@@ -16,7 +19,6 @@ from braces.views import (
     StaffuserRequiredMixin,
 )
 from .forms import (
-
     ContactForm,
     NoteForm,
     TicketForm,
@@ -46,6 +48,7 @@ class CheckPermMixin(object):
 
 class ContactCreateView(
         LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, CreateView):
+
     form_class = ContactForm
     model = Contact
 

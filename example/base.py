@@ -1,3 +1,6 @@
+# -*- encoding: utf-8 -*-
+
+from __future__ import unicode_literals
 """ Django settings """
 from django.core.urlresolvers import reverse_lazy
 
@@ -117,7 +120,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'reversion',
     'south',
     'base',

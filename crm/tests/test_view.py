@@ -1,3 +1,6 @@
+# -*- encoding: utf-8 -*-
+
+from __future__ import unicode_literals
 """Simple tests to make sure a view doesn't throw any exceptions"""
 
 from django.core.urlresolvers import reverse
