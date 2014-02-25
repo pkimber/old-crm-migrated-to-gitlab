@@ -1,6 +1,3 @@
-# -*- encoding: utf-8 -*-
-
-from __future__ import unicode_literals
 import os
 from distutils.core import setup
 
@@ -34,7 +31,7 @@ setup(
             'templates/search/indexes/crm/*.*',
         ],
     },
-    version='0.0.22',
+    version='0.0.23',
     description='crm',
     author='Patrick Kimber',
     author_email='code@pkimber.net',
