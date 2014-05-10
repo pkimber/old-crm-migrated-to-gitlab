@@ -11,112 +11,114 @@
 {% block content %}
   <div class="pure-g-r">
     <div class="pure-u-1">
-      <table class="pure-table pure-table-bordered">
-        <tbody>
-          <tr valign="top">
-            <td>Contact</td>
-            <td>
-              <a href="{% url 'crm.contact.detail' ticket.contact.slug %}">
-                <strong>{{ ticket.contact.name }}</strong>
-              </a>
-              <br />
-              <small>
-                {{ ticket.contact.address }}
-              </small>
-            </td>
-          </tr>
-          <tr>
-            <td>Ticket {{ ticket.pk }}</td>
-            <td>
-              <a href="{% url "crm.ticket.update" ticket.pk %}">
-                <i class="fa fa-edit"></i>
-                <strong>{{ ticket.title }}</strong>
-              </a>
-            </td>
-          </tr>
-          {% if ticket.priority.level or ticket.due %}
+      <div class="l-box">
+        <table class="pure-table pure-table-bordered">
+          <tbody>
+            <tr valign="top">
+              <td>Contact</td>
+              <td>
+                <a href="{% url 'crm.contact.detail' ticket.contact.slug %}">
+                  <strong>{{ ticket.contact.name }}</strong>
+                </a>
+                <br />
+                <small>
+                  {{ ticket.contact.address }}
+                </small>
+              </td>
+            </tr>
             <tr>
-              <td>Priority</td>
+              <td>Ticket {{ ticket.pk }}</td>
               <td>
-                {% if ticket.priority.level %}
-                  <strong>{{ ticket.priority.name }}</strong>
-                {% endif %}
-                {% if ticket.due %}
-                  <small>by {{ ticket.due|date:"d/m/Y" }}</small>
-                {% endif %}
+                <a href="{% url "crm.ticket.update" ticket.pk %}">
+                  <i class="fa fa-edit"></i>
+                  <strong>{{ ticket.title }}</strong>
+                </a>
               </td>
             </tr>
-          {% endif %}
-          <tr>
-            <td>User</td>
-            <td>
-              {% if ticket.user_assigned %}
-                <strong>{{ ticket.user_assigned }}</strong>
-              {% endif %}
-              <small>
-                Created
-                {{ ticket.modified|date:"d/m/Y H:i" }}
-                {{ ticket.user.username }}
-              </small>
-            </td>
-          </tr>
-          {% if ticket.complete %}
+            {% if ticket.priority.level or ticket.due %}
+              <tr>
+                <td>Priority</td>
+                <td>
+                  {% if ticket.priority.level %}
+                    <strong>{{ ticket.priority.name }}</strong>
+                  {% endif %}
+                  {% if ticket.due %}
+                    <small>by {{ ticket.due|date:"d/m/Y" }}</small>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endif %}
             <tr>
-              <td><strong>Complete</strong></td>
+              <td>User</td>
               <td>
-                {{ ticket.complete|date:"d/m/Y H:i" }}
-                <small>by {{ ticket.complete_user.username }}</small>
+                {% if ticket.user_assigned %}
+                  <strong>{{ ticket.user_assigned }}</strong>
+                {% endif %}
+                <small>
+                  Created
+                  {{ ticket.modified|date:"d/m/Y H:i" }}
+                  {{ ticket.user.username }}
+                </small>
               </td>
             </tr>
-          {% endif %}
-          {% if ticket.contact.mail %}
-          <tr valign="top">
-            <td>email</td>
-            <td>{{ ticket.contact.mail|urlize }}</td>
-          </tr>
-          {% endif %}
-          {% if ticket.contact.phone %}
-          <tr valign="top">
-            <td>Phone</td>
-            <td>{{ ticket.contact.phone }}</td>
-          </tr>
-          {% endif %}
-          {% if ticket.description %}
+            {% if ticket.complete %}
+              <tr>
+                <td><strong>Complete</strong></td>
+                <td>
+                  {{ ticket.complete|date:"d/m/Y H:i" }}
+                  <small>by {{ ticket.complete_user.username }}</small>
+                </td>
+              </tr>
+            {% endif %}
+            {% if ticket.contact.mail %}
             <tr valign="top">
-              <td>Description</td>
-              <td>{{ ticket.description|urlize|linebreaksbr }}</td>
+              <td>email</td>
+              <td>{{ ticket.contact.mail|urlize }}</td>
             </tr>
-          {% endif %}
-          {% if ticket.note_set.all %}
+            {% endif %}
+            {% if ticket.contact.phone %}
             <tr valign="top">
-              <td><strong>Notes</strong></td>
-              <td></td>
+              <td>Phone</td>
+              <td>{{ ticket.contact.phone }}</td>
             </tr>
-          {% endif %}
-          {% for note in ticket.note_set.all %}
-            <tr valign="top">
-              <td>
-                {{ note.user.username }}
-              </td>
-              <td>
-                {% if note.user == user and note.modified_today %}
-                  <a href="{% url "crm.note.update" note.pk %}">
-                    <i class="fa fa-edit"></i>
+            {% endif %}
+            {% if ticket.description %}
+              <tr valign="top">
+                <td>Description</td>
+                <td>{{ ticket.description|urlize|linebreaksbr }}</td>
+              </tr>
+            {% endif %}
+            {% if ticket.note_set.all %}
+              <tr valign="top">
+                <td><strong>Notes</strong></td>
+                <td></td>
+              </tr>
+            {% endif %}
+            {% for note in ticket.note_set.all %}
+              <tr valign="top">
+                <td>
+                  {{ note.user.username }}
+                </td>
+                <td>
+                  {% if note.user == user and note.modified_today %}
+                    <a href="{% url "crm.note.update" note.pk %}">
+                      <i class="fa fa-edit"></i>
+                      <strong>{{ note.title }}</strong>
+                    </a>
+                  {% else %}
                     <strong>{{ note.title }}</strong>
-                  </a>
-                {% else %}
-                  <strong>{{ note.title }}</strong>
-                {% endif %}
-                <small>{{ note.created|date:"d/m/y H:i" }}</small>
-                {% if note.description %}
-                  <br />
-                  {{ note.description|urlize|linebreaksbr }}
-                {% endif %}
-            </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+                  {% endif %}
+                  <small>{{ note.created|date:"d/m/y H:i" }}</small>
+                  {% if note.description %}
+                    <br />
+                    {{ note.description|urlize|linebreaksbr }}
+                  {% endif %}
+              </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
       <div class="pure-menu pure-menu-open pure-menu-horizontal">
         <ul>
           <li>

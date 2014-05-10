@@ -11,101 +11,103 @@
 {% block content %}
   <div class="pure-g-r">
     <div class="pure-u-1">
-      <table class="pure-table pure-table-bordered">
-        <tbody>
-          <tr>
-            <td>Contact</td>
-            <td>
-              {% if user.is_staff %}
-              <a href="{% url "crm.contact.update" contact.slug %}">
-                <i class="fa fa-edit"></i>
-                <strong>{{ contact.name }}</strong>
-              </a>
-              {% else %}
-                {{ contact.name }}
-              {% endif %}
-            </td>
-            <td></td>
-          </tr>
-          {% if contact.address %}
-          <tr valign="top">
-            <td>Address</td>
-            <td>
-              {{ contact.address|linebreaksbr }}
-            </td>
-            <td></td>
-          </tr>
-          {% endif %}
-          {% if contact.phone %}
-          <tr>
-            <td>Phone</td>
-            <td><strong>{{ contact.phone }}</strong></td>
-            <td></td>
-          </tr>
-          {% endif %}
-          {% if contact.url %}
-          <tr>
-            <td>Web</td>
-            <td>{{ contact.url|urlize }}</td>
-            <td></td>
-          </tr>
-          {% endif %}
-          {% if contact.mail %}
-          <tr>
-            <td>email</td>
-            <td>{{ contact.mail|urlize }}</td>
-            <td></td>
-          </tr>
-          {% endif %}
-          {% if contact.ticket_set.all %}
-          <tr>
-            <td><strong>Tickets</strong></td>
-            <td></td>
-            <td></td>
-          </tr>
-          {% endif %}
-          {% for ticket in contact.ticket_set.all %}
-            <tr valign="top">
-              <td>{{ ticket.id }}</td>
+      <div class="l-box">
+        <table class="pure-table pure-table-bordered">
+          <tbody>
+            <tr>
+              <td>Contact</td>
               <td>
-                {% if ticket.complete %}
-                  <a href="{% url 'crm.ticket.detail' ticket.pk %}">
-                    {{ ticket.title }}
-                  </a>
-                  <small>
-                    Completed on
-                    {{ ticket.complete|date:"d/m/Y" }}
-                    by {{ ticket.complete_user.username }}
-                  </small>
-                </td>
+                {% if user.is_staff %}
+                <a href="{% url "crm.contact.update" contact.slug %}">
+                  <i class="fa fa-edit"></i>
+                  <strong>{{ contact.name }}</strong>
+                </a>
                 {% else %}
-                  <a href="{% url 'crm.ticket.detail' ticket.pk %}">
-                    <strong>{{ ticket.title }}</strong>
-                  </a>
-                  {% if ticket.user_assigned %}
-                    <small>{{ ticket.user_assigned }}</small>
-                  {% endif %}
-                  {% if ticket.description %}
-                    <br />
-                    {{ ticket.description|urlize|linebreaksbr }}
-                  {% endif %}
+                  {{ contact.name }}
                 {% endif %}
               </td>
-              <td>
-                {% if not ticket.complete %}
-                  {% if ticket.priority.level %}
-                    {{ ticket.priority.name }}
-                  {% endif %}
-                  {% if ticket.due %}
-                    <small>due {{ ticket.due|date:"d/m/Y" }}</small>
-                  {% endif %}
-                  <small>created {{ ticket.created|date:"d/m/Y" }}</small>
-                {% endif %}
-              </td>
+              <td></td>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+            {% if contact.address %}
+            <tr valign="top">
+              <td>Address</td>
+              <td>
+                {{ contact.address|linebreaksbr }}
+              </td>
+              <td></td>
+            </tr>
+            {% endif %}
+            {% if contact.phone %}
+            <tr>
+              <td>Phone</td>
+              <td><strong>{{ contact.phone }}</strong></td>
+              <td></td>
+            </tr>
+            {% endif %}
+            {% if contact.url %}
+            <tr>
+              <td>Web</td>
+              <td>{{ contact.url|urlize }}</td>
+              <td></td>
+            </tr>
+            {% endif %}
+            {% if contact.mail %}
+            <tr>
+              <td>email</td>
+              <td>{{ contact.mail|urlize }}</td>
+              <td></td>
+            </tr>
+            {% endif %}
+            {% if contact.ticket_set.all %}
+            <tr>
+              <td><strong>Tickets</strong></td>
+              <td></td>
+              <td></td>
+            </tr>
+            {% endif %}
+            {% for ticket in contact.ticket_set.all %}
+              <tr valign="top">
+                <td>{{ ticket.id }}</td>
+                <td>
+                  {% if ticket.complete %}
+                    <a href="{% url 'crm.ticket.detail' ticket.pk %}">
+                      {{ ticket.title }}
+                    </a>
+                    <small>
+                      Completed on
+                      {{ ticket.complete|date:"d/m/Y" }}
+                      by {{ ticket.complete_user.username }}
+                    </small>
+                  </td>
+                  {% else %}
+                    <a href="{% url 'crm.ticket.detail' ticket.pk %}">
+                      <strong>{{ ticket.title }}</strong>
+                    </a>
+                    {% if ticket.user_assigned %}
+                      <small>{{ ticket.user_assigned }}</small>
+                    {% endif %}
+                    {% if ticket.description %}
+                      <br />
+                      {{ ticket.description|urlize|linebreaksbr }}
+                    {% endif %}
+                  {% endif %}
+                </td>
+                <td>
+                  {% if not ticket.complete %}
+                    {% if ticket.priority.level %}
+                      {{ ticket.priority.name }}
+                    {% endif %}
+                    {% if ticket.due %}
+                      <small>due {{ ticket.due|date:"d/m/Y" }}</small>
+                    {% endif %}
+                    <small>created {{ ticket.created|date:"d/m/Y" }}</small>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
       <div class="pure-menu pure-menu-open pure-menu-horizontal">
         <ul>
           <li>

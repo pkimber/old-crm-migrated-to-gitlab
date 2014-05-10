@@ -1,10 +1,10 @@
 -r base.txt
+-e .
 -e ../base
 -e ../invoice
 -e ../login
 -e ../search
 beautifulsoup4
-fabric
 gitpython
 hgapi
 ipdb

@@ -1,9 +1,7 @@
 # -*- encoding: utf-8 -*-
-
 from __future__ import unicode_literals
-from base.form_utils import (
-    RequiredFieldForm,
-)
+
+from base.form_utils import RequiredFieldForm
 from .models import (
     Contact,
     Note,

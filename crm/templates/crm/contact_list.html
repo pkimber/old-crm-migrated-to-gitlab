@@ -12,31 +12,33 @@
 {% block content %}
   <div class="pure-g-r">
     <div class="pure-u-1">
-      {% if user.is_staff %}{% crm_menu %}{% endif %}
-      <table class="pure-table pure-table-bordered">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Phone</th>
-            <th>email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for contact in contact_list %}
-            <tr valign="top">
-              <td>
-                <a href="{% url 'crm.contact.detail' contact.slug %}">
-                  {{ contact.name }}
-                </a>
-              </td>
-              <td>{{ contact.address }}</td>
-              <td>{{ contact.phone }}</td>
-              <td>{{ contact.mail|urlize }}</td>
+      <div class="l-box">
+        {% if user.is_staff %}{% crm_menu %}{% endif %}
+        <table class="pure-table pure-table-bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>email</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {% for contact in contact_list %}
+              <tr valign="top">
+                <td>
+                  <a href="{% url 'crm.contact.detail' contact.slug %}">
+                    {{ contact.name }}
+                  </a>
+                </td>
+                <td>{{ contact.address }}</td>
+                <td>{{ contact.phone }}</td>
+                <td>{{ contact.mail|urlize }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
       <div class="pure-menu pure-menu-open pure-menu-horizontal">
         <ul>
           <li>
