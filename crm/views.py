@@ -18,6 +18,7 @@ from braces.views import (
     LoginRequiredMixin,
     StaffuserRequiredMixin,
 )
+
 from base.view_utils import BaseMixin
 
 from .forms import (
