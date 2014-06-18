@@ -1,28 +1,34 @@
-<div class="pure-menu pure-menu-open pure-menu-horizontal">
-  <ul>
-    <li>
-      <a href="{% url "crm.contact.list" %}">
-        <i class="fa fa-user"></i>
-        Contacts
-      </a>
-    </li>
-    <li>
-      <a href="{% url "crm.ticket.list" %}">
-        <i class="fa fa-ticket"></i>
-        Tickets
-      </a>
-    </li>
-    <li>
-      <a href="{% url "invoice.list" %}">
-        <i class="fa fa-gbp"></i>
-        Invoices
-      </a>
-    </li>
-    <li>
-      <a href="{% url "invoice.time.user.list" %}">
-        <i class="fa fa-clock-o"></i>
-        My Time Records
-      </a>
-    </li>
-  </ul>
-</div>
+{% if user.is_staff %}
+  <div class="pure-g">
+    <div class="pure-u-1">
+      <div class="pure-menu pure-menu-open pure-menu-horizontal">
+        <ul>
+          <li>
+            <a href="{% url "crm.contact.list" %}">
+              <i class="fa fa-user"></i>
+              Contacts
+            </a>
+          </li>
+          <li>
+            <a href="{% url "crm.ticket.list" %}">
+              <i class="fa fa-ticket"></i>
+              Tickets
+            </a>
+          </li>
+          <li>
+            <a href="{% url "invoice.list" %}">
+              <i class="fa fa-gbp"></i>
+              Invoices
+            </a>
+          </li>
+          <li>
+            <a href="{% url "invoice.time.user.list" %}">
+              <i class="fa fa-clock-o"></i>
+              My Time Records
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endif %}

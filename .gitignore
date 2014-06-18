@@ -26,8 +26,6 @@ MANIFEST
 .coverage
 .tox
 nosetests.xml
-temp.db
-venv-*
 
 # Translations
 *.mo
@@ -36,3 +34,12 @@ venv-*
 .mr.developer.cfg
 .project
 .pydevproject
+
+# dev
+media
+media-private
+temp.db
+venv-*
+
+# private info
+.private

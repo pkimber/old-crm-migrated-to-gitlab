@@ -12,10 +12,10 @@
 {% endblock sub_heading %}
 
 {% block content %}
-  <div class="pure-g-r">
+  {% include 'crm/_menu.html' %}
+  <div class="pure-g">
     <div class="pure-u-1">
       <div class="l-box">
-        {% if user.is_staff %}{% crm_menu %}{% endif %}
         <table class="pure-table pure-table-bordered">
           <thead>
             <tr>
@@ -62,7 +62,7 @@
           </tbody>
         </table>
       </div>
-      {% if user.is_staff %}{% crm_menu %}{% endif %}
     </div>
   </div>
+  {% include 'crm/_menu.html' %}
 {% endblock content %}

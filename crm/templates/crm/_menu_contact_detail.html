@@ -1,0 +1,26 @@
+<div class="pure-g">
+  <div class="pure-u-1">
+    <div class="pure-menu pure-menu-open pure-menu-horizontal">
+      <ul>
+        <li>
+          <a href="{% url "crm.ticket.create" contact.slug %}">
+            <i class="fa fa-ticket"></i>
+            New ticket
+          </a>
+        </li>
+        <li>
+          <a href="{% url "invoice.contact.list" contact.slug %}">
+            <i class="fa fa-gbp"></i>
+            Invoices
+          </a>
+        </li>
+        <li>
+          <a href="{% url "invoice.time.contact.list" contact.slug %}">
+            <i class="fa fa-clock-o"></i>
+            Time records
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
