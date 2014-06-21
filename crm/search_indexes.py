@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
-
 from __future__ import unicode_literals
+
 from haystack import indexes
 
 from .models import (
@@ -11,6 +11,7 @@ from .models import (
 
 
 class ContactIndex(indexes.SearchIndex, indexes.Indexable):
+
     text = indexes.CharField(document=True, use_template=True)
 
     def get_model(self):
@@ -18,6 +19,7 @@ class ContactIndex(indexes.SearchIndex, indexes.Indexable):
 
 
 class NoteIndex(indexes.SearchIndex, indexes.Indexable):
+
     text = indexes.CharField(document=True, use_template=True)
 
     def get_model(self):
@@ -25,6 +27,7 @@ class NoteIndex(indexes.SearchIndex, indexes.Indexable):
 
 
 class TicketIndex(indexes.SearchIndex, indexes.Indexable):
+
     text = indexes.CharField(document=True, use_template=True)
 
     def get_model(self):
