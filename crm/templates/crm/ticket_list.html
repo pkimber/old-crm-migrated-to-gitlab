@@ -1,13 +1,19 @@
 {% extends "crm/base.html" %}
 
 {% block sub_title %}
-  {% if is_home %}My{% endif %}
-  My Tickets
+  {% if is_home %}
+    My Tickets
+  {% else %}
+    All Tickets
+  {% endif %}
 {% endblock sub_title %}
 
 {% block sub_heading %}
-  {% if is_home %}My{% endif %}
-  Tickets
+  {% if is_home %}
+    My Tickets
+  {% else %}
+    All Tickets
+  {% endif %}
 {% endblock sub_heading %}
 
 {% block content %}
