@@ -3,28 +3,40 @@
     <div class="pure-u-1">
       <div class="pure-menu pure-menu-open pure-menu-horizontal">
         <ul>
-          <li>
+          <li {% if path == '/crm/contact/' %}class="pure-menu-disabled"{% endif %}>
             <a href="{% url "crm.contact.list" %}">
               <i class="fa fa-user"></i>
-              Contacts
+              Contacts              
             </a>
           </li>
-          <li>
-            <a href="{% url "crm.ticket.list" %}">
+          <li {% if path == '/crm/' %}class="pure-menu-disabled"{% endif %}>
+            <a href="{% url 'crm.ticket.home' %}">
+              <i class="fa fa-ticket"></i>
+              My Tickets
+            </a>
+          </li>
+          <li {% if path == '/crm/ticket/' %}class="pure-menu-disabled"{% endif %}>
+            <a href="{% url 'crm.ticket.list' %}">
               <i class="fa fa-ticket"></i>
               All Tickets
             </a>
           </li>
-          <li>
-            <a href="{% url "invoice.list" %}">
-              <i class="fa fa-gbp"></i>
-              Invoices
-            </a>
-          </li>
-          <li>
-            <a href="{% url "invoice.time.user.list" %}">
+          <li {% if path == '/invoice/user/time/' %}class="pure-menu-disabled"{% endif %}>
+            <a href="{% url 'invoice.time.user.list' %}">
               <i class="fa fa-clock-o"></i>
               My Time Records
+            </a>
+          </li>
+          <li {% if path == '/invoice/time/' %}class="pure-menu-disabled"{% endif %}>
+            <a href="{% url 'invoice.time' %}">
+              <i class="fa fa-clock-o"></i>
+              All Time Records
+             </a>
+          </li>
+          <li {% if path == '/invoice/' %}class="pure-menu-disabled"{% endif %}>
+            <a href="{% url 'invoice.list' %}">
+              <i class="fa fa-gbp"></i>
+              Invoices
             </a>
           </li>
         </ul>
