@@ -12,6 +12,7 @@
 
 {% block content %}
   {% include 'crm/_menu.html' %}
+  {% include 'base/_paginate.html' %}
   <div class="pure-g">
     <div class="pure-u-1">
       <div class="l-box">
@@ -22,6 +23,8 @@
                 <th>Contact</th>
               {% endif %}
               <th>Ticket</th>
+              <th>User</th>
+              <th>Due</th>
               <th>Priority</th>
             </tr>
           </thead>
@@ -37,24 +40,23 @@
                 {% endif %}
                 <td>
                   <a href="{% url 'crm.ticket.detail' ticket.pk %}">
-                    <strong>{{ ticket.title }}</strong>
+                    {{ ticket.title }}
                   </a>
+                </td>
+                <td>
                   {% if ticket.user_assigned and not is_home %}
                     <small>{{ ticket.user_assigned }}</small>
                   {% endif %}
-                  {% if ticket.description %}
-                    <br />
-                    {{ ticket.description|urlize|linebreaksbr }}
+                </td>
+                <td>
+                  {% if ticket.due %}
+                    <small>{{ ticket.due|date:"d/m/Y" }}</small>
                   {% endif %}
                 </td>
                 <td>
                   {% if ticket.priority.level %}
                     {{ ticket.priority.name }}
                   {% endif %}
-                  {% if ticket.due %}
-                    <small>due {{ ticket.due|date:"d/m/Y" }}</small>
-                  {% endif %}
-                  <small>created {{ ticket.created|date:"d/m/Y" }}</small>
                 </td>
               </tr>
             {% endfor %}
@@ -63,5 +65,6 @@
       </div>
     </div>
   </div>
+  {% include 'base/_paginate.html' %}
   {% include 'crm/_menu.html' %}
 {% endblock content %}

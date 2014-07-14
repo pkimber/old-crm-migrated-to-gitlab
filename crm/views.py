@@ -211,11 +211,15 @@ class TicketDetailView(
 class TicketListView(
         LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
 
+    paginate_by = 20
+
     def get_queryset(self):
         return Ticket.objects.filter(
-            complete__isnull=True,
-            priority__level__gt=0,
-            )[:30]
+            complete__isnull=True
+        ).order_by(
+            'due',
+            'priority',
+        )
 
 
 class TicketUpdateView(
