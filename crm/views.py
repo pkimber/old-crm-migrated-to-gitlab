@@ -68,6 +68,8 @@ class ContactDetailView(
 
 class ContactListView(
         LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
+        
+    paginate_by = 20
 
     model = Contact
 
@@ -80,6 +82,8 @@ class ContactUpdateView(
 
 
 class HomeTicketListView(LoginRequiredMixin, BaseMixin, ListView):
+
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super(HomeTicketListView, self).get_context_data(**kwargs)
