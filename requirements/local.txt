@@ -5,6 +5,7 @@
 -e ../login
 -e ../search
 beautifulsoup4
+factory-boy
 gitpython
 hgapi
 ipdb

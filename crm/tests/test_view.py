@@ -12,6 +12,7 @@ from crm.tests.scenario import (
     get_note_fence_forgot,
     get_ticket_fence_for_farm,
 )
+from login.tests.factories import TEST_PASSWORD
 from login.tests.scenario import (
     default_scenario_login,
     get_user_staff,
@@ -86,7 +87,7 @@ class TestView(TestCase):
         # Log the user in so they can access this URL
         self.client.login(
             username=self.staff.username,
-            password=self.staff.username,
+            password=TEST_PASSWORD,
         )
         response = self.client.get(url)
         self.assertEqual(

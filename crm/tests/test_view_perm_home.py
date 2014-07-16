@@ -8,6 +8,7 @@ from crm.tests.scenario import (
     default_scenario_crm,
     get_contact_farm,
 )
+from login.tests.factories import TEST_PASSWORD
 from login.tests.scenario import (
     default_scenario_login,
     get_user_sara,
@@ -23,9 +24,9 @@ class TestViewPermHome(TestCase):
         default_scenario_crm()
         self.farm = get_contact_farm()
         self.sara = get_user_sara()
-        self.client.login(
-            username=self.sara.username, password=self.sara.username
-        )
+        self.assertTrue(self.client.login(
+            username=self.sara.username, password=TEST_PASSWORD
+        ))
 
     def test_ticket_home(self):
         url = reverse('crm.ticket.home')

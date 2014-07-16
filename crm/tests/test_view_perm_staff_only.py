@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
-
 from __future__ import unicode_literals
+
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
@@ -9,6 +9,7 @@ from crm.tests.scenario import (
     get_contact_farm,
     get_ticket_fence_for_farm,
 )
+from login.tests.factories import TEST_PASSWORD
 from login.tests.scenario import (
     default_scenario_login,
     get_user_fred,
@@ -35,9 +36,9 @@ class TestViewPermStaffOnly(TestCase):
         self.farm = get_contact_farm()
         self.fence = get_ticket_fence_for_farm()
         self.fred = get_user_fred()
-        self.client.login(
-            username=self.fred.username, password=self.fred.username
-        )
+        self.assertTrue(self.client.login(
+            username=self.fred.username, password=TEST_PASSWORD
+        ))
 
     def test_contact_create(self):
         url = reverse('crm.contact.create')
@@ -70,9 +71,9 @@ class TestViewPermStaffOnly(TestCase):
                 response.status_code, self.fred.username, url
             )
         )
-        self.client.login(
-            username=staff.username, password=staff.username
-        )
+        self.assertTrue(self.client.login(
+            username=staff.username, password=TEST_PASSWORD
+        ))
         response = self.client.get(url)
         self.assertEqual(
             response.status_code,

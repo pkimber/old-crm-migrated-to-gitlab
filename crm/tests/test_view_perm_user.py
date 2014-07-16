@@ -10,6 +10,7 @@ from crm.tests.scenario import (
     get_note_fence_forgot,
     get_ticket_fence_for_farm,
 )
+from login.tests.factories import TEST_PASSWORD
 from login.tests.scenario import (
     default_scenario_login,
     get_user_sara,
@@ -34,9 +35,9 @@ class TestViewPermUser(TestCase):
         self.fence = get_ticket_fence_for_farm()
         self.note = get_note_fence_forgot()
         self.sara = get_user_sara()
-        self.client.login(
-            username=self.sara.username, password=self.sara.username
-        )
+        self.assertTrue(self.client.login(
+            username=self.sara.username, password=TEST_PASSWORD
+        ))
 
     def test_contact_detail(self):
         url = reverse('crm.contact.detail', kwargs={'slug': self.farm.slug})
