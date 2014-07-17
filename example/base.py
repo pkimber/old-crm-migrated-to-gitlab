@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
-
 from __future__ import unicode_literals
+
 """ Django settings """
 from django.core.urlresolvers import reverse_lazy
 
@@ -121,6 +121,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     # 'debug_toolbar',
+    'compressor',
     'reversion',
     'south',
     'base',
@@ -162,6 +163,9 @@ LOGGING = {
 # URL where requests are redirected after login when the contrib.auth.login
 # view gets no next parameter.
 LOGIN_REDIRECT_URL = reverse_lazy('project.home.user')
+
+# django-compressor
+COMPRESS_ENABLED = False # defaults to the opposite of DEBUG
 
 # Django debug toolbar
 INTERNAL_IPS = ('127.0.0.1',)

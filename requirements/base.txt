@@ -1,5 +1,6 @@
 bleach==1.4
 django-braces==1.4.0
+django-compressor==1.4
 django-reversion==1.8.0
 Django==1.6.5
 git+https://github.com/pkimber/django-sendfile#egg=sendfile
