@@ -5,6 +5,7 @@
 -e ../login
 -e ../search
 beautifulsoup4
+devpi-client
 factory-boy
 gitpython
 hgapi
