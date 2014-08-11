@@ -29,7 +29,9 @@
                 <th>Contact</th>
               {% endif %}
               <th>Ticket</th>
-              <th>User</th>
+              {% if not is_home %}
+                <th>User</th>
+              {% endif %}
               <th>Due</th>
               <th>Priority</th>
             </tr>
@@ -49,11 +51,13 @@
                     {{ ticket.title }}
                   </a>
                 </td>
-                <td>
-                  {% if ticket.user_assigned and not is_home %}
-                    <small>{{ ticket.user_assigned }}</small>
-                  {% endif %}
-                </td>
+                {% if not is_home %}
+                  <td>
+                      {% if ticket.user_assigned %}
+                        <small>{{ ticket.user_assigned }}</small>
+                      {% endif %}
+                  </td>
+                {% endif %}
                 <td>
                   {% if ticket.due %}
                     <small>{{ ticket.due|date:"d/m/Y" }}</small>

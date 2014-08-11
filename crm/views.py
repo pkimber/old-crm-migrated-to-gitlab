@@ -68,7 +68,7 @@ class ContactDetailView(
 
 class ContactListView(
         LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
-        
+
     paginate_by = 20
 
     model = Contact
