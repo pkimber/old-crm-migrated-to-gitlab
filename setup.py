@@ -19,7 +19,7 @@ def get_readme():
 
 
 setup(
-    name='pkimber-crm',
+    name='kb-crm',
     packages=['crm', 'crm.migrations', 'crm.tests', 'crm.management', 'crm.management.commands'],
     package_data={
         'crm': [
@@ -31,7 +31,7 @@ setup(
             'templates/search/indexes/crm/*.*',
         ],
     },
-    version='0.1.06',
+    version='0.1.07',
     description='crm',
     author='Patrick Kimber',
     author_email='code@pkimber.net',
