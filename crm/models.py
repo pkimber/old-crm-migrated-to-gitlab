@@ -47,6 +47,11 @@ class Contact(TimeStampedModel):
     def __str__(self):
         return '{}'.format(self.name)
 
+    @property
+    def deleted(self):
+        """No actual delete (yet), so just return 'False'."""
+        return False
+
     def get_absolute_url(self):
         return reverse('crm.contact.detail', args=[self.slug])
 
@@ -117,6 +122,11 @@ class Ticket(TimeStampedModel):
     def __str__(self):
         return '{}'.format(self.title)
 
+    @property
+    def deleted(self):
+        """No actual delete (yet), so just return 'False'."""
+        return False
+
     def get_absolute_url(self):
         return reverse('crm.ticket.detail', args=[self.pk])
 
@@ -147,6 +157,11 @@ class Note(TimeStampedModel):
 
     def __str__(self):
         return '{}'.format(self.title)
+
+    @property
+    def deleted(self):
+        """No actual delete (yet), so just return 'False'."""
+        return False
 
     def get_absolute_url(self):
         return reverse('crm.ticket.detail', args=[self.ticket.pk])
