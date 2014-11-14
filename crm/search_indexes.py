@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
+from celery_haystack.indexes import CelerySearchIndex
 from haystack import indexes
 
 from .models import (
@@ -10,7 +11,7 @@ from .models import (
 )
 
 
-class ContactIndex(indexes.SearchIndex, indexes.Indexable):
+class ContactIndex(CelerySearchIndex, indexes.Indexable):
 
     text = indexes.CharField(document=True, use_template=True)
 
@@ -18,7 +19,7 @@ class ContactIndex(indexes.SearchIndex, indexes.Indexable):
         return Contact
 
 
-class NoteIndex(indexes.SearchIndex, indexes.Indexable):
+class NoteIndex(CelerySearchIndex, indexes.Indexable):
 
     text = indexes.CharField(document=True, use_template=True)
 
@@ -26,7 +27,7 @@ class NoteIndex(indexes.SearchIndex, indexes.Indexable):
         return Note
 
 
-class TicketIndex(indexes.SearchIndex, indexes.Indexable):
+class TicketIndex(CelerySearchIndex, indexes.Indexable):
 
     text = indexes.CharField(document=True, use_template=True)
 
