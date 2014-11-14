@@ -6,4 +6,4 @@ Django==1.6.8
 git+https://github.com/pkimber/django-sendfile#egg=sendfile
 pytz==2014.2
 reportlab==3.1.8
-South==1.0
+South==1.0.1
