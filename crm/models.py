@@ -1,11 +1,12 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
-from datetime import datetime
+from datetime import date
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils import timezone
 
 import reversion
 
@@ -137,8 +138,12 @@ class Ticket(TimeStampedModel):
         ))
 
     def set_complete(self, user):
-        self.complete = datetime.now()
+        self.complete = timezone.now()
         self.complete_user = user
+
+    @property
+    def is_overdue(self):
+        return self.due < date.today()
 
 reversion.register(Ticket)
 
@@ -173,6 +178,6 @@ class Note(TimeStampedModel):
         ))
 
     def modified_today(self):
-        return self.created.date() == datetime.today().date()
+        return self.created.date() == date.today()
 
 reversion.register(Note)

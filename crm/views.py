@@ -152,6 +152,43 @@ class NoteUpdateView(
         return context
 
 
+class ProjectTicketDueListView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
+
+    paginate_by = 30
+    template_name = 'crm/project_ticket_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectTicketDueListView, self).get_context_data(**kwargs)
+        context.update(dict(
+            sort_by_due_date=True,
+        ))
+        return context
+
+    def get_queryset(self):
+        return Ticket.objects.filter(
+            complete__isnull=True
+        ).order_by(
+            'due',
+            'priority',
+        )
+
+
+class ProjectTicketPriorityListView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
+
+    paginate_by = 30
+    template_name = 'crm/project_ticket_list.html'
+
+    def get_queryset(self):
+        return Ticket.objects.filter(
+            complete__isnull=True
+        ).order_by(
+            'priority',
+            'due',
+        )
+
+
 class TicketCompleteView(
         LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, DeleteView):
 

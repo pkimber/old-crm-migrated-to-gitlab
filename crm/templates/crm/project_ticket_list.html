@@ -1,0 +1,125 @@
+{% extends 'crm/base.html' %}
+
+{% block sub_title %}
+  Project planning (version 1)
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Project planning (version 1)
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="pure-g">
+    <div class="pure-u-1">
+      <div class="pure-menu pure-menu-open pure-menu-horizontal">
+        <ul>
+          {% if sort_by_due_date %}
+            <li>
+              <a href="{% url 'crm.project.ticket.priority.list' %}">
+                <i class="fa fa-bar-chart-o"></i>
+                By priority
+              </a>
+            </li>
+          {% else %}
+            <li>
+              <a href="{% url 'crm.project.ticket.due.list' %}">
+                <i class="fa fa-calendar"></i>
+                By due date
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  {% include 'base/_paginate.html' %}
+  <div class="pure-g">
+    <div class="pure-u-1">
+      <div class="l-box">
+        <table class="pure-table pure-table-bordered">
+          <thead>
+            <tr>
+              <th>Contact</th>
+              <th>Ticket</th>
+              {% if sort_by_due_date %}
+                <th>Due date</th>
+              {% else %}
+                <th>Priority</th>
+              {% endif %}
+              <th>User</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ticket in ticket_list %}
+              <tr valign="top">
+                <td>
+                  <small>
+                    <a href="{% url 'crm.contact.detail' ticket.contact.slug %}">
+                      {{ ticket.contact.name|truncatewords:3 }}
+                    </a>
+                  </small>
+                </td>
+                <td>
+                  <small>
+                    <a href="{% url 'crm.ticket.detail' ticket.pk %}">
+                      {{ ticket.title|truncatewords:8 }}
+                    </a>
+                  </small>
+                </td>
+                <td>
+                  <small>
+                    {% if sort_by_due_date %}
+                      {% if ticket.due %}
+                        {% if ticket.is_overdue %}
+                          <strike>
+                        {% else %}
+                          <strong>
+                        {% endif %}
+                        {{ ticket.due|date:"d/m/Y" }}
+                        {% if ticket.is_overdue %}
+                          </strike>
+                        {% else %}
+                          <strong>
+                        {% endif %}
+                      {% endif %}
+                      </strong>
+                      {% if ticket.priority.level %}
+                        |
+                        {{ ticket.priority.name }}
+                      {% endif %}
+                    {% else %}
+                      <strong>
+                        {% if ticket.priority.level %}
+                          {{ ticket.priority.name }}
+                        {% endif %}
+                      </strong>
+                      {% if ticket.due %}
+                        |
+                        {% if ticket.is_overdue %}
+                          <strike>
+                        {% endif %}
+                        {{ ticket.due|date:"d/m/Y" }}
+                        {% if ticket.is_overdue %}
+                          </strike>
+                        {% endif %}
+                      {% endif %}
+                    {% endif %}
+                  </small>
+                </td>
+                <td>
+                  <small>
+                    {% if ticket.user_assigned %}
+                      {{ ticket.user_assigned.username }}
+                    {% endif %}
+                  </small>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {% include 'base/_paginate.html' %}
+  {% include 'crm/_menu.html' %}
+{% endblock content %}

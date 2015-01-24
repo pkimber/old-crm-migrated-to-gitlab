@@ -13,6 +13,8 @@ from .views import (
     HomeTicketListView,
     NoteCreateView,
     NoteUpdateView,
+    ProjectTicketDueListView,
+    ProjectTicketPriorityListView,
     TicketCompleteView,
     TicketCreateView,
     TicketDetailView,
@@ -50,6 +52,14 @@ urlpatterns = patterns(
     url(regex=r'^note/(?P<pk>\d+)/edit/$',
         view=NoteUpdateView.as_view(),
         name='crm.note.update'
+        ),
+    url(regex=r'^project/ticket/due/$',
+        view=ProjectTicketDueListView.as_view(),
+        name='crm.project.ticket.due.list'
+        ),
+    url(regex=r'^project/ticket/priority/$',
+        view=ProjectTicketPriorityListView.as_view(),
+        name='crm.project.ticket.priority.list'
         ),
     url(regex=r'^ticket/(?P<pk>\d+)/complete/$',
         view=TicketCompleteView.as_view(),

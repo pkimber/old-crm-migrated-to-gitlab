@@ -52,6 +52,14 @@ class TestViewPermStaffOnly(TestCase):
         url = reverse('crm.contact.update', kwargs={'slug': self.farm.slug})
         self._assert_staff_only(url)
 
+    def test_project_ticket_due_list(self):
+        url = reverse('crm.project.ticket.due.list')
+        self._assert_staff_only(url)
+
+    def test_project_ticket_priority_list(self):
+        url = reverse('crm.project.ticket.priority.list')
+        self._assert_staff_only(url)
+
     def test_ticket_complete(self):
         url = reverse('crm.ticket.complete', kwargs={'pk': self.fence.pk})
         self._assert_staff_only(url)
