@@ -3,6 +3,7 @@
 -e ../base
 -e ../invoice
 -e ../login
+-e ../mail
 -e ../search
 beautifulsoup4
 devpi-client

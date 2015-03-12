@@ -1,8 +1,9 @@
-bleach==1.4
+bleach==1.4.1
+celery==3.1.17
 django-braces==1.4.0
 django-compressor==1.4
 django-reversion==1.8.5
-Django==1.7.1
-git+https://github.com/pkimber/django-sendfile#egg=sendfile
-pytz==2014.2
-reportlab==3.1.8
+django-sendfile==0.3.6
+Django==1.7.6
+pytz==2014.10
+reportlab==3.1.44
