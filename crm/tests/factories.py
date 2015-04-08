@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-from __future__ import unicode_literals
-
 from decimal import Decimal
 
 from django.template.defaultfilters import slugify
