@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-from __future__ import unicode_literals
-
 from datetime import date
 
 from django.conf import settings
@@ -181,3 +179,18 @@ class Note(TimeStampedModel):
         return self.created.date() == date.today()
 
 reversion.register(Note)
+
+
+class Task(TimeStampedModel):
+    """Task."""
+
+    ticket = models.ForeignKey(Ticket)
+    title = models.CharField(max_length=100)
+    description = models.TextField(blank=True, null=True)
+
+    class Meta:
+        ordering = ('created',)
+        verbose_name = 'Task'
+        verbose_name_plural = 'Tasks'
+
+reversion.register(Task)

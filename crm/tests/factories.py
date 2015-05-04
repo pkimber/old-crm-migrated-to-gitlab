@@ -11,6 +11,7 @@ from login.tests.factories import UserFactory
 from crm.models import (
     Contact,
     Priority,
+    Task,
     Ticket,
 )
 
@@ -47,3 +48,11 @@ class TicketFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Ticket
+
+
+class TaskFactory(factory.django.DjangoModelFactory):
+
+    ticket = factory.SubFactory(TicketFactory)
+
+    class Meta:
+        model = Task
