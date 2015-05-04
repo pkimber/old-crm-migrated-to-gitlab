@@ -1,5 +1,4 @@
-import pytest
-
+# -*- encoding: utf-8 -*-
 from django.core.urlresolvers import reverse
 
 from base.tests.test_utils import PermTestCase

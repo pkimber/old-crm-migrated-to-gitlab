@@ -1,44 +1,25 @@
 # -*- encoding: utf-8 -*-
-from datetime import date
+import pytz
 
+from datetime import datetime
 from dateutil.rrule import (
-    DAILY,
+    MONTHLY,
     rrule,
-    TH,
-    TU,
 )
 
 
-def test_intro():
-    result = rrule(
-        DAILY,
-        count=3,
-        byweekday=(TU, TH),
-        dtstart=date(2015, 1, 1)
-    )
-    print('test_intro')
-    for r in result:
-        print(r)
+def test_end_of_month():
+    d = datetime(2015, 1, 10, 0, 0, 0, tzinfo=pytz.utc)
+    rule = rrule(MONTHLY, bymonthday=(-1,), dtstart=d)
+    result = rule.after(d)
+    assert datetime(2015, 1, 31, 0, 0, 0, tzinfo=pytz.utc) == result
 
 
-def test_monthly():
-    result = rrule(
-        DAILY,
-        count=4,
-        bymonthday=(-1,),
-        dtstart=date(2015, 1, 1)
-    )
-    print('test_monthly')
-    for r in result:
-        print(r)
-
-
-def test_today():
-    result = rrule(
-        DAILY,
-        count=4,
-        bymonthday=(-1,),
-    )
-    print('test_today')
-    for r in result:
-        print(r)
+def test_end_of_following_month():
+    d = datetime(2015, 1, 10, 0, 0, 0, tzinfo=pytz.utc)
+    rule = rrule(MONTHLY, bymonthday=(-1,), dtstart=d)
+    # current recurrence
+    current = rule.after(d)
+    # next recurrence
+    result = rule.after(current)
+    assert datetime(2015, 2, 28, 0, 0, 0, tzinfo=pytz.utc) == result
