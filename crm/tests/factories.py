@@ -53,6 +53,7 @@ class TicketFactory(factory.django.DjangoModelFactory):
 class TaskFactory(factory.django.DjangoModelFactory):
 
     ticket = factory.SubFactory(TicketFactory)
+    user = factory.SubFactory(UserFactory)
 
     class Meta:
         model = Task

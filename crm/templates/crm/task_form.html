@@ -1,0 +1,21 @@
+{% extends 'crm/base.html' %}
+
+{% block sub_title %}
+  Note for ticket {{ ticket.pk }}
+{% endblock sub_title %}
+
+{% block sub_heading %}
+  Note for
+  {{ ticket.contact.name }}
+  ticket {{ ticket.pk }}
+{% endblock sub_heading %}
+
+{% block content %}
+  <div class="pure-g">
+    <div class="pure-u-1">
+      <div class="l-box">
+        {% include '_form.html' with legend=ticket.title %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}

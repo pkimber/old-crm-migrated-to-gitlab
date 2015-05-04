@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-
-from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
@@ -17,6 +15,7 @@ from login.tests.scenario import (
 
 
 class TestViewPermHome(TestCase):
+    """Note: for new tests using factories, check out 'test_view_perm.py'."""
 
     def setUp(self):
         user_contractor()

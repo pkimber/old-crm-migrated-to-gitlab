@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
@@ -27,6 +25,9 @@ class TestViewPermStaffOnly(TestCase):
     belongs to him.
 
     Only a member of staff should be able to access the following views.
+
+    Note: for new tests using factories, check out 'test_view_perm.py'.
+
     """
 
     def setUp(self):

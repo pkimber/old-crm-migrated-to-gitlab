@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-
-from __future__ import unicode_literals
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
@@ -25,6 +23,9 @@ class TestViewPermUser(TestCase):
 
     sara is a smallholder who shouldn't be able to see any of fred's
     information when she is logged into the system
+
+    Note: for new tests using factories, check out 'test_view_perm.py'
+
     """
 
     def setUp(self):

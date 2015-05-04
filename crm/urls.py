@@ -1,8 +1,7 @@
 # -*- encoding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.conf.urls import (
-    patterns, url
+    patterns,
+    url,
 )
 
 from .views import (
@@ -15,6 +14,7 @@ from .views import (
     NoteUpdateView,
     ProjectTicketDueListView,
     ProjectTicketPriorityListView,
+    TaskCreateView,
     TicketCompleteView,
     TicketCreateView,
     TicketDetailView,
@@ -60,6 +60,10 @@ urlpatterns = patterns(
     url(regex=r'^project/ticket/priority/$',
         view=ProjectTicketPriorityListView.as_view(),
         name='crm.project.ticket.priority.list'
+        ),
+    url(regex=r'^ticket/(?P<pk>\d+)/task/add/$',
+        view=TaskCreateView.as_view(),
+        name='crm.task.create'
         ),
     url(regex=r'^ticket/(?P<pk>\d+)/complete/$',
         view=TicketCompleteView.as_view(),

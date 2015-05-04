@@ -185,6 +185,7 @@ class Task(TimeStampedModel):
     """Task."""
 
     ticket = models.ForeignKey(Ticket)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
 

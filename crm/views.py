@@ -22,11 +22,13 @@ from base.view_utils import BaseMixin
 from .forms import (
     ContactForm,
     NoteForm,
+    TaskForm,
     TicketForm,
 )
 from .models import (
     Contact,
     Note,
+    Task,
     Ticket,
     UserContact,
 )
@@ -185,6 +187,31 @@ class ProjectTicketPriorityListView(
             'priority',
             'due',
         )
+
+
+class TaskCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, CreateView):
+
+    form_class = TaskForm
+    model = Task
+
+    def _get_ticket(self):
+        pk = self.kwargs.get('pk', None)
+        ticket = get_object_or_404(Ticket, pk=pk)
+        return ticket
+
+    def get_context_data(self, **kwargs):
+        context = super(TaskCreateView, self).get_context_data(**kwargs)
+        context.update(dict(
+            ticket=self._get_ticket(),
+        ))
+        return context
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.ticket = self._get_ticket()
+        self.object.user = self.request.user
+        return super(TaskCreateView, self).form_valid(form)
 
 
 class TicketCompleteView(
