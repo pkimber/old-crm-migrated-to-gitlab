@@ -214,6 +214,20 @@ class TaskCreateView(
         return super(TaskCreateView, self).form_valid(form)
 
 
+class TaskUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
+
+    form_class = TaskForm
+    model = Task
+
+    def get_context_data(self, **kwargs):
+        context = super(TaskUpdateView, self).get_context_data(**kwargs)
+        context.update(dict(
+            ticket=self.object.ticket,
+        ))
+        return context
+
+
 class TicketCompleteView(
         LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, DeleteView):
 

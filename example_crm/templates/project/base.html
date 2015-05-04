@@ -14,11 +14,11 @@
 {% endblock sub_heading %}
 
 {% block menu %}
-  <li>
-    <a href="{% url "crm.ticket.home" %}">CRM</a>
+  <li class="pure-menu-item">
+    <a href="{% url 'crm.ticket.home' %}" class="pure-menu-link">CRM</a>
   </li>
-  <li>
-    <a href="{% url "admin:index" %}">Admin</a>
+  <li class="pure-menu-item">
+    <a href="{% url 'admin:index' %}" class="pure-menu-link">Admin</a>
   </li>
   {{ block.super }}
 {% endblock menu %}

@@ -89,6 +89,34 @@
                 <td>{{ ticket.description|urlize|linebreaksbr }}</td>
               </tr>
             {% endif %}
+            {% if ticket.task_set.all %}
+              <tr valign="top">
+                <td><strong>Tasks</strong></td>
+                <td></td>
+              </tr>
+            {% endif %}
+            {% for task in ticket.task_set.all %}
+              <tr valign="top">
+                <td>
+                  {{ task.user.username }}
+                </td>
+                <td>
+                  {% if task.user == user and task.modified_today %}
+                    <a href="{% url 'crm.task.update' task.pk %}">
+                      <i class="fa fa-edit"></i>
+                      <strong>{{ task.title }}</strong>
+                    </a>
+                  {% else %}
+                    <strong>{{ task.title }}</strong>
+                  {% endif %}
+                  <small>{{ task.created|date:'d/m/y H:i' }}</small>
+                  {% if task.description %}
+                    <br />
+                    {{ task.description|urlize|linebreaksbr }}
+                  {% endif %}
+              </td>
+              </tr>
+            {% endfor %}
             {% if ticket.note_set.all %}
               <tr valign="top">
                 <td><strong>Notes</strong></td>

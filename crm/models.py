@@ -194,4 +194,10 @@ class Task(TimeStampedModel):
         verbose_name = 'Task'
         verbose_name_plural = 'Tasks'
 
+    def get_absolute_url(self):
+        return reverse('crm.ticket.detail', args=[self.ticket.pk])
+
+    def modified_today(self):
+        return self.created.date() == date.today()
+
 reversion.register(Task)

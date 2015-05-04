@@ -15,6 +15,7 @@ from .views import (
     ProjectTicketDueListView,
     ProjectTicketPriorityListView,
     TaskCreateView,
+    TaskUpdateView,
     TicketCompleteView,
     TicketCreateView,
     TicketDetailView,
@@ -64,6 +65,10 @@ urlpatterns = patterns(
     url(regex=r'^ticket/(?P<pk>\d+)/task/add/$',
         view=TaskCreateView.as_view(),
         name='crm.task.create'
+        ),
+    url(regex=r'^task/(?P<pk>\d+)/edit/$',
+        view=TaskUpdateView.as_view(),
+        name='crm.task.update'
         ),
     url(regex=r'^ticket/(?P<pk>\d+)/complete/$',
         view=TicketCompleteView.as_view(),
