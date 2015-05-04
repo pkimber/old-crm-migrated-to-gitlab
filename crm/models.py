@@ -1,5 +1,9 @@
 # -*- encoding: utf-8 -*-
 from datetime import date
+from dateutil.rrule import (
+    MONTHLY,
+    rrule,
+)
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -196,7 +200,7 @@ class Task(TimeStampedModel):
     description = models.TextField(blank=True, null=True)
     recurrence = models.IntegerField(choices=RECURRENCE_CHOICES, blank=True, null=True)
     # copy of fields from the ticket model
-    due = models.DateField(blank=True, null=True)
+    due = models.DateTimeField(blank=True, null=True)
     complete = models.DateTimeField(blank=True, null=True)
     complete_user = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True, related_name='+'
@@ -212,6 +216,17 @@ class Task(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('crm.ticket.detail', args=[self.ticket.pk])
+
+    def recurrence_init(self):
+        if self.recurrence == self.END_OF_MONTH:
+            today = timezone.now()
+            rule = rrule(MONTHLY, bymonthday=(-1,), dtstart=today)
+            self.due = rule.after(today)
+
+    def recurrence_increment(self):
+        if self.recurrence == self.END_OF_MONTH:
+            rule = rrule(MONTHLY, bymonthday=(-1,), dtstart=self.due)
+            self.due = rule.after(self.due)
 
     def modified_today(self):
         return self.created.date() == date.today()
