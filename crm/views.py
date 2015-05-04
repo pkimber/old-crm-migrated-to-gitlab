@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 

@@ -17,8 +17,9 @@ develop-eggs
 .installed.cfg
 lib
 lib64
+__pycache__
 
-# Installer
+# Installer logs
 pip-log.txt
 MANIFEST
 
@@ -26,6 +27,8 @@ MANIFEST
 .coverage
 .tox
 nosetests.xml
+temp.db
+venv-*
 
 # Translations
 *.mo
@@ -36,10 +39,12 @@ nosetests.xml
 .pydevproject
 
 # dev
-media
-media-private
-temp.db
-venv-*
+.cache/
+*~
 
 # private info
 .private
+
+# media
+media/
+media-private/

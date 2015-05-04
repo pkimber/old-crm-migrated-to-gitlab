@@ -196,6 +196,7 @@ class Task(TimeStampedModel):
     description = models.TextField(blank=True, null=True)
     recurrence = models.IntegerField(choices=RECURRENCE_CHOICES, blank=True, null=True)
     # copy of fields from the ticket model
+    due = models.DateField(blank=True, null=True)
     complete = models.DateTimeField(blank=True, null=True)
     complete_user = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True, related_name='+'
