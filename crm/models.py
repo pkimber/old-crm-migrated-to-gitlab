@@ -105,7 +105,7 @@ reversion.register(Priority)
 
 
 class Ticket(TimeStampedModel):
-    """ Contact """
+    """Ticket."""
     contact = models.ForeignKey(Contact)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=100)
@@ -145,6 +145,10 @@ class Ticket(TimeStampedModel):
     def set_complete(self, user):
         self.complete = timezone.now()
         self.complete_user = user
+
+    def tasks(self):
+        """Current tasks for this ticket."""
+        return self.task_set.filter(complete__isnull=True).order_by('due')
 
     @property
     def is_overdue(self):
@@ -191,6 +195,7 @@ reversion.register(Note)
 class TaskManager(models.Manager):
 
     def create_task_recurrence(self, task, user):
+        """Create a new task from the current task."""
         if task.recurrence:
             obj = copy_model_instance(task)
             obj.user = user
