@@ -12,7 +12,10 @@ from django.utils import timezone
 
 import reversion
 
-from base.model_utils import TimeStampedModel
+from base.model_utils import (
+    copy_model_instance,
+    TimeStampedModel,
+)
 
 
 class Industry(models.Model):
@@ -185,6 +188,18 @@ class Note(TimeStampedModel):
 reversion.register(Note)
 
 
+class TaskManager(models.Manager):
+
+    def create_task_recurrence(self, task, user):
+        if task.recurrence:
+            obj = copy_model_instance(task)
+            obj.user = user
+            obj.complete = None
+            obj.complete_user = None
+            obj.recurrence_increment()
+            obj.save()
+
+
 class Task(TimeStampedModel):
     """Task."""
 
@@ -208,6 +223,7 @@ class Task(TimeStampedModel):
     user_assigned = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True, related_name='+'
     )
+    objects = TaskManager()
 
     class Meta:
         ordering = ('created',)
@@ -216,6 +232,9 @@ class Task(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('crm.ticket.detail', args=[self.ticket.pk])
+
+    def can_edit(self):
+        return self.modified_today and not self.complete
 
     def recurrence_init(self):
         if self.recurrence == self.END_OF_MONTH:

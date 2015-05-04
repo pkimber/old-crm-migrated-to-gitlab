@@ -101,7 +101,10 @@
                   {{ task.user.username }}
                 </td>
                 <td>
-                  {% if task.user == user and task.modified_today %}
+                  {% if task.complete %}
+                    <strike>
+                  {% endif %}
+                  {% if task.can_edit and user == task.user %}
                     <a href="{% url 'crm.task.update' task.pk %}">
                       <i class="fa fa-edit"></i>
                       {{ task.title }}
@@ -109,12 +112,18 @@
                   {% else %}
                     {{ task.title }}
                   {% endif %}
-                  <small>{{ task.created|date:'d/m/y H:i' }}</small>
+                  <small>Created: {{ task.created|date:'d/m/y H:i' }}</small>
+                  {% if task.due %}
+                    <br />
+                    Due: {{ task.due|date:'d/m/Y' }}
+                  {% endif %}
                   {% if task.description %}
                     <br />
                     {{ task.description|urlize|linebreaksbr }}
                   {% endif %}
-                  {% if not task.complete %}
+                  {% if task.complete %}
+                    </strike>
+                  {% else %}
                     <br />
                     <a href="{% url 'crm.task.complete' task.pk %}">
                       <i class="fa fa-check-square-o"></i>

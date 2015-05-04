@@ -37,6 +37,19 @@
                 {{ object.title }}
               </td>
             </tr>
+
+            {% if object.due %}
+              <tr valign="top">
+                <td>
+                  Task
+                </td>
+                <td>
+                  {{ object.due }}
+                </td>
+              </tr>
+            {% endif %}
+
+
           </tbody>
         </table>
       </div>

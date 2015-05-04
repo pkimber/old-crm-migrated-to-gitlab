@@ -213,6 +213,7 @@ class TaskCreateView(
         self.object = form.save(commit=False)
         self.object.ticket = self._get_ticket()
         self.object.user = self.request.user
+        self.object.recurrence_init()
         return super(TaskCreateView, self).form_valid(form)
 
 
@@ -228,6 +229,7 @@ class TaskCompleteView(
             self.object = form.save(commit=False)
             self.object.set_complete(self.request.user)
             self.object = form.save()
+            Task.objects.create_task_recurrence(self.object, self.request.user)
             messages.info(
                 self.request,
                 "Completed task {}, {} on {}".format(
