@@ -19,6 +19,11 @@ class TestViewPerm(PermTestCase):
         url = reverse('crm.task.create', kwargs={'pk': ticket.pk})
         self.assert_staff_only(url)
 
+    def test_task_complete(self):
+        task = TaskFactory()
+        url = reverse('crm.task.complete', kwargs={'pk': task.pk})
+        self.assert_staff_only(url)
+
     def test_task_update(self):
         task = TaskFactory()
         url = reverse('crm.task.update', kwargs={'pk': task.pk})

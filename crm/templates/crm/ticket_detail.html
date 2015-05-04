@@ -32,7 +32,7 @@
               <td>
                 <a href="{% url "crm.ticket.update" ticket.pk %}">
                   <i class="fa fa-edit"></i>
-                  <strong>{{ ticket.title }}</strong>
+                  {{ ticket.title }}
                 </a>
               </td>
             </tr>
@@ -104,15 +104,22 @@
                   {% if task.user == user and task.modified_today %}
                     <a href="{% url 'crm.task.update' task.pk %}">
                       <i class="fa fa-edit"></i>
-                      <strong>{{ task.title }}</strong>
+                      {{ task.title }}
                     </a>
                   {% else %}
-                    <strong>{{ task.title }}</strong>
+                    {{ task.title }}
                   {% endif %}
                   <small>{{ task.created|date:'d/m/y H:i' }}</small>
                   {% if task.description %}
                     <br />
                     {{ task.description|urlize|linebreaksbr }}
+                  {% endif %}
+                  {% if not task.complete %}
+                    <br />
+                    <a href="{% url 'crm.task.complete' task.pk %}">
+                      <i class="fa fa-check-square-o"></i>
+                      Complete
+                    </a>
                   {% endif %}
               </td>
               </tr>
@@ -132,10 +139,10 @@
                   {% if note.user == user and note.modified_today %}
                     <a href="{% url "crm.note.update" note.pk %}">
                       <i class="fa fa-edit"></i>
-                      <strong>{{ note.title }}</strong>
+                      {{ note.title }}
                     </a>
                   {% else %}
-                    <strong>{{ note.title }}</strong>
+                    {{ note.title }}
                   {% endif %}
                   <small>{{ note.created|date:"d/m/y H:i" }}</small>
                   {% if note.description %}

@@ -22,6 +22,7 @@ from base.view_utils import BaseMixin
 from .forms import (
     ContactForm,
     NoteForm,
+    TaskEmptyForm,
     TaskForm,
     TicketForm,
 )
@@ -212,6 +213,29 @@ class TaskCreateView(
         self.object.ticket = self._get_ticket()
         self.object.user = self.request.user
         return super(TaskCreateView, self).form_valid(form)
+
+
+class TaskCompleteView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
+
+    form_class = TaskEmptyForm
+    model = Task
+    template_name = 'crm/task_complete.html'
+
+    def form_valid(self, form):
+        with transaction.atomic():
+            self.object = form.save(commit=False)
+            self.object.set_complete(self.request.user)
+            self.object = form.save()
+            messages.info(
+                self.request,
+                "Completed task {}, {} on {}".format(
+                    self.object.pk,
+                    self.object.title,
+                    self.object.complete.strftime('%d/%m/%Y at %H:%M'),
+                )
+            )
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class TaskUpdateView(

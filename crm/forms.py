@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+from django import forms
+
 from base.form_utils import RequiredFieldForm
 from .models import (
     Contact,
@@ -48,6 +50,13 @@ class NoteForm(RequiredFieldForm):
         )
 
 
+class TaskEmptyForm(forms.ModelForm):
+
+    class Meta:
+        model = Task
+        fields = ()
+
+
 class TaskForm(RequiredFieldForm):
 
     def __init__(self, *args, **kwargs):
@@ -60,8 +69,10 @@ class TaskForm(RequiredFieldForm):
     class Meta:
         model = Task
         fields = (
-            "title",
-            "description",
+            'title',
+            'recurrence',
+            'description',
+            'user_assigned',
         )
 
 

@@ -184,10 +184,25 @@ reversion.register(Note)
 class Task(TimeStampedModel):
     """Task."""
 
+    END_OF_MONTH = 1
+
+    RECURRENCE_CHOICES = (
+        (END_OF_MONTH, 'End of Month'),
+    )
+
     ticket = models.ForeignKey(Ticket)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
+    recurrence = models.IntegerField(choices=RECURRENCE_CHOICES, blank=True, null=True)
+    # copy of fields from the ticket model
+    complete = models.DateTimeField(blank=True, null=True)
+    complete_user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, blank=True, null=True, related_name='+'
+    )
+    user_assigned = models.ForeignKey(
+        settings.AUTH_USER_MODEL, blank=True, null=True, related_name='+'
+    )
 
     class Meta:
         ordering = ('created',)
@@ -199,5 +214,9 @@ class Task(TimeStampedModel):
 
     def modified_today(self):
         return self.created.date() == date.today()
+
+    def set_complete(self, user):
+        self.complete = timezone.now()
+        self.complete_user = user
 
 reversion.register(Task)
