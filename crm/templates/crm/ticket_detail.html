@@ -26,6 +26,7 @@
                   {{ ticket.contact.address }}
                 </small>
               </td>
+              <td></td>
             </tr>
             <tr>
               <td>Ticket {{ ticket.pk }}</td>
@@ -35,6 +36,7 @@
                   {{ ticket.title }}
                 </a>
               </td>
+              <td></td>
             </tr>
             {% if ticket.priority.level or ticket.due %}
               <tr>
@@ -47,6 +49,7 @@
                     <small>by {{ ticket.due|date:"d/m/Y" }}</small>
                   {% endif %}
                 </td>
+                <td></td>
               </tr>
             {% endif %}
             <tr>
@@ -61,6 +64,7 @@
                   {{ ticket.user.username }}
                 </small>
               </td>
+              <td></td>
             </tr>
             {% if ticket.complete %}
               <tr>
@@ -70,28 +74,33 @@
                   <small>by {{ ticket.complete_user.username }}</small>
                 </td>
               </tr>
+              <td></td>
             {% endif %}
             {% if ticket.contact.mail %}
             <tr valign="top">
               <td>email</td>
               <td>{{ ticket.contact.mail|urlize }}</td>
+              <td></td>
             </tr>
             {% endif %}
             {% if ticket.contact.phone %}
             <tr valign="top">
               <td>Phone</td>
               <td>{{ ticket.contact.phone }}</td>
+              <td></td>
             </tr>
             {% endif %}
             {% if ticket.description %}
               <tr valign="top">
                 <td>Description</td>
                 <td>{{ ticket.description|urlize|linebreaksbr }}</td>
+                <td></td>
               </tr>
             {% endif %}
             {% if ticket.tasks.count %}
               <tr valign="top">
                 <td><strong>Tasks</strong></td>
+                <td></td>
                 <td></td>
               </tr>
             {% endif %}
@@ -109,26 +118,27 @@
                   {% else %}
                     {{ task.title }}
                   {% endif %}
-                  <small>Created: {{ task.created|date:'d/m/y H:i' }}</small>
                   {% if task.due %}
-                    <br />
-                    Due: {{ task.due|date:'d/m/Y' }}
+                    due {{ task.due|date:'d/m/Y' }}
                   {% endif %}
+                  <small>(created {{ task.created|date:'d/m/y' }})</small>
                   {% if task.description %}
                     <br />
                     {{ task.description|urlize|linebreaksbr }}
                   {% endif %}
                   <br />
-                  <a href="{% url 'crm.task.complete' task.pk %}">
+                </td>
+                <td>
+                  <a href="{% url 'crm.task.complete' task.pk %}" title="Complete">
                     <i class="fa fa-check-square-o"></i>
-                    Complete
                   </a>
-              </td>
+                </td>
               </tr>
             {% endfor %}
             {% if ticket.note_set.all %}
               <tr valign="top">
                 <td><strong>Notes</strong></td>
+                <td></td>
                 <td></td>
               </tr>
             {% endif %}
@@ -151,7 +161,8 @@
                     <br />
                     {{ note.description|urlize|linebreaksbr }}
                   {% endif %}
-              </td>
+                </td>
+                <td></td>
               </tr>
             {% endfor %}
           </tbody>
