@@ -1,19 +1,10 @@
 # -*- encoding: utf-8 -*-
-from __future__ import unicode_literals
-
 from datetime import date
 
 from django.test import TestCase
 
-from search.tests.helper import check_search_methods
-
 from crm.tests.factories import TicketFactory
-from crm.tests.model_maker import (
-    make_contact,
-    make_ticket,
-    make_priority,
-)
-from login.tests.scenario import make_user
+from search.tests.helper import check_search_methods
 
 
 class TestContact(TestCase):

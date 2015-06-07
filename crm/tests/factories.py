@@ -1,18 +1,14 @@
 # -*- encoding: utf-8 -*-
-from decimal import Decimal
-
-from django.template.defaultfilters import slugify
-from django.utils import timezone
-
 import factory
 
-from login.tests.factories import UserFactory
+from decimal import Decimal
 
 from crm.models import (
     Contact,
     Priority,
     Ticket,
 )
+from login.tests.factories import UserFactory
 
 
 class ContactFactory(factory.django.DjangoModelFactory):

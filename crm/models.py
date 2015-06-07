@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-from __future__ import unicode_literals
-
 from datetime import date
 
 from django.conf import settings
@@ -28,7 +26,7 @@ reversion.register(Industry)
 
 
 class Contact(TimeStampedModel):
-    """ Contact """
+
     name = models.CharField(max_length=100)
     address = models.TextField(blank=True)
     slug = models.SlugField(unique=True)
@@ -87,6 +85,7 @@ class UserContact(TimeStampedModel):
 
 class Priority(models.Model):
     """Level 0 will exclude the ticket from normal reminder lists"""
+
     name = models.CharField(max_length=100, unique=True)
     level = models.IntegerField()
 
@@ -102,7 +101,7 @@ reversion.register(Priority)
 
 
 class Ticket(TimeStampedModel):
-    """ Contact """
+
     contact = models.ForeignKey(Contact)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=100)
@@ -151,7 +150,7 @@ reversion.register(Ticket)
 
 
 class Note(TimeStampedModel):
-    """ Contact """
+
     ticket = models.ForeignKey(Ticket)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=100)
