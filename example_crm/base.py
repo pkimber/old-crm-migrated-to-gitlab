@@ -121,6 +121,7 @@ LOCAL_APPS = (
     'base',
     'crm',
     'example_crm',
+    'finance',
     'invoice',
     'login',
     'mail',
@@ -163,6 +164,8 @@ LOGIN_REDIRECT_URL = reverse_lazy('project.dash')
 
 # django-compressor
 COMPRESS_ENABLED = False # defaults to the opposite of DEBUG
+
+CONTACT_MODEL = 'crm.Contact'
 
 # Django debug toolbar
 INTERNAL_IPS = ('127.0.0.1',)

@@ -75,8 +75,10 @@ class UserContact(TimeStampedModel):
     Andy - ConnexionSW
     Fred - ConnexionSW
     Kate - British Sugar
+
     """
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, unique=True)
+
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
     contact = models.ForeignKey(Contact)
 
     def __str__(self):

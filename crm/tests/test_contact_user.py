@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-
-from __future__ import unicode_literals
 from django.db import IntegrityError
 from django.test import TestCase
 
@@ -26,8 +24,8 @@ class TestContactUser(TestCase):
         user_contractor()
         default_scenario_login()
         default_scenario_crm()
-        user_contacts = get_user_fred().usercontact_set.all()
-        self.assertIn("Fred's Farm", user_contacts[0].contact.name)
+        user = get_user_fred()
+        self.assertIn("Fred's Farm", user.usercontact.contact.name)
 
     def test_one_contact_per_user(self):
         """Make sure a user can only link to one contact"""

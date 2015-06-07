@@ -35,7 +35,9 @@ from .models import (
 def check_perm(user, contact):
     if user.is_staff:
         pass
-    elif not user.usercontact_set.filter(contact=contact):
+    elif user.usercontact.contact == contact:
+        pass
+    else:
         # the user is NOT linked to the contact
         raise PermissionDenied()
 
@@ -99,9 +101,9 @@ class HomeTicketListView(LoginRequiredMixin, BaseMixin, ListView):
             )
         else:
             try:
-                contact = UserContact.objects.get(user=self.request.user)
+                user_contact = UserContact.objects.get(user=self.request.user)
                 result = Ticket.objects.filter(
-                    contact=contact,
+                    contact=user_contact.contact,
                     complete__isnull=True,
                 )
             except UserContact.DoesNotExist:

@@ -1,6 +1,7 @@
 -r base.txt
 -e .
 -e ../base
+-e ../finance
 -e ../invoice
 -e ../login
 -e ../mail
