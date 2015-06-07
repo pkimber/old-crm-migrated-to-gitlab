@@ -8,3 +8,4 @@ Django==1.8.2
 python-dateutil==2.4.1
 pytz==2014.10
 reportlab==3.1.44
+tasklib==0.9.0
