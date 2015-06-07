@@ -3,13 +3,10 @@
 from django.core.urlresolvers import reverse_lazy
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 TESTING = False
 
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
-
-TEMPLATE_STRING_IF_INVALID = '**** INVALID EXPRESSION: %s ****'
 
 ADMINS = (
     ('admin', 'code@pkimber.net'),
@@ -93,11 +90,25 @@ ROOT_URLCONF = 'example_crm.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'example_crm.wsgi.application'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+            'string_if_invalid': '**** INVALID EXPRESSION: %s ****',
+        },
+    },
+]
 
 DJANGO_APPS = (
     'django.contrib.auth',
