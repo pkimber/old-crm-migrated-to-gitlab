@@ -16,9 +16,15 @@ from braces.views import (
     LoginRequiredMixin,
     StaffuserRequiredMixin,
 )
+from rest_framework import (
+    authentication,
+    permissions,
+    status,
+)
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from base.view_utils import BaseMixin
-
 from .forms import (
     ContactForm,
     NoteForm,
@@ -30,6 +36,7 @@ from .models import (
     Ticket,
     UserContact,
 )
+from .serializers import TicketSerializer
 
 
 def check_perm(user, contact):
@@ -166,12 +173,7 @@ class ProjectTicketDueListView(
         return context
 
     def get_queryset(self):
-        return Ticket.objects.filter(
-            complete__isnull=True
-        ).order_by(
-            'due',
-            'priority',
-        )
+        return Ticket.objects.current().order_by('due', 'priority')
 
 
 class ProjectTicketPriorityListView(
@@ -181,12 +183,22 @@ class ProjectTicketPriorityListView(
     template_name = 'crm/project_ticket_list.html'
 
     def get_queryset(self):
-        return Ticket.objects.filter(
-            complete__isnull=True
-        ).order_by(
-            'priority',
-            'due',
-        )
+        return Ticket.objects.current().order_by('priority', 'due')
+
+
+class TicketAPIView(APIView):
+
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAdminUser,)
+    #permission_classes = (permissions.AllowAny,)
+
+    def get(self, request, pk=None, format=None):
+        if pk:
+            ticket = Ticket.objects.get(pk=pk)
+            serializer = TicketSerializer(ticket)
+        else:
+            serializer = TicketSerializer(Ticket.objects.current(), many=True)
+        return Response(serializer.data)
 
 
 class TicketCompleteView(

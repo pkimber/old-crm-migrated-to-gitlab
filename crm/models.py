@@ -100,6 +100,12 @@ class Priority(models.Model):
 reversion.register(Priority)
 
 
+class TicketManager(models.Manager):
+
+    def current(self):
+        return self.model.objects.filter(complete__isnull=True)
+
+
 class Ticket(TimeStampedModel):
 
     contact = models.ForeignKey(Contact)
@@ -115,6 +121,7 @@ class Ticket(TimeStampedModel):
     user_assigned = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True, related_name='+'
     )
+    objects = TicketManager()
 
     class Meta:
         ordering = ('-complete', 'due', '-priority__level', 'created',)
@@ -186,7 +193,7 @@ reversion.register(Note)
 
 class TicketTaskWarriorManager(models.Manager):
 
-    def create_taskwarrior(self, uuid, ticket):
+    def create_taskwarrior(self, user, uuid, ticket):
         obj = self.model(
             uuid=uuid,
             ticket=ticket,
@@ -195,35 +202,43 @@ class TicketTaskWarriorManager(models.Manager):
         return obj
 
 
-class TicketTaskWarrior(TimeStampedModel):
-    """Link our tickets to a TaskWarrior database for managing tasks.
-
-    We will try to use https://github.com/robgolding63/tasklib to create and
-    update the tasks:
-    http://tasklib.readthedocs.org/en/latest/
-
-    From the TaskWarrior documentation,
-    http://taskwarrior.org/docs/design/task.html
-    Data Type: UUID:
-
-    A UUID is a 32-hex-character lower case string, formatted in this way:
-    xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-
-    An example:
-    296d835e-8f85-4224-8f36-c612cad1b9f8
-
-    """
-
-    ticket = models.OneToOneField(Ticket)
-    uuid = models.UUIDField(unique=True)
-    objects = TicketTaskWarriorManager()
-
-    class Meta:
-        ordering = ('ticket__pk',)
-        verbose_name = 'Ticket TaskWarrior'
-        verbose_name_plural = 'Ticket TaskWarrior'
-
-    def __str__(self):
-        return '{}'.format(self.ticket.pk)
-
-reversion.register(TicketTaskWarrior)
+#class TicketTaskWarrior(TimeStampedModel):
+#    """Link our tickets to a TaskWarrior database for managing tasks.
+#
+#    We will try to use https://github.com/robgolding63/tasklib to create and
+#    update the tasks:
+#    http://tasklib.readthedocs.org/en/latest/
+#
+#    From the TaskWarrior documentation,
+#    http://taskwarrior.org/docs/design/task.html
+#    Data Type: UUID:
+#
+#    A UUID is a 32-hex-character lower case string, formatted in this way:
+#    xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+#
+#    An example:
+#    296d835e-8f85-4224-8f36-c612cad1b9f8
+#
+#    We will give access to this model through the API, so we need to know which
+#    user has created the link to their local TaskWarrior database.
+#
+#    """
+#
+#    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+#    ticket = models.OneToOneField(Ticket)
+#    uuid = models.UUIDField(unique=True)
+#    objects = TicketTaskWarriorManager()
+#
+#    class Meta:
+#        ordering = ('ticket__pk',)
+#        unique_together = (
+#            ('user', 'ticket'),
+#            ('user', 'uuid'),
+#        )
+#        verbose_name = 'Ticket TaskWarrior'
+#        verbose_name_plural = 'Ticket TaskWarrior'
+#
+#    def __str__(self):
+#        return '{}'.format(self.ticket.pk)
+#
+#reversion.register(TicketTaskWarrior)
