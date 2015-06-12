@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
-from datetime import datetime
 from datetime import timedelta
 
 from django.test import TestCase
+from django.utils import timezone
 
 from crm.tests.scenario import (
     default_scenario_crm,
@@ -33,13 +33,13 @@ class TestNote(TestCase):
         self.assertTrue(self.note.modified_today())
 
     def test_modified_tomorrow(self):
-        tomorrow = datetime.today() + timedelta(days=1)
+        tomorrow = timezone.now() + timedelta(days=1)
         self.note.created = tomorrow
         self.note.save()
         self.assertFalse(self.note.modified_today())
 
     def test_modified_yesterday(self):
-        yesterday = datetime.today() - timedelta(days=1)
+        yesterday = timezone.now() - timedelta(days=1)
         self.note.created = yesterday
         self.note.save()
         self.assertFalse(self.note.modified_today())
