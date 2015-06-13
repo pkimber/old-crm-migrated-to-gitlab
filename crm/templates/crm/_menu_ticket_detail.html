@@ -1,31 +1,31 @@
 <div class="pure-g">
   <div class="pure-u-1">
     <div class="pure-menu pure-menu-open pure-menu-horizontal">
-      <ul>
-        <li>
-          <a href="{% url 'crm.note.create' ticket.pk %}">
+      <ul class="pure-menu-list">
+        <li class="pure-menu-item">
+          <a href="{% url 'crm.note.create' ticket.pk %}" class="pure-menu-link">
             <i class="fa fa-comment-o"></i>
             Add note
           </a>
         </li>
         {% if user.is_staff %}
-          <li>
-            <a href="{% url 'invoice.time.create' ticket.pk %}">
+          <li class="pure-menu-item">
+            <a href="{% url 'invoice.time.create' ticket.pk %}" class="pure-menu-link">
               <i class="fa fa-clock-o"></i>
               Add time
             </a>
           </li>
         {% endif %}
-        <li>
-          <a href="{% url 'invoice.time.ticket.list' ticket.pk %}">
+        <li class="pure-menu-item">
+          <a href="{% url 'invoice.time.ticket.list' ticket.pk %}" class="pure-menu-link">
             <i class="fa fa-clock-o"></i>
             View time
           </a>
         </li>
         {% if user.is_staff %}
           {% if not ticket.complete %}
-            <li>
-              <a href="{% url 'crm.ticket.complete' ticket.pk %}">
+            <li class="pure-menu-item">
+              <a href="{% url 'crm.ticket.complete' ticket.pk %}" class="pure-menu-link">
                 <i class="fa fa-check-square-o"></i>
                 Complete ticket
               </a>
