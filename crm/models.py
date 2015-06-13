@@ -100,6 +100,19 @@ class Priority(models.Model):
 reversion.register(Priority)
 
 
+class TicketManager(models.Manager):
+
+    def current(self):
+        return self.model.objects.filter(complete__isnull=True)
+
+    def planner(self):
+        return self.model.objects.filter(
+            complete__isnull=True
+        ).exclude(
+            priority__level=0
+        )
+
+
 class Ticket(TimeStampedModel):
 
     contact = models.ForeignKey(Contact)
@@ -115,6 +128,7 @@ class Ticket(TimeStampedModel):
     user_assigned = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True, related_name='+'
     )
+    objects = TicketManager()
 
     class Meta:
         ordering = ('-complete', 'due', '-priority__level', 'created',)

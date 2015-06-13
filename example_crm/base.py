@@ -125,6 +125,9 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     # 'debug_toolbar',
     'compressor',
+    'rest_framework',
+    # http://www.django-rest-framework.org/api-guide/authentication#tokenauthentication
+    'rest_framework.authtoken',
     'reversion',
 )
 
@@ -183,6 +186,20 @@ INTERNAL_IPS = ('127.0.0.1',)
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
     'ENABLE_STACKTRACES': True,
+}
+
+# http://www.django-rest-framework.org/api-guide/authentication#tokenauthentication
+REST_FRAMEWORK = {
+    'COERCE_DECIMAL_TO_STRING': True,
+    # not sure if this is required or not
+    # 'DATETIME_FORMAT': '%Y%m%dT%H%M%SZ',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAdminUser',
+    ),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 
 # https://github.com/johnsensible/django-sendfile

@@ -6,4 +6,4 @@ include README
 include requirements/*.txt
 include *.txt
 
-prune example/
+prune example_crm/

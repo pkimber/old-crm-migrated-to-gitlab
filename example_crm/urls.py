@@ -22,12 +22,19 @@ urlpatterns = patterns(
     url(regex=r'^admin/',
         view=include(admin.site.urls)
         ),
+    url(regex=r'^api/',
+        view=include('crm.urls_api')
+        ),
     url(regex=r'^crm/',
         view=include('crm.urls')
         ),
     url(regex=r'^invoice/',
         view=include('invoice.urls')
         ),
+    url(regex=r'^token/$',
+        view='rest_framework.authtoken.views.obtain_auth_token',
+        name='api.token.auth',
+    ),
     url(r'^home/user/$',
         view=RedirectView.as_view(url=reverse_lazy('crm.ticket.home')),
         name='project.dash'

@@ -11,18 +11,18 @@
 {% block content %}
   <div class="pure-g">
     <div class="pure-u-1">
-      <div class="pure-menu pure-menu-open pure-menu-horizontal">
-        <ul>
+      <div class="pure-menu pure-menu-horizontal">
+        <ul class="pure-menu-list">
           {% if sort_by_due_date %}
-            <li>
-              <a href="{% url 'crm.project.ticket.priority.list' %}">
+            <li class="pure-menu-item">
+              <a href="{% url 'crm.project.ticket.priority.list' %}" class="pure-menu-link">
                 <i class="fa fa-bar-chart-o"></i>
                 By priority
               </a>
             </li>
           {% else %}
-            <li>
-              <a href="{% url 'crm.project.ticket.due.list' %}">
+            <li class="pure-menu-item">
+              <a href="{% url 'crm.project.ticket.due.list' %}" class="pure-menu-link">
                 <i class="fa fa-calendar"></i>
                 By due date
               </a>
