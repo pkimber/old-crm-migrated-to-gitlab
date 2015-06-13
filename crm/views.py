@@ -197,7 +197,10 @@ class TicketAPIView(APIView):
             ticket = Ticket.objects.get(pk=pk)
             serializer = TicketSerializer(ticket)
         else:
-            serializer = TicketSerializer(Ticket.objects.current(), many=True)
+            serializer = TicketSerializer(
+                Ticket.objects.planner().order_by('pk'),
+                many=True
+            )
         return Response(serializer.data)
 
 

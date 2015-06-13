@@ -105,6 +105,13 @@ class TicketManager(models.Manager):
     def current(self):
         return self.model.objects.filter(complete__isnull=True)
 
+    def planner(self):
+        return self.model.objects.filter(
+            complete__isnull=True
+        ).exclude(
+            priority__level=0
+        )
+
 
 class Ticket(TimeStampedModel):
 
@@ -191,15 +198,15 @@ class Note(TimeStampedModel):
 reversion.register(Note)
 
 
-class TicketTaskWarriorManager(models.Manager):
-
-    def create_taskwarrior(self, user, uuid, ticket):
-        obj = self.model(
-            uuid=uuid,
-            ticket=ticket,
-        )
-        obj.save()
-        return obj
+#class TicketTaskWarriorManager(models.Manager):
+#
+#    def create_taskwarrior(self, user, uuid, ticket):
+#        obj = self.model(
+#            uuid=uuid,
+#            ticket=ticket,
+#        )
+#        obj.save()
+#        return obj
 
 
 #class TicketTaskWarrior(TimeStampedModel):

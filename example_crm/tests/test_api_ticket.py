@@ -28,13 +28,13 @@ def api_client():
 @pytest.mark.django_db
 def test_api_ticket(api_client):
     t1 = TicketFactory(
-        contact=ContactFactory(name='Andrea'),
+        contact=ContactFactory(slug='andrea'),
         priority=PriorityFactory(name='Medium'),
         title='Mow the lawn',
         user_assigned=UserFactory(username='akimber'),
     )
     t2 = TicketFactory(
-        contact=ContactFactory(name='Patrick'),
+        contact=ContactFactory(slug='patrick'),
         priority=PriorityFactory(name='High'),
         title='Make a cup of tea',
         user_assigned=UserFactory(username='pkimber'),
@@ -44,19 +44,19 @@ def test_api_ticket(api_client):
     assert status.HTTP_200_OK == response.status_code
     assert [
         {
-            'contact': 'Andrea',
+            'contact': 'andrea',
             'due': None,
             'id': t1.pk,
             'priority': 'Medium',
             'title': 'Mow the lawn',
-            'user_assigned': 'akimber',
+            'username': 'akimber',
         },
         {
-            'contact': 'Patrick',
+            'contact': 'patrick',
             'due': None,
             'id': t2.pk,
             'priority': 'High',
             'title': 'Make a cup of tea',
-            'user_assigned': 'pkimber',
+            'username': 'pkimber',
         },
     ] == response.data

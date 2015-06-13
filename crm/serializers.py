@@ -6,9 +6,9 @@ from .models import Ticket
 
 class TicketSerializer(serializers.ModelSerializer):
 
-    contact = serializers.ReadOnlyField(source='contact.name')
+    contact = serializers.ReadOnlyField(source='contact.slug')
     priority = serializers.ReadOnlyField(source='priority.name')
-    user_assigned = serializers.ReadOnlyField(source='user_assigned.username')
+    username = serializers.ReadOnlyField(source='user_assigned.username')
 
     class Meta:
         model = Ticket
@@ -18,5 +18,5 @@ class TicketSerializer(serializers.ModelSerializer):
             'id',
             'priority',
             'title',
-            'user_assigned',
+            'username',
         )
