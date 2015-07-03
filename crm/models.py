@@ -6,6 +6,10 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
 
+from mptt.models import (
+    MPTTModel,
+    TreeForeignKey,
+)
 import reversion
 
 from base.model_utils import TimeStampedModel
@@ -113,7 +117,14 @@ class TicketManager(models.Manager):
         )
 
 
-class Ticket(TimeStampedModel):
+class Ticket(MPTTModel):
+
+    parent = TreeForeignKey(
+        'self', null=True, blank=True, related_name='children', db_index=True
+    )
+
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
 
     contact = models.ForeignKey(Contact)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
