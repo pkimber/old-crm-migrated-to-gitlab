@@ -25,7 +25,6 @@ from rest_framework.views import APIView
 
 from base.view_utils import BaseMixin
 from .forms import (
-    ContactForm,
     NoteForm,
     TicketForm,
 )
@@ -52,39 +51,6 @@ class CheckPermMixin(object):
 
     def _check_perm(self, contact):
         check_perm(self.request.user, contact)
-
-
-class ContactCreateView(
-        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, CreateView):
-
-    form_class = ContactForm
-    model = Contact
-
-
-class ContactDetailView(
-        LoginRequiredMixin, CheckPermMixin, BaseMixin, DetailView):
-
-    model = Contact
-
-    def get_object(self, *args, **kwargs):
-        obj = super(ContactDetailView, self).get_object(*args, **kwargs)
-        self._check_perm(obj)
-        return obj
-
-
-class ContactListView(
-        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
-
-    paginate_by = 20
-
-    model = Contact
-
-
-class ContactUpdateView(
-        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
-
-    form_class = ContactForm
-    model = Contact
 
 
 class HomeTicketListView(LoginRequiredMixin, BaseMixin, ListView):
