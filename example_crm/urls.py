@@ -5,7 +5,10 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
 
-from .views import HomeView
+from .views import (
+    HomeView,
+    SettingsView,
+)
 
 admin.autodiscover()
 
@@ -30,6 +33,10 @@ urlpatterns = patterns(
         ),
     url(regex=r'^invoice/',
         view=include('invoice.urls')
+        ),
+    url(regex=r'^settings/$',
+        view=SettingsView.as_view(),
+        name='project.settings'
         ),
     url(regex=r'^token/$',
         view='rest_framework.authtoken.views.obtain_auth_token',

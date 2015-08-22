@@ -9,52 +9,68 @@
 {% endblock sub_heading %}
 
 {% block content %}
-  {% include 'crm/_menu.html' %}
-  {% include 'base/_paginate.html' %}
   <div class="pure-g">
     <div class="pure-u-1">
-      <div class="l-box">
-        <table class="pure-table pure-table-bordered">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Address</th>
-              <th>Phone</th>
-              <th>email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for contact in contact_list %}
-              <tr valign="top">
-                <td>
-                  <a href="{% url 'crm.contact.detail' contact.slug %}">
-                    {{ contact.name }}
-                  </a>
-                </td>
-                <td>{{ contact.address }}</td>
-                <td>{{ contact.phone }}</td>
-                <td>{{ contact.mail|urlize }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <div class="pure-menu pure-menu-open pure-menu-horizontal">
+        <ul class="pure-menu-list">
+          {% include 'base/_paginate.html' %}
+          {% if user.is_staff %}
+            <li class="pure-menu-item">
+              <a href="{% url 'crm.contact.create' %}" class="pure-menu-link">
+                <i class="fa fa-user"></i>
+                New contact
+              </a>
+            </li>
+            {% include 'crm/_menu.html' %}
+          {% endif %}
+        </ul>
       </div>
+    </div>
+  </div>
+  <div class="pure-g">
+    <div class="pure-u-1">
+      <table class="pure-table pure-table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for contact in contact_list %}
+            <tr valign="top">
+              <td>
+                <a href="{% url 'crm.contact.detail' contact.slug %}">
+                  {{ contact.name }}
+                </a>
+              </td>
+              <td>{{ contact.address }}</td>
+              <td>{{ contact.phone }}</td>
+              <td>{{ contact.mail|urlize }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="pure-g">
     <div class="pure-u-1">
       <div class="pure-menu pure-menu-open pure-menu-horizontal">
-        <ul>
-          <li>
-            <a href="{% url "crm.contact.create" %}">
-              <i class="fa fa-user"></i>
-              New contact
-            </a>
-          </li>
+        <ul class="pure-menu-list">
+          {% include 'base/_paginate.html' %}
+          {% if user.is_staff %}
+            <li class="pure-menu-item">
+              <a href="{% url 'crm.contact.create' %}" class="pure-menu-link">
+                <i class="fa fa-user"></i>
+                New contact
+              </a>
+            </li>
+            {% include 'crm/_menu.html' %}
+          {% endif %}
         </ul>
       </div>
     </div>
   </div>
-  {% include 'base/_paginate.html' %}
-  {% include 'crm/_menu.html' %}
 {% endblock content %}
