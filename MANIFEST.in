@@ -1,4 +1,3 @@
-recursive-include crm/static *
 recursive-include crm/templates *
 
 include LICENSE
