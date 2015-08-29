@@ -11,14 +11,14 @@
 {% block content %}
   <div class="pure-g">
     <div class="pure-u-1">
-      <div class="pure-menu pure-menu-open pure-menu-horizontal">
+      <div class="pure-menu pure-menu-horizontal">
         <ul class="pure-menu-list">
           {% include 'base/_paginate.html' %}
           {% if user.is_staff %}
             <li class="pure-menu-item">
               <a href="{% url 'crm.contact.create' %}" class="pure-menu-link">
                 <i class="fa fa-user"></i>
-                New contact
+                New Contact
               </a>
             </li>
             {% include 'crm/_menu.html' %}
@@ -57,7 +57,7 @@
   </div>
   <div class="pure-g">
     <div class="pure-u-1">
-      <div class="pure-menu pure-menu-open pure-menu-horizontal">
+      <div class="pure-menu pure-menu-horizontal">
         <ul class="pure-menu-list">
           {% include 'base/_paginate.html' %}
           {% if user.is_staff %}
