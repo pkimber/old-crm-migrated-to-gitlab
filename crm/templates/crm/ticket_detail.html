@@ -161,6 +161,9 @@
               <i class="fa fa-clock-o"></i>
             {% endif %}
             {{ item.title }}
+            {% if item.time_code %}
+              ({{ item.time_code.description }})
+            {% endif %}
             {% if item.is_complete %}
               ({{ item.delta_as_string }})
             {% else %}
