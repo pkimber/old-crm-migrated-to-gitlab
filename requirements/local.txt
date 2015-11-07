@@ -5,6 +5,7 @@
 -e ../invoice
 -e ../login
 -e ../mail
+-e ../report
 -e ../search
 beautifulsoup4
 devpi-client
