@@ -5,6 +5,7 @@ from decimal import Decimal
 
 from crm.models import (
     Contact,
+    Note,
     Priority,
     Ticket,
 )
@@ -43,3 +44,16 @@ class TicketFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Ticket
+
+
+class NoteFactory(factory.django.DjangoModelFactory):
+
+    ticket = factory.SubFactory(TicketFactory)
+    user = factory.SubFactory(UserFactory)
+
+    class Meta:
+        model = Note
+
+    @factory.sequence
+    def title(n):
+        return 'title_{:02d}'.format(n)

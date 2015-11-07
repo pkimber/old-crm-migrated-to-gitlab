@@ -152,6 +152,10 @@ class Ticket(TimeStampedModel):
             self.description,
         ))
 
+    @property
+    def notes(self):
+        return self.note_set.order_by('-created')
+
     def set_complete(self, user):
         self.complete = timezone.now()
         self.complete_user = user

@@ -258,7 +258,7 @@ class TicketDetailView(
     model = Ticket
 
     def get_object(self, *args, **kwargs):
-        obj = super(TicketDetailView, self).get_object(*args, **kwargs)
+        obj = super().get_object(*args, **kwargs)
         self._check_perm(obj.contact)
         return obj
 
