@@ -3,19 +3,9 @@ import pytest
 
 from datetime import timedelta
 
-from django.test import TestCase
 from django.utils import timezone
 
 from crm.tests.factories import NoteFactory
-from crm.tests.scenario import (
-    default_scenario_crm,
-    get_note_fence_forgot,
-)
-from login.tests.factories import UserFactory
-from login.tests.scenario import (
-    default_scenario_login,
-    user_contractor,
-)
 from search.tests.helper import check_search_methods
 
 
