@@ -23,6 +23,9 @@ setup(
     packages=['crm', 'crm.migrations', 'crm.tests', 'crm.management', 'crm.management.commands'],
     package_data={
         'crm': [
+            'static/*.*',
+            'static/crm/*.*',
+            'static/crm/css/*.*',
             'templates/*.*',
             'templates/crm/*.*',
             'templates/search/*.*',
@@ -30,7 +33,7 @@ setup(
             'templates/search/indexes/crm/*.*',
         ],
     },
-    version='0.1.17',
+    version='0.1.18',
     description='crm',
     author='Patrick Kimber',
     author_email='code@pkimber.net',
