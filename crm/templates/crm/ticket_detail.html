@@ -138,6 +138,11 @@
                         <i class="fa fa-gift"></i>
                       {% endif %}
                       {{ item.description }}
+                      {% if item.chargeable %}
+                        (charge)
+                      {% else %}
+                        (no-charge)
+                      {% endif %}
                     </button>
                   </small>
                 </form>
