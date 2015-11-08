@@ -28,31 +28,24 @@
           {{ ticket.contact.address }}
         </small>
         <br />
-        <br />
-        <a href="{% url "crm.ticket.update" ticket.pk %}">
-          <i class="fa fa-edit"></i>
-          {{ ticket.pk }}
+        <div class="crm-note">
           <strong>{{ ticket.title }}</strong>
-        </a>
-        <br />
-        {% if ticket.description %}
+          <br />
+          {% if ticket.description %}
+            {{ ticket.description|urlize|linebreaksbr }}
+            <br>
+          {% endif %}
           <br>
-          {{ ticket.description|urlize|linebreaksbr }}
-          <br>
-          <br>
-        {% else %}
-          <br>
-        {% endif %}
+        </div>
+        <br>
         {% for note in ticket.notes %}
           <div class="crm-note">
             {% if note.user == user and note.modified_today %}
               <a href="{% url 'crm.note.update' note.pk %}">
                 <i class="fa fa-edit"></i>
-                {{ note.created|date:'d/m/Y' }}
                 <strong>{{ note.title }}</strong>
               </a>
             {% else %}
-              {{ note.created|date:'d/m/Y' }}
               <strong>{{ note.title }}</strong>
             {% endif %}
             <small>
@@ -60,7 +53,7 @@
                 {{ note.user.username }}
               {% endif %}
               at
-              {{ note.created|date:'H:i' }}
+              {{ note.created|date:'d/m/Y H:i' }}
             </small>
             {% if note.description %}
               <br>
@@ -76,6 +69,15 @@
     <div class="pure-u-1 pure-u-md-1-3">
       <table class="pure-table pure-table-bordered">
         <tbody>
+          <tr>
+            <td>Number</td>
+            <td>
+              <a href="{% url 'crm.ticket.update' ticket.pk %}">
+                <i class="fa fa-edit"></i>
+                {{ ticket.pk }}
+              </a>
+            </td>
+          </tr>
           {% if ticket.priority.level or ticket.due %}
             <tr>
               <td>Priority</td>
@@ -165,10 +167,18 @@
               {% else %}
                 <i class="fa fa-gift"></i>
               {% endif %}
+              {{ item.title }}
             {% else %}
-              <i class="fa fa-clock-o"></i>
+              {% if user == item.user and user.is_staff and item.user_can_edit %}
+                <a href="{% url 'invoice.time.update' item.pk %}">
+                  <i class="fa fa-edit"></i>
+                  {{ item.title }}
+                </a>
+              {% else %}
+                <i class="fa fa-clock-o"></i>
+                {{ item.title }}
+              {% endif %}
             {% endif %}
-            {{ item.title }}
             {% if item.time_code %}
               ({{ item.time_code.description }})
             {% endif %}
