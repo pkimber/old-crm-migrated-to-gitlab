@@ -56,8 +56,11 @@
               <strong>{{ note.title }}</strong>
             {% endif %}
             <small>
+              {% if not user == note.user %}
+                {{ note.user.username }}
+              {% endif %}
+              at
               {{ note.created|date:'H:i' }}
-              {{ note.user.username }}
             </small>
             {% if note.description %}
               <br>
