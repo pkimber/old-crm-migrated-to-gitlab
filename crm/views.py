@@ -25,6 +25,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from base.view_utils import BaseMixin
+from crm.service import get_contact_model
 from invoice.forms import QuickTimeRecordEmptyForm
 from invoice.models import (
     QuickTimeRecord,
@@ -35,7 +36,6 @@ from .forms import (
     TicketForm,
 )
 from .models import (
-    Contact,
     Note,
     Ticket,
     UserContact,
@@ -64,7 +64,7 @@ class HomeTicketListView(LoginRequiredMixin, BaseMixin, ListView):
     paginate_by = 20
 
     def get_context_data(self, **kwargs):
-        context = super(HomeTicketListView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update(dict(
             is_home=True,
         ))
@@ -102,7 +102,7 @@ class NoteCreateView(
         return ticket
 
     def get_context_data(self, **kwargs):
-        context = super(NoteCreateView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update(dict(
             ticket=self._get_ticket(),
         ))
@@ -112,7 +112,7 @@ class NoteCreateView(
         self.object = form.save(commit=False)
         self.object.ticket = self._get_ticket()
         self.object.user = self.request.user
-        return super(NoteCreateView, self).form_valid(form)
+        return super().form_valid(form)
 
 
 class NoteUpdateView(
@@ -122,7 +122,7 @@ class NoteUpdateView(
     model = Note
 
     def get_context_data(self, **kwargs):
-        context = super(NoteUpdateView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         self._check_perm(self.object.ticket.contact)
         context.update(dict(
             ticket=self.object.ticket,
@@ -137,7 +137,7 @@ class ProjectTicketDueListView(
     template_name = 'crm/project_ticket_list.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ProjectTicketDueListView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update(dict(
             sort_by_due_date=True,
         ))
@@ -206,12 +206,12 @@ class TicketCreateView(
 
     def _get_contact(self):
         slug = self.kwargs.get('slug', None)
-        contact = get_object_or_404(Contact, slug=slug)
+        contact = get_contact_model().objects.get(slug=slug)
         self._check_perm(contact)
         return contact
 
     def get_context_data(self, **kwargs):
-        context = super(TicketCreateView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update(dict(
             contact=self._get_contact(),
         ))
@@ -221,7 +221,7 @@ class TicketCreateView(
         self.object = form.save(commit=False)
         self.object.contact = self._get_contact()
         self.object.user = self.request.user
-        return super(TicketCreateView, self).form_valid(form)
+        return super().form_valid(form)
 
 
 class TicketDetailView(
@@ -275,7 +275,7 @@ class TicketUpdateView(
     model = Ticket
 
     def get_context_data(self, **kwargs):
-        context = super(TicketUpdateView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         self._check_perm(self.object.contact)
         context.update(dict(
             contact=self.object.contact,

@@ -57,7 +57,7 @@ class Contact(TimeStampedModel):
         return False
 
     def get_absolute_url(self):
-        return reverse('crm.contact.detail', args=[self.slug])
+        return reverse('contact.detail', args=[self.slug])
 
     def get_summary_description(self):
         return filter(None, (
@@ -81,8 +81,8 @@ class UserContact(TimeStampedModel):
 
     """
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL)
-    contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='user')
+    contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='contact')
     crm_contact = models.ForeignKey(Contact, related_name='crm_contact_user_contact')
 
     def __str__(self):
@@ -129,7 +129,7 @@ class Ticket(MPTTModel):
     modified = models.DateTimeField(auto_now=True)
 
     contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True)
-    crm_contact = models.ForeignKey(Contact, related_name='crm_contact_ticket')
+    crm_contact = models.ForeignKey(Contact, blank=True, null=True, related_name='crm_contact_ticket')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)

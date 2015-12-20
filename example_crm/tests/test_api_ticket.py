@@ -7,8 +7,9 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
 
+from contact.tests.factories import ContactFactory
 from crm.tests.factories import (
-    ContactFactory,
+    #CrmContactFactory,
     PriorityFactory,
     TicketFactory,
 )
@@ -27,14 +28,17 @@ def api_client():
 
 @pytest.mark.django_db
 def test_api_ticket(api_client):
+    user = UserFactory(first_name='Andrea')
     t1 = TicketFactory(
-        contact=ContactFactory(slug='andrea'),
+        contact=ContactFactory(company_name='', user=user),
+        #crm_contact=CrmContactFactory(),
         priority=PriorityFactory(name='Medium'),
         title='Mow the lawn',
         user_assigned=UserFactory(username='akimber'),
     )
+    user = UserFactory(first_name='Patrick')
     t2 = TicketFactory(
-        contact=ContactFactory(slug='patrick'),
+        contact=ContactFactory(company_name='', user=user),
         priority=PriorityFactory(name='High'),
         title='Make a cup of tea',
         user_assigned=UserFactory(username='pkimber'),

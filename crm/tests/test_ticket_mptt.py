@@ -2,7 +2,6 @@
 import pytest
 
 from crm.tests.factories import (
-    ContactFactory,
     PriorityFactory,
     TicketFactory,
 )
