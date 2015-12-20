@@ -16,6 +16,7 @@ from base.model_utils import TimeStampedModel
 
 
 class Industry(models.Model):
+
     name = models.CharField(max_length=100)
 
     class Meta:
@@ -165,9 +166,17 @@ class Ticket(MPTTModel):
             self.description,
         ))
 
+    @property
+    def notes(self):
+        return self.note_set.order_by('-created')
+
     def set_complete(self, user):
         self.complete = timezone.now()
         self.complete_user = user
+
+    @property
+    def time_records(self):
+        return self.timerecord_set.order_by('-created')
 
     @property
     def is_overdue(self):

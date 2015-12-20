@@ -1,4 +1,10 @@
-{% extends 'project/base.html' %}
+{% extends 'dash/base.html' %}
+{% load static %}
+
+{% block stylesheets_extra %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'crm/css/crm.css' %}">
+{% endblock stylesheets_extra %}
 
 {% block heading %}
   CRM

@@ -1,46 +1,48 @@
-{% if user.is_staff %}
-  <div class="pure-g">
-    <div class="pure-u-1">
-      <div class="pure-menu pure-menu-open pure-menu-horizontal">
-        <ul class="pure-menu-list">
-          <li class="pure-menu-item{% if path == '/crm/contact/' %} pure-menu-disabled{% endif %}">
-            <a href="{% url 'crm.contact.list' %}" class="pure-menu-link">
-              <i class="fa fa-user"></i>
-              Contacts
-            </a>
-          </li>
-          <li class="pure-menu-item{% if path == '/crm/' %} pure-menu-disabled{% endif %}">
-            <a href="{% url 'crm.ticket.home' %}" class="pure-menu-link">
-              <i class="fa fa-ticket"></i>
-              My Tickets
-            </a>
-          </li>
-          <li class="pure-menu-item{% if path == '/crm/ticket/' %} pure-menu-disabled{% endif %}">
-            <a href="{% url 'crm.ticket.list' %}" class="pure-menu-link">
-              <i class="fa fa-ticket"></i>
-              All Tickets
-            </a>
-          </li>
-          <li class="pure-menu-item{% if path == '/invoice/user/time/' %} pure-menu-disabled{% endif %}">
-            <a href="{% url 'invoice.time.user.list' %}" class="pure-menu-link">
-              <i class="fa fa-clock-o"></i>
-              My Time Records
-            </a>
-          </li>
-          <li class="pure-menu-item{% if path == '/invoice/time/' %} pure-menu-disabled{% endif %}">
-            <a href="{% url 'invoice.time' %}" class="pure-menu-link">
-              <i class="fa fa-clock-o"></i>
-              All Time Records
-             </a>
-          </li>
-          <li class="pure-menu-item{% if path == '/invoice/' %} pure-menu-disabled{% endif %}">
-            <a href="{% url 'invoice.list' %}" class="pure-menu-link">
-              <i class="fa fa-gbp"></i>
-              Invoices
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+{% if not path == '/crm/' %}
+  <li class="pure-menu-item">
+    <a href="{% url 'crm.ticket.home' %}" class="pure-menu-link">
+      <i class="fa fa-ticket"></i>
+      My Tickets
+    </a>
+  </li>
+{% endif %}
+{% if not path == '/invoice/user/time/' %}
+  <li class="pure-menu-item">
+    <a href="{% url 'invoice.time.user.list' %}" class="pure-menu-link">
+      <i class="fa fa-clock-o"></i>
+      My Time
+    </a>
+  </li>
+{% endif %}
+{% if not path == '/crm/contact/' %}
+  <li class="pure-menu-item">
+    <a href="{% url 'crm.contact.list' %}" class="pure-menu-link">
+      <i class="fa fa-user"></i>
+      Contacts
+    </a>
+  </li>
+{% endif %}
+{% if not path == '/crm/ticket/' %}
+  <li class="pure-menu-item">
+    <a href="{% url 'crm.ticket.list' %}" class="pure-menu-link">
+      <i class="fa fa-ticket"></i>
+      All Tickets
+    </a>
+  </li>
+{% endif %}
+{% if not path == '/invoice/time/' %}
+  <li class="pure-menu-item">
+    <a href="{% url 'invoice.time' %}" class="pure-menu-link">
+      <i class="fa fa-clock-o"></i>
+      All Time
+     </a>
+  </li>
+{% endif %}
+{% if not path == '/invoice/' %}
+  <li class="pure-menu-item">
+    <a href="{% url 'invoice.list' %}" class="pure-menu-link">
+      <i class="fa fa-gbp"></i>
+      Invoices
+    </a>
+  </li>
 {% endif %}

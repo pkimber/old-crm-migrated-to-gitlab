@@ -1,13 +1,14 @@
 # -*- encoding: utf-8 -*-
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-
 from django.views.generic import (
     CreateView,
     DeleteView,
     DetailView,
+    FormView,
     ListView,
     UpdateView,
 )
@@ -24,6 +25,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from base.view_utils import BaseMixin
+from invoice.forms import QuickTimeRecordEmptyForm
+from invoice.models import (
+    QuickTimeRecord,
+    TimeRecord,
+)
 from .forms import (
     NoteForm,
     TicketForm,
@@ -219,14 +225,33 @@ class TicketCreateView(
 
 
 class TicketDetailView(
-        LoginRequiredMixin, CheckPermMixin, BaseMixin, DetailView):
+        LoginRequiredMixin, CheckPermMixin, BaseMixin, FormView):
 
-    model = Ticket
+    form_class = QuickTimeRecordEmptyForm
+    template_name = 'crm/ticket_detail.html'
 
-    def get_object(self, *args, **kwargs):
-        obj = super(TicketDetailView, self).get_object(*args, **kwargs)
-        self._check_perm(obj.contact)
-        return obj
+    def get_ticket(self):
+        pk = self.kwargs.get('pk')
+        ticket = Ticket.objects.get(pk=pk)
+        self._check_perm(ticket.contact)
+        return ticket
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(dict(
+            ticket=self.get_ticket(),
+            quick=QuickTimeRecord.objects.quick(self.request.user),
+        ))
+        return context
+
+    def form_valid(self, form):
+        quick_pk = self.request.POST.get('quick')
+        ticket = self.get_ticket()
+        quick_time_record = QuickTimeRecord.objects.get(pk=quick_pk)
+        TimeRecord.objects.start(ticket, quick_time_record)
+        return HttpResponseRedirect(
+            reverse('crm.ticket.detail', args=[ticket.pk])
+        )
 
 
 class TicketListView(

@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-
-from __future__ import unicode_literals
 from django.test import TestCase
 
 from search.tests.helper import check_search_methods

@@ -1,26 +1,18 @@
-<div class="pure-g">
-  <div class="pure-u-1">
-    <div class="pure-menu pure-menu-horizontal">
-      <ul class="pure-menu-list">
-        <li class="pure-menu-item">
-          <a href="{% url 'crm.ticket.create' contact.slug %}" class="pure-menu-link">
-            <i class="fa fa-ticket"></i>
-            New ticket
-          </a>
-        </li>
-        <li class="pure-menu-item">
-          <a href="{% url 'invoice.contact.list' contact.slug %}" class="pure-menu-link">
-            <i class="fa fa-gbp"></i>
-            Invoices
-          </a>
-        </li>
-        <li class="pure-menu-item">
-          <a href="{% url 'invoice.time.contact.list' contact.slug %}" class="pure-menu-link">
-            <i class="fa fa-clock-o"></i>
-            Time records
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
+<li class="pure-menu-item">
+  <a href="{% url 'crm.ticket.create' contact.slug %}" class="pure-menu-link">
+    <i class="fa fa-ticket"></i>
+    New Ticket
+  </a>
+</li>
+<li class="pure-menu-item">
+  <a href="{% url 'invoice.contact.list' contact.slug %}" class="pure-menu-link">
+    <i class="fa fa-gbp"></i>
+    Invoices
+  </a>
+</li>
+<li class="pure-menu-item">
+  <a href="{% url 'invoice.time.contact.list' contact.slug %}" class="pure-menu-link">
+    <i class="fa fa-clock-o"></i>
+    Time Records
+  </a>
+</li>
