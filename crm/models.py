@@ -68,6 +68,24 @@ class Contact(TimeStampedModel):
 reversion.register(Contact)
 
 
+class ContactCrm(TimeStampedModel):
+
+    contact = models.OneToOneField(settings.CONTACT_MODEL)
+    industry = models.ForeignKey(Industry, blank=True, null=True)
+    hourly_rate = models.DecimalField(
+        blank=True, null=True, max_digits=8, decimal_places=2
+    )
+
+    class Meta:
+        verbose_name = 'CRM Contact'
+        verbose_name_plural = 'CRM Contacts'
+
+    def __str__(self):
+        return '{}'.format(self.contact.name)
+
+reversion.register(ContactCrm)
+
+
 class UserContact(TimeStampedModel):
     """
     A user is linked to a single contact.
