@@ -6,10 +6,10 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
 
-from mptt.models import (
-    MPTTModel,
-    TreeForeignKey,
-)
+#from mptt.models import (
+#    MPTTModel,
+#    TreeForeignKey,
+#)
 import reversion
 
 from base.model_utils import TimeStampedModel
@@ -68,22 +68,19 @@ class Contact(TimeStampedModel):
 reversion.register(Contact)
 
 
-class ContactCrm(TimeStampedModel):
-
-    contact = models.OneToOneField(settings.CONTACT_MODEL)
-    industry = models.ForeignKey(Industry, blank=True, null=True)
-    hourly_rate = models.DecimalField(
-        blank=True, null=True, max_digits=8, decimal_places=2
-    )
-
-    class Meta:
-        verbose_name = 'CRM Contact'
-        verbose_name_plural = 'CRM Contacts'
-
-    def __str__(self):
-        return '{}'.format(self.contact.name)
-
-reversion.register(ContactCrm)
+# class CrmContact(TimeStampedModel):
+# 
+#     contact = models.OneToOneField(settings.CONTACT_MODEL)
+#     industry = models.ForeignKey(Industry, blank=True, null=True)
+# 
+#     class Meta:
+#         verbose_name = 'CRM Contact'
+#         verbose_name_plural = 'CRM Contacts'
+# 
+#     def __str__(self):
+#         return '{}'.format(self.contact.name)
+# 
+# reversion.register(CrmContact)
 
 
 class UserContact(TimeStampedModel):
@@ -100,8 +97,10 @@ class UserContact(TimeStampedModel):
     """
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='user')
-    contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='contact')
-    crm_contact = models.ForeignKey(Contact, related_name='crm_contact_user_contact')
+    # contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='contact')
+    # contact = models.ForeignKey(settings.CONTACT_MODEL, related_name='contact')
+    # crm_contact = models.ForeignKey(Contact)
+    crm_contact = models.ForeignKey(Contact) #, related_name='crm_contact_user_contact')
 
     def __str__(self):
         return '{} - {}'.format(self.user.username, self.contact.name)
@@ -137,17 +136,21 @@ class TicketManager(models.Manager):
         )
 
 
-class Ticket(MPTTModel):
+# mptt
+# class Ticket(MPTTModel):
+class Ticket(TimeStampedModel):
 
-    parent = TreeForeignKey(
-        'self', null=True, blank=True, related_name='children', db_index=True
-    )
+    # mptt
+    # parent = TreeForeignKey(
+    #     'self', null=True, blank=True, related_name='children', db_index=True
+    # )
+    # created = models.DateTimeField(auto_now_add=True)
+    # modified = models.DateTimeField(auto_now=True)
 
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
-
-    contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True)
-    crm_contact = models.ForeignKey(Contact, blank=True, null=True, related_name='crm_contact_ticket')
+    # contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True)
+    # contact = models.ForeignKey(settings.CONTACT_MODEL)
+    # crm_contact = models.ForeignKey(Contact)
+    crm_contact = models.ForeignKey(Contact) #, related_name='crm_contact_ticket')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
