@@ -68,19 +68,19 @@ class Contact(TimeStampedModel):
 reversion.register(Contact)
 
 
-# class CrmContact(TimeStampedModel):
-# 
-#     contact = models.OneToOneField(settings.CONTACT_MODEL)
-#     industry = models.ForeignKey(Industry, blank=True, null=True)
-# 
-#     class Meta:
-#         verbose_name = 'CRM Contact'
-#         verbose_name_plural = 'CRM Contacts'
-# 
-#     def __str__(self):
-#         return '{}'.format(self.contact.name)
-# 
-# reversion.register(CrmContact)
+class CrmContact(TimeStampedModel):
+
+    contact = models.OneToOneField(settings.CONTACT_MODEL)
+    industry = models.ForeignKey(Industry, blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'CRM Contact'
+        verbose_name_plural = 'CRM Contacts'
+
+    def __str__(self):
+        return '{}'.format(self.contact.name)
+
+reversion.register(CrmContact)
 
 
 class UserContact(TimeStampedModel):
@@ -97,10 +97,11 @@ class UserContact(TimeStampedModel):
     """
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='user')
-    # contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='contact')
     # contact = models.ForeignKey(settings.CONTACT_MODEL, related_name='contact')
     # crm_contact = models.ForeignKey(Contact)
     crm_contact = models.ForeignKey(Contact) #, related_name='crm_contact_user_contact')
+    # PJK2
+    contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='user_contact_contact')
 
     def __str__(self):
         return '{} - {}'.format(self.user.username, self.contact.name)
@@ -151,6 +152,8 @@ class Ticket(TimeStampedModel):
     # contact = models.ForeignKey(settings.CONTACT_MODEL)
     # crm_contact = models.ForeignKey(Contact)
     crm_contact = models.ForeignKey(Contact) #, related_name='crm_contact_ticket')
+    # PJK2
+    contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='ticket_contact')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)

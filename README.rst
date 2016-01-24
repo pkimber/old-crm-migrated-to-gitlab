@@ -6,6 +6,8 @@ Django CRM application
 717-django-mptt
 ===============
 
+.. todo:: Convert ticket ``crm_contact`` to ``contact``.
+
 ::
 
   0003_auto_20150704_0036.py            # mptt
