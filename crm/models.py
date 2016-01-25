@@ -152,9 +152,12 @@ class Ticket(TimeStampedModel):
     # created = models.DateTimeField(auto_now_add=True)
     # modified = models.DateTimeField(auto_now=True)
 
-    contact = models.ForeignKey(Contact)
+    # PJK3
+    # contact = models.ForeignKey(Contact)
     # PJK2
-    new_contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='ticket_contact')
+    # new_contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='ticket_contact')
+    # PJK3
+    new_contact = models.ForeignKey(settings.CONTACT_MODEL, related_name='ticket_contact')
 
     # contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True)
     # contact = models.ForeignKey(settings.CONTACT_MODEL)
