@@ -97,11 +97,15 @@ class UserContact(TimeStampedModel):
     """
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='user')
+    contact = models.ForeignKey(Contact)
+    # PJK1
+    # new_contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='usercontact_contact')
+
     # contact = models.ForeignKey(settings.CONTACT_MODEL, related_name='contact')
     # crm_contact = models.ForeignKey(Contact)
-    crm_contact = models.ForeignKey(Contact) #, related_name='crm_contact_user_contact')
+    # crm_contact = models.ForeignKey(Contact) #, related_name='crm_contact_user_contact')
     # PJK2
-    contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='user_contact_contact')
+    # contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='user_contact_contact')
 
     def __str__(self):
         return '{} - {}'.format(self.user.username, self.contact.name)
@@ -148,12 +152,16 @@ class Ticket(TimeStampedModel):
     # created = models.DateTimeField(auto_now_add=True)
     # modified = models.DateTimeField(auto_now=True)
 
+    contact = models.ForeignKey(Contact)
+    # PJK1
+    # new_contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='ticket_contact')
+
     # contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True)
     # contact = models.ForeignKey(settings.CONTACT_MODEL)
     # crm_contact = models.ForeignKey(Contact)
-    crm_contact = models.ForeignKey(Contact) #, related_name='crm_contact_ticket')
+    # crm_contact = models.ForeignKey(Contact) #, related_name='crm_contact_ticket')
     # PJK2
-    contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='ticket_contact')
+    # contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='ticket_contact')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
