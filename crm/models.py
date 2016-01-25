@@ -154,7 +154,7 @@ class Ticket(TimeStampedModel):
 
     contact = models.ForeignKey(Contact)
     # PJK1
-    # new_contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='ticket_contact')
+    new_contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='ticket_contact')
 
     # contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True)
     # contact = models.ForeignKey(settings.CONTACT_MODEL)

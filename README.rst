@@ -10,6 +10,8 @@ Django CRM application
 
 .. todo:: Make ``contact`` a non-blank foreign key.
 
+.. todo:: Remove ``UserContact``.  We are not using it at present.
+
 ::
 
   0003_auto_20150704_0036.py            # mptt
