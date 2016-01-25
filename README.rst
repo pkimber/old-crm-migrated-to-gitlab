@@ -8,6 +8,8 @@ Django CRM application
 
 .. todo:: Convert ticket ``crm_contact`` to ``contact``.
 
+.. todo:: Make ``contact`` a non-blank foreign key.
+
 ::
 
   0003_auto_20150704_0036.py            # mptt

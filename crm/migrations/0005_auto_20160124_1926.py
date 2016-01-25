@@ -49,12 +49,21 @@ def _create_contact(model, obj, crm_model, user_model):
 
 
 def transfer_to_new_contact_app(apps, schema_editor):
-    contact_new = apps.get_model('contact', 'Contact')
+    contact_new = apps.get_model(settings.CONTACT_MODEL)
     contact_old = apps.get_model('crm', 'Contact')
     crm_model = apps.get_model('crm', 'CrmContact')
+    ticket_model = apps.get_model('crm', 'Ticket')
     user_model = apps.get_model(settings.AUTH_USER_MODEL)
     for obj in contact_old.objects.all().order_by('pk'):
         _create_contact(contact_new, obj, crm_model, user_model)
+    # update contact on the ticket
+    pks = [obj.pk for obj in ticket_model.objects.all()]
+    for pk in pks:
+        ticket = ticket_model.objects.get(pk=pk)
+        crm_contact = contact_old.objects.get(pk=ticket.crm_contact.pk)
+        contact = contact_new.objects.get(slug=crm_contact.slug)
+        ticket.contact = contact
+        ticket.save()
 
 
 class Migration(migrations.Migration):
