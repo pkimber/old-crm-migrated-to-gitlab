@@ -83,32 +83,34 @@ class CrmContact(TimeStampedModel):
 reversion.register(CrmContact)
 
 
-class UserContact(TimeStampedModel):
-    """
-    A user is linked to a single contact.
-    More than one user can link to the same contact, but a user cannot
-    link to more than one contact.
-
-    e.g.
-    Andy - ConnexionSW
-    Fred - ConnexionSW
-    Kate - British Sugar
-
-    """
-
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='user')
-    contact = models.ForeignKey(Contact)
-    # PJK1
-    # new_contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='usercontact_contact')
-
-    # contact = models.ForeignKey(settings.CONTACT_MODEL, related_name='contact')
-    # crm_contact = models.ForeignKey(Contact)
-    # crm_contact = models.ForeignKey(Contact) #, related_name='crm_contact_user_contact')
-    # PJK2
-    # contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='user_contact_contact')
-
-    def __str__(self):
-        return '{} - {}'.format(self.user.username, self.contact.name)
+# class UserContact(TimeStampedModel):
+#     """
+#     A user is linked to a single contact.
+#     More than one user can link to the same contact, but a user cannot
+#     link to more than one contact.
+#
+#     e.g.
+#     Andy - ConnexionSW
+#     Fred - ConnexionSW
+#     Kate - British Sugar
+#
+#     25/01/2016 Is not used on the KB CRM system, so we will remove it.
+#
+#     """
+#
+#     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='user')
+#     contact = models.ForeignKey(Contact)
+#     # PJK1
+#     # new_contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='usercontact_contact')
+#
+#     # contact = models.ForeignKey(settings.CONTACT_MODEL, related_name='contact')
+#     # crm_contact = models.ForeignKey(Contact)
+#     # crm_contact = models.ForeignKey(Contact) #, related_name='crm_contact_user_contact')
+#     # PJK2
+#     # contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='user_contact_contact')
+#
+#     def __str__(self):
+#         return '{} - {}'.format(self.user.username, self.contact.name)
 
 
 class Priority(models.Model):
@@ -157,7 +159,9 @@ class Ticket(TimeStampedModel):
     # PJK2
     # new_contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='ticket_contact')
     # PJK3
-    new_contact = models.ForeignKey(settings.CONTACT_MODEL, related_name='ticket_contact')
+    # new_contact = models.ForeignKey(settings.CONTACT_MODEL, related_name='ticket_contact')
+    # PJK4
+    contact = models.ForeignKey(settings.CONTACT_MODEL, related_name='ticket_contact')
 
     # contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True)
     # contact = models.ForeignKey(settings.CONTACT_MODEL)
