@@ -38,28 +38,28 @@ from .forms import (
 from .models import (
     Note,
     Ticket,
-    UserContact,
 )
 from .serializers import TicketSerializer
 
 
-def check_perm(user, contact):
-    if user.is_staff:
-        pass
-    elif user.usercontact.contact == contact:
-        pass
-    else:
-        # the user is NOT linked to the contact
-        raise PermissionDenied()
+# def check_perm(user, contact):
+#     if user.is_staff:
+#         pass
+#     elif user.usercontact.contact == contact:
+#         pass
+#     else:
+#         # the user is NOT linked to the contact
+#         raise PermissionDenied()
 
 
-class CheckPermMixin(object):
+# class CheckPermMixin(object):
+#
+#     def _check_perm(self, contact):
+#         check_perm(self.request.user, contact)
 
-    def _check_perm(self, contact):
-        check_perm(self.request.user, contact)
 
-
-class HomeTicketListView(LoginRequiredMixin, BaseMixin, ListView):
+class HomeTicketListView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
 
     paginate_by = 20
 
@@ -90,7 +90,7 @@ class HomeTicketListView(LoginRequiredMixin, BaseMixin, ListView):
 
 
 class NoteCreateView(
-        LoginRequiredMixin, CheckPermMixin, BaseMixin, CreateView):
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, CreateView):
 
     form_class = NoteForm
     model = Note
@@ -98,7 +98,7 @@ class NoteCreateView(
     def _get_ticket(self):
         pk = self.kwargs.get('pk', None)
         ticket = get_object_or_404(Ticket, pk=pk)
-        self._check_perm(ticket.contact)
+        # self._check_perm(ticket.contact)
         return ticket
 
     def get_context_data(self, **kwargs):
@@ -116,14 +116,14 @@ class NoteCreateView(
 
 
 class NoteUpdateView(
-        LoginRequiredMixin, CheckPermMixin, BaseMixin, UpdateView):
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
 
     form_class = NoteForm
     model = Note
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        self._check_perm(self.object.ticket.contact)
+        # self._check_perm(self.object.ticket.contact)
         context.update(dict(
             ticket=self.object.ticket,
         ))
@@ -199,7 +199,7 @@ class TicketCompleteView(
 
 
 class TicketCreateView(
-        LoginRequiredMixin, CheckPermMixin, BaseMixin, CreateView):
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, CreateView):
 
     form_class = TicketForm
     model = Ticket
@@ -207,7 +207,7 @@ class TicketCreateView(
     def _get_contact(self):
         slug = self.kwargs.get('slug', None)
         contact = get_contact_model().objects.get(slug=slug)
-        self._check_perm(contact)
+        # self._check_perm(contact)
         return contact
 
     def get_context_data(self, **kwargs):
@@ -225,7 +225,7 @@ class TicketCreateView(
 
 
 class TicketDetailView(
-        LoginRequiredMixin, CheckPermMixin, BaseMixin, FormView):
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, FormView):
 
     form_class = QuickTimeRecordEmptyForm
     template_name = 'crm/ticket_detail.html'
@@ -233,7 +233,7 @@ class TicketDetailView(
     def get_ticket(self):
         pk = self.kwargs.get('pk')
         ticket = Ticket.objects.get(pk=pk)
-        self._check_perm(ticket.contact)
+        # self._check_perm(ticket.contact)
         return ticket
 
     def get_context_data(self, **kwargs):
@@ -269,14 +269,14 @@ class TicketListView(
 
 
 class TicketUpdateView(
-        LoginRequiredMixin, CheckPermMixin, BaseMixin, UpdateView):
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
 
     form_class = TicketForm
     model = Ticket
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        self._check_perm(self.object.contact)
+        # self._check_perm(self.object.contact)
         context.update(dict(
             contact=self.object.contact,
         ))

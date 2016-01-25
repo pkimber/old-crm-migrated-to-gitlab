@@ -9,12 +9,6 @@ from crm.tests.factories import (
     NoteFactory,
     TicketFactory,
 )
-from crm.tests.scenario import (
-    default_scenario_crm,
-    get_contact_farm,
-    get_note_fence_forgot,
-    get_ticket_fence_for_farm,
-)
 from login.tests.factories import TEST_PASSWORD
 from login.tests.fixture import perm_check
 from login.tests.scenario import (

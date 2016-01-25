@@ -30,7 +30,7 @@ def api_client():
 def test_api_ticket(api_client):
     user = UserFactory(first_name='Andrea')
     t1 = TicketFactory(
-        contact=ContactFactory(company_name='', user=user),
+        contact=ContactFactory(slug='andrea', company_name='', user=user),
         #crm_contact=CrmContactFactory(),
         priority=PriorityFactory(name='Medium'),
         title='Mow the lawn',
@@ -38,7 +38,7 @@ def test_api_ticket(api_client):
     )
     user = UserFactory(first_name='Patrick')
     t2 = TicketFactory(
-        contact=ContactFactory(company_name='', user=user),
+        contact=ContactFactory(slug='patrick', company_name='', user=user),
         priority=PriorityFactory(name='High'),
         title='Make a cup of tea',
         user_assigned=UserFactory(username='pkimber'),
