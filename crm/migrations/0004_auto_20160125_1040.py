@@ -73,6 +73,8 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('crm', '0003_auto_20160125_1034'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        migrations.swappable_dependency(settings.CONTACT_MODEL),
     ]
 
     operations = [
