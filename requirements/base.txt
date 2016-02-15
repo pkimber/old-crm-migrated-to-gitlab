@@ -2,7 +2,7 @@ bleach==1.4.2
 celery==3.1.18
 django-braces==1.8.1
 django-compressor==1.5
-django-reversion==1.9.3
+django-reversion==1.10.1
 django-sendfile==0.3.9
 Django==1.8.6
 djangorestframework==3.1.3

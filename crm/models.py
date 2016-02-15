@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
 
-import reversion
+from reversion import revisions as reversion
 
 from base.model_utils import TimeStampedModel
 
