@@ -10,7 +10,7 @@ from django.utils import timezone
 #    MPTTModel,
 #    TreeForeignKey,
 #)
-import reversion
+from reversion import revisions as reversion
 
 from base.model_utils import TimeStampedModel
 
