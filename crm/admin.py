@@ -2,17 +2,17 @@
 from django.contrib import admin
 
 from .models import (
-    Contact,
+    # Contact,
     Industry,
     Priority,
     # UserContact,
 )
 
 
-class ContactAdmin(admin.ModelAdmin):
-    pass
-
-admin.site.register(Contact, ContactAdmin)
+# class ContactAdmin(admin.ModelAdmin):
+#     pass
+# 
+# admin.site.register(Contact, ContactAdmin)
 
 
 class IndustryAdmin(admin.ModelAdmin):
