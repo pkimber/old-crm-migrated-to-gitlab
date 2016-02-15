@@ -8,7 +8,7 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('contact', '0004_default_gender'),
+        ('contact', '0002_default_gender'),
         ('crm', '0002_auto_20150607_2042'),
     ]
 
