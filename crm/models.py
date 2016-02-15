@@ -30,42 +30,42 @@ class Industry(models.Model):
 reversion.register(Industry)
 
 
-class Contact(TimeStampedModel):
-
-    name = models.CharField(max_length=100)
-    address = models.TextField(blank=True)
-    slug = models.SlugField(unique=True)
-    url = models.URLField(blank=True, null=True)
-    phone = models.CharField(max_length=100, blank=True)
-    mail = models.EmailField(blank=True)
-    industry = models.ForeignKey(Industry, blank=True, null=True)
-    hourly_rate = models.DecimalField(
-        blank=True, null=True, max_digits=8, decimal_places=2
-    )
-
-    class Meta:
-        ordering = ('slug',)
-        verbose_name = 'Contact'
-        verbose_name_plural = 'Contacts'
-
-    def __str__(self):
-        return '{}'.format(self.name)
-
-    @property
-    def deleted(self):
-        """No actual delete (yet), so just return 'False'."""
-        return False
-
-    def get_absolute_url(self):
-        return reverse('contact.detail', args=[self.slug])
-
-    def get_summary_description(self):
-        return filter(None, (
-            self.name,
-            self.address,
-        ))
-
-reversion.register(Contact)
+# class Contact(TimeStampedModel):
+#
+#     name = models.CharField(max_length=100)
+#     address = models.TextField(blank=True)
+#     slug = models.SlugField(unique=True)
+#     url = models.URLField(blank=True, null=True)
+#     phone = models.CharField(max_length=100, blank=True)
+#     mail = models.EmailField(blank=True)
+#     industry = models.ForeignKey(Industry, blank=True, null=True)
+#     hourly_rate = models.DecimalField(
+#         blank=True, null=True, max_digits=8, decimal_places=2
+#     )
+#
+#     class Meta:
+#         ordering = ('slug',)
+#         verbose_name = 'Contact'
+#         verbose_name_plural = 'Contacts'
+#
+#     def __str__(self):
+#         return '{}'.format(self.name)
+#
+#     @property
+#     def deleted(self):
+#         """No actual delete (yet), so just return 'False'."""
+#         return False
+#
+#     def get_absolute_url(self):
+#         return reverse('contact.detail', args=[self.slug])
+#
+#     def get_summary_description(self):
+#         return filter(None, (
+#             self.name,
+#             self.address,
+#         ))
+#
+# reversion.register(Contact)
 
 
 class CrmContact(TimeStampedModel):

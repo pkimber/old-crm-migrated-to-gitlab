@@ -87,7 +87,7 @@ class Migration(migrations.Migration):
                 ('due', models.DateField(blank=True, null=True)),
                 ('complete', models.DateTimeField(blank=True, null=True)),
                 ('complete_user', models.ForeignKey(null=True, related_name='+', blank=True, to=settings.AUTH_USER_MODEL)),
-                ('contact', models.ForeignKey(to='crm.Contact')),
+                ('contact', models.ForeignKey(to=settings.CONTACT_MODEL)),
                 ('priority', models.ForeignKey(to='crm.Priority')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
                 ('user_assigned', models.ForeignKey(null=True, related_name='+', blank=True, to=settings.AUTH_USER_MODEL)),
@@ -105,7 +105,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(serialize=False, primary_key=True, verbose_name='ID', auto_created=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('modified', models.DateTimeField(auto_now=True)),
-                ('contact', models.ForeignKey(to='crm.Contact')),
+                ('contact', models.ForeignKey(to=settings.CONTACT_MODEL)),
                 ('user', models.ForeignKey(unique=True, to=settings.AUTH_USER_MODEL)),
             ],
             options={
