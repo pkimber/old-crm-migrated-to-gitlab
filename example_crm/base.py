@@ -125,7 +125,8 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     # 'debug_toolbar',
     'compressor',
-    'mptt',
+    # 'django_extensions',
+    # 'mptt',
     'rest_framework',
     # http://www.django-rest-framework.org/api-guide/authentication#tokenauthentication
     'rest_framework.authtoken',

@@ -28,10 +28,9 @@ Virtual Environment
 
 ::
 
-  pyvenv-3.4 --without-pip venv-crm
+  virtualenv --python=python3.4 venv-crm
   source venv-crm/bin/activate
-  wget https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py
-  python get-pip.py
+  pip install --upgrade pip
 
   pip install -r requirements/local.txt
 
