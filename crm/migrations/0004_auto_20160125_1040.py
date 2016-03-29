@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
-from django.db import migrations, models
+from django.db import DataError, migrations, models
 
 
 def _create_contact(user, slug, name, website, phone, model):
@@ -17,6 +17,7 @@ def _create_contact(user, slug, name, website, phone, model):
             website=website,
             phone=phone,
         ))
+        # import pdb; pdb.set_trace()
         obj.save()
         obj.full_clean()
     return obj
@@ -56,7 +57,35 @@ def _create(pk, model_contact_old, model_contact_new, model_contact_crm, model_u
     website = obj.url or ''
     user = _create_user(slug, obj.mail, model_user)
     contact = _create_contact(user, slug, obj.name, website, obj.phone, model_contact_new)
-    _create_contact_crm(contact, obj.industry, model_contact_crm)
+    # address
+    try:
+        address = obj.address.split('\n')
+        if len(address) > 0:
+            contact.address_1 = address[0].strip()
+            # if '1st Floor' in address[0]:
+            # import pdb; pdb.set_trace()
+        if len(address) > 1:
+            contact.address_2 = address[1].strip()
+        if len(address) > 2:
+            contact.address_3 = address[2].strip()
+        if len(address) > 3:
+            contact.town = address[3].strip()
+        if len(address) > 4:
+            contact.county = address[4].strip()
+        if len(address) > 5:
+            # if not 'Young' in address[5]:
+            contact.postcode = address[5].strip()
+        if len(address) > 6:
+            # if not 'Young' in address[5]:
+            contact.country = address[6].strip()
+        contact.save()
+        _create_contact_crm(contact, obj.industry, model_contact_crm)
+    except DataError:
+        print("Cannot save address '{}' (postcode is '{}')".format(
+            address,
+            address[5],
+        ))
+        raise
 
 
 def transfer_to_new_contact_app(apps, schema_editor):
