@@ -6,7 +6,7 @@ from django.db import migrations, models
 
 
 def _update(obj, model_contact_old, model_contact_new):
-    contact_old = model_contact_old.objects.get(pk=obj.contact.pk)
+    contact_old = model_contact_old.objects.get(pk=obj.contact_id)
     contact_new = model_contact_new.objects.get(slug=contact_old.slug)
     obj.new_contact = contact_new
     obj.save()
@@ -26,6 +26,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('crm', '0005_ticket_new_contact'),
+        ('invoice', '0007_invoice_new_contact'),
         migrations.swappable_dependency(settings.CONTACT_MODEL),
     ]
 
