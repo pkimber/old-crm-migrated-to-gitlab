@@ -25,6 +25,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from base.view_utils import BaseMixin
+from contact.models import Contact
+from contact.views import (
+    ContactDetailMixin,
+    ContactUpdateMixin,
+)
 from crm.service import get_contact_model
 from invoice.forms import QuickTimeRecordEmptyForm
 from invoice.models import (
@@ -56,6 +61,39 @@ from .serializers import TicketSerializer
 #
 #     def _check_perm(self, contact):
 #         check_perm(self.request.user, contact)
+
+
+class ContactTicketListView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
+
+    paginate_by = 20
+    template_name = 'crm/contact_ticket_list.html'
+
+    def _contact(self):
+        slug = self.kwargs['slug']
+        return Contact.objects.get(slug=slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(dict(
+            contact=self._contact(),
+        ))
+        return context
+
+    def get_queryset(self):
+        return Ticket.objects.contact(self._contact()).order_by(
+            '-complete',
+            'due',
+            'priority',
+        )
+
+
+class ContactUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin,
+        ContactUpdateMixin, BaseMixin, DetailView):
+
+    def get_success_url(self):
+        return reverse('crm.contact.detail', args=[self.object.slug])
 
 
 class HomeTicketListView(
