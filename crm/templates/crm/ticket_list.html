@@ -50,8 +50,8 @@
             <tr valign="top">
               {% if user.is_staff %}
                 <td>
-                  <a href="{% url 'crm.contact.detail' ticket.contact.slug %}">
-                    {{ ticket.contact.name }}
+                  <a href="{% url 'contact.detail' ticket.contact.slug %}">
+                    {{ ticket.contact.full_name }}
                   </a>
                 </td>
               {% endif %}

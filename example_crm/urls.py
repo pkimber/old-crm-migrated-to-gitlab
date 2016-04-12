@@ -28,6 +28,9 @@ urlpatterns = patterns(
     url(regex=r'^api/',
         view=include('crm.urls_api')
         ),
+    url(regex=r'^contact/',
+        view=include('contact.urls')
+        ),
     url(regex=r'^crm/',
         view=include('crm.urls')
         ),
