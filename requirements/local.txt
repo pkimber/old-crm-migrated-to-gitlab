@@ -8,6 +8,7 @@
 -e ../mail
 -e ../report
 -e ../search
+-e ../stock
 factory-boy
 pytest-cov
 pytest-django

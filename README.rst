@@ -11,7 +11,7 @@ Virtual Environment
 
 ::
 
-  virtualenv --python=python3.4 venv-crm
+  virtualenv --python=python3 venv-crm
   source venv-crm/bin/activate
   pip install --upgrade pip
 
