@@ -2,11 +2,11 @@ bleach==1.4.2
 celery==3.1.19
 django-braces==1.8.1
 django-compressor==2.0
-django-extensions==1.6.1
-django-reversion==1.10.1
+django-extensions==1.6.7
+django-reversion==1.10.2
 django-sendfile==0.3.9
-Django==1.8.11
+Django==1.9.7
 djangorestframework==3.3.2
 python-dateutil==2.4.2
-pytz==2015.06
-reportlab==3.2.0
+pytz==2016.3
+reportlab==3.3.0
