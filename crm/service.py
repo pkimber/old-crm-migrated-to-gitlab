@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.conf import settings
-from django.db.models.loading import get_model
+from django.apps import apps
 
 
 def get_contact_model():
-    return get_model(settings.CONTACT_MODEL)
+    return apps.get_model(settings.CONTACT_MODEL)
