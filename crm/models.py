@@ -132,6 +132,12 @@ reversion.register(Priority)
 
 class TicketManager(models.Manager):
 
+    def contact(self, contact):
+        return self.model.objects.filter(
+            contact=contact,
+            complete__isnull=True,
+        )
+
     def current(self):
         return self.model.objects.filter(complete__isnull=True)
 
