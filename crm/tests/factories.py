@@ -1,9 +1,6 @@
 # -*- encoding: utf-8 -*-
 import factory
 
-from decimal import Decimal
-from django.conf import settings
-
 from crm.models import Note, Priority, Ticket
 from contact.tests.factories import ContactFactory
 from login.tests.factories import UserFactory

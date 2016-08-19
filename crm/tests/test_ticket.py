@@ -2,7 +2,6 @@
 import pytest
 
 from datetime import date
-from django.test import TestCase
 from django.utils import timezone
 
 from contact.tests.factories import ContactFactory

@@ -1,13 +1,11 @@
 # -*- encoding: utf-8 -*-
 from django.contrib import messages
-from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import (
     CreateView,
     DeleteView,
-    DetailView,
     FormView,
     ListView,
     UpdateView,
@@ -26,16 +24,9 @@ from rest_framework.views import APIView
 
 from base.view_utils import BaseMixin
 from contact.models import Contact
-from contact.views import (
-    ContactDetailMixin,
-    ContactUpdateMixin,
-)
 from crm.service import get_contact_model
 from invoice.forms import QuickTimeRecordEmptyForm
-from invoice.models import (
-    QuickTimeRecord,
-    TimeRecord,
-)
+from invoice.models import QuickTimeRecord, TimeRecord
 from .forms import (
     CrmContactForm,
     NoteForm,
@@ -130,14 +121,15 @@ class HomeTicketListView(
                 user_assigned=self.request.user,
             )
         else:
-            try:
-                user_contact = UserContact.objects.get(user=self.request.user)
-                result = Ticket.objects.filter(
-                    contact=user_contact.contact,
-                    complete__isnull=True,
-                )
-            except UserContact.DoesNotExist:
-                result = Ticket.objects.none()
+            # try:
+            #     user_contact = UserContact.objects.get(user=self.request.user)
+            #     result = Ticket.objects.filter(
+            #         contact=user_contact.contact,
+            #         complete__isnull=True,
+            #     )
+            # except UserContact.DoesNotExist:
+            #     result = Ticket.objects.none()
+            result = Ticket.objects.none()
         return result
 
 
