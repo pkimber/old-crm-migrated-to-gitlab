@@ -5,10 +5,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
 
-from .views import (
-    HomeView,
-    SettingsView,
-)
+from .views import ContactDetailView, HomeView, SettingsView
+
 
 admin.autodiscover()
 
@@ -30,6 +28,10 @@ urlpatterns = patterns(
         ),
     url(regex=r'^contact/',
         view=include('contact.urls')
+        ),
+    url(regex=r'^contact/(?P<slug>[-\w\d]+)/$',
+        view=ContactDetailView.as_view(),
+        name='contact.detail'
         ),
     url(regex=r'^crm/',
         view=include('crm.urls')

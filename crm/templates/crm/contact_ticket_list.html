@@ -53,6 +53,24 @@
             <td></td>
           </tr>
           {% endif %}
+
+          <tr>
+            <td>CRM</td>
+            <td>
+              <a href="{% url 'crm.contact.update' contact.slug %}">
+                <i class="fa fa-edit"></i>
+                {% if crm_contact.industry %}
+                  {{ crm_contact.industry }}
+                {% else %}
+                  Edit CRM Information
+                {% endif %}
+              </a>
+            </td>
+            <td></td>
+          </tr>
+
+
+
           {% if contact.url %}
           <tr>
             <td>Web</td>

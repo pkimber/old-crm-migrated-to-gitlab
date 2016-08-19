@@ -37,10 +37,12 @@ from invoice.models import (
     TimeRecord,
 )
 from .forms import (
+    CrmContactForm,
     NoteForm,
     TicketForm,
 )
 from .models import (
+    CrmContact,
     Note,
     Ticket,
 )
@@ -75,8 +77,11 @@ class ContactTicketListView(
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        contact = self._contact()
+        crm_contact = CrmContact.objects.get(contact=contact)
         context.update(dict(
-            contact=self._contact(),
+            contact=contact,
+            crm_contact=crm_contact,
         ))
         return context
 
@@ -89,12 +94,20 @@ class ContactTicketListView(
         )
 
 
-class ContactUpdateView(
-        LoginRequiredMixin, StaffuserRequiredMixin,
-        ContactUpdateMixin, BaseMixin, DetailView):
+class CrmContactUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
 
-    def get_success_url(self):
-        return reverse('crm.contact.detail', args=[self.object.slug])
+    model = CrmContact
+    form_class = CrmContactForm
+    slug_field = 'user__username'
+
+
+# class ContactUpdateView(
+#         LoginRequiredMixin, StaffuserRequiredMixin,
+#         ContactUpdateMixin, BaseMixin, DetailView):
+#
+#     def get_success_url(self):
+#         return reverse('crm.contact.detail', args=[self.object.slug])
 
 
 class HomeTicketListView(

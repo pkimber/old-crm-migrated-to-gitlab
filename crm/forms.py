@@ -1,11 +1,21 @@
 # -*- encoding: utf-8 -*-
+from django import forms
+
 from base.form_utils import RequiredFieldForm
 from .models import (
-    # Contact,
+    CrmContact,
     Note,
     Ticket,
 )
 
+
+class CrmContactForm(forms.ModelForm):
+
+    class Meta:
+        model = CrmContact
+        fields = (
+            "industry",
+        )
 
 # class ContactForm(RequiredFieldForm):
 #
