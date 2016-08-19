@@ -16,10 +16,10 @@ def test_contact():
     contact = ContactFactory()
     TicketFactory(contact=contact, due=date.today(), title='t1')
     TicketFactory(contact=contact, title='t2')
-    TicketFactory(complete=timezone.now(), title='t3')
+    TicketFactory(contact=contact, complete=timezone.now(), title='t3')
     TicketFactory(title='t4')
     qs = Ticket.objects.contact(contact)
-    assert ['t2', 't1'] == [obj.title for obj in qs]
+    assert ['t3', 't2', 't1'] == [obj.title for obj in qs]
 
 
 @pytest.mark.django_db

@@ -85,6 +85,7 @@ class ContactTicketListView(
             '-complete',
             'due',
             'priority',
+            'created',
         )
 
 
