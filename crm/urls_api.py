@@ -1,14 +1,10 @@
 # -*- encoding: utf-8 -*-
-from django.conf.urls import (
-    patterns,
-    url,
-)
+from django.conf.urls import url
 
 from .views import TicketAPIView
 
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(regex=r'^ticket/$',
         view=TicketAPIView.as_view(),
         name='api.crm.ticket'
@@ -17,4 +13,4 @@ urlpatterns = patterns(
         view=TicketAPIView.as_view(),
         name='api.crm.ticket'
         ),
-)
+]

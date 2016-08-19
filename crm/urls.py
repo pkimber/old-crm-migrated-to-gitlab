@@ -1,8 +1,5 @@
 # -*- encoding: utf-8 -*-
-from django.conf.urls import (
-    patterns,
-    url,
-)
+from django.conf.urls import url
 
 from .views import (
     ContactTicketListView,
@@ -20,8 +17,7 @@ from .views import (
 )
 
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(regex=r'^$',
         view=HomeTicketListView.as_view(),
         name='crm.ticket.home'
@@ -70,4 +66,4 @@ urlpatterns = patterns(
         view=TicketUpdateView.as_view(),
         name='crm.ticket.update'
         ),
-)
+]
