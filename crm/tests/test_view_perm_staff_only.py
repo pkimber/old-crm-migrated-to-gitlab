@@ -4,22 +4,10 @@ import pytest
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from crm.tests.factories import (
-    TicketFactory,
-)
-# from crm.tests.scenario import (
-#     default_scenario_crm,
-#     get_contact_farm,
-#     get_ticket_fence_for_farm,
-# )
+from contact.tests.factories import ContactFactory
+from crm.tests.factories import CrmContactFactory, TicketFactory
 from login.tests.fixture import perm_check
 from login.tests.factories import TEST_PASSWORD
-# from login.tests.scenario import (
-#     default_scenario_login,
-#     get_user_fred,
-#     get_user_staff,
-#     user_contractor,
-# )
 
 
 # class TestViewPermStaffOnly(TestCase):
@@ -61,6 +49,15 @@ from login.tests.factories import TEST_PASSWORD
 # def test_contact_update(perm_check):
 #     url = reverse('crm.contact.update', kwargs={'slug': self.farm.slug})
 #     perm_check.staff(url)
+
+
+@pytest.mark.django_db
+def test_contact_update(perm_check):
+    contact = ContactFactory()
+    crm_contact = CrmContactFactory(contact=contact)
+    url = reverse('crm.contact.update', args=[contact.user.username])
+    print(url)
+    perm_check.staff(url)
 
 
 @pytest.mark.django_db

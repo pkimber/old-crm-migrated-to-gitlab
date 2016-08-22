@@ -1,9 +1,10 @@
 # -*- encoding: utf-8 -*-
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
+from rest_framework.authtoken import views
 
 from .views import ContactDetailView, HomeView, SettingsView
 
@@ -11,8 +12,7 @@ from .views import ContactDetailView, HomeView, SettingsView
 admin.autodiscover()
 
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(regex=r'^$',
         view=HomeView.as_view(),
         name='project.home'
@@ -44,13 +44,13 @@ urlpatterns = patterns(
         name='project.settings'
         ),
     url(regex=r'^token/$',
-        view='rest_framework.authtoken.views.obtain_auth_token',
+        view=views.obtain_auth_token,
         name='api.token.auth',
     ),
     url(r'^home/user/$',
         view=RedirectView.as_view(url=reverse_lazy('crm.ticket.home')),
         name='project.dash'
         ),
-)
+]
 
 urlpatterns += staticfiles_urlpatterns()

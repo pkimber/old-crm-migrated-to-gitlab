@@ -90,7 +90,7 @@ class CrmContactUpdateView(
 
     model = CrmContact
     form_class = CrmContactForm
-    slug_field = 'user__username'
+    slug_field = 'contact__user__username'
 
 
 # class ContactUpdateView(
