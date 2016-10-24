@@ -78,7 +78,7 @@ class CrmContact(TimeStampedModel):
         verbose_name_plural = 'CRM Contacts'
 
     def __str__(self):
-        return '{}'.format(self.contact.name)
+        return '{}'.format(self.contact.full_name)
 
 reversion.register(CrmContact)
 

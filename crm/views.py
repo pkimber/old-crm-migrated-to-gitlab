@@ -92,13 +92,8 @@ class CrmContactUpdateView(
     form_class = CrmContactForm
     slug_field = 'contact__user__username'
 
-
-# class ContactUpdateView(
-#         LoginRequiredMixin, StaffuserRequiredMixin,
-#         ContactUpdateMixin, BaseMixin, DetailView):
-#
-#     def get_success_url(self):
-#         return reverse('crm.contact.detail', args=[self.object.slug])
+    def get_success_url(self):
+        return self.object.contact.get_absolute_url()
 
 
 class HomeTicketListView(
