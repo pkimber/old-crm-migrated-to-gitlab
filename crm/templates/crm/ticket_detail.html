@@ -1,5 +1,5 @@
 {% extends 'crm/base.html' %}
-{% load mptt_tags %}
+{# load mptt_tags #}
 
 {% block sub_title %}
   Ticket
@@ -136,27 +136,28 @@
             </a>
           {% endif %}
 
-          {% drilldown_tree_for_node ticket as drilldown %}
-          {% for node, structure in drilldown|tree_info %}
-          {% if structure.new_level %}<ul><li>{% else %}</li><li>{% endif %}
-            {% ifequal node ticket %}
+          {# mptt #}
+          {# drilldown_tree_for_node ticket as drilldown #}
+          {# for node, structure in drilldown|tree_info #}
+          {# if structure.new_level #}<ul><li>{# else #}</li><li>{# endif #}
+            {# ifequal node ticket #}
               <strong>{{ node.title }}</strong>
               Sub-tickets
-            {% else %}
-              <a href="{{ node.get_absolute_url }}">{{ node.title }}</a>
-            {% endifequal %}
-            {% for level in structure.closed_levels %}</li></ul>{% endfor %}
-          {% endfor %}
+            {# else #}
+              <a href="{# node.get_absolute_url #}">{# node.title #}</a>
+            {# endifequal #}
+            {# for level in structure.closed_levels #}</li></ul>{# endfor #}
+          {# endfor #}
 
           <br>
-          {% if ticket.is_leaf_node %}
+          {# if ticket.is_leaf_node #}
             Leaf:
-            {{ ticket.children }}
-          {% else %}
-            <a href="{% url 'crm.ticket.child.create' ticket.pk %}">
+            {# ticket.children #}
+          {# else #}
+            <a href="{# url 'crm.ticket.child.create' ticket.pk #}">
               Create sub-ticket...
             </a>
-          {% endif %}
+          {# endif #}
 
           {% for item in quick %}
             <tr valign="top">

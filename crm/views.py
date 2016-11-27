@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import (
     CreateView,
     DeleteView,
+    DetailView,
     FormView,
     ListView,
     UpdateView,
@@ -87,11 +88,7 @@ class ContactTicketListView(
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         contact = self._contact()
-        crm_contact = CrmContact.objects.get(contact=contact)
-        context.update(dict(
-            contact=contact,
-            crm_contact=crm_contact,
-        ))
+        context.update(dict(contact=contact))
         return context
 
     def get_queryset(self):

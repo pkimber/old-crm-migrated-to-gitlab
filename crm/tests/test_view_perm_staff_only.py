@@ -5,22 +5,16 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from contact.tests.factories import ContactFactory
-from crm.tests.factories import TicketFactory
+from crm.tests.factories import CrmContactFactory, TicketFactory
 from login.tests.fixture import perm_check
 from login.tests.factories import TEST_PASSWORD
 
 
 @pytest.mark.django_db
 def test_contact_ticket_list(perm_check):
-    obj = ContactFactory()
-    url = reverse('crm.contact.ticket.list', args=[obj.slug])
-    perm_check.staff(url)
-
-
-@pytest.mark.django_db
-def test_contact_update(perm_check):
-    obj = ContactFactory()
-    url = reverse('crm.contact.update', args=[obj.slug])
+    contact = ContactFactory()
+    crm_contact = CrmContactFactory(contact=contact)
+    url = reverse('crm.contact.ticket.list', args=[contact.slug])
     perm_check.staff(url)
 
 
@@ -29,7 +23,6 @@ def test_contact_update(perm_check):
     contact = ContactFactory()
     crm_contact = CrmContactFactory(contact=contact)
     url = reverse('crm.contact.update', args=[contact.user.username])
-    print(url)
     perm_check.staff(url)
 
 
