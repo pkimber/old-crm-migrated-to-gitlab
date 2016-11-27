@@ -25,6 +25,15 @@ def test_contact_update(perm_check):
 
 
 @pytest.mark.django_db
+def test_contact_update(perm_check):
+    contact = ContactFactory()
+    crm_contact = CrmContactFactory(contact=contact)
+    url = reverse('crm.contact.update', args=[contact.user.username])
+    print(url)
+    perm_check.staff(url)
+
+
+@pytest.mark.django_db
 def test_project_ticket_due_list(perm_check):
     url = reverse('crm.project.ticket.due.list')
     perm_check.staff(url)

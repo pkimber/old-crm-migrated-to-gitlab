@@ -1,30 +1,27 @@
 # -*- encoding: utf-8 -*-
 import factory
 
-from decimal import Decimal
-
-from django.conf import settings
-
-from crm.models import (
-    #Contact,
-    Note,
-    Priority,
-    Ticket,
-)
+from crm.models import CrmContact, Industry, Note, Priority, Ticket
 from contact.tests.factories import ContactFactory
 from login.tests.factories import UserFactory
 
 
-# class CrmContactFactory(factory.django.DjangoModelFactory):
-#
-#     class Meta:
-#         model = Contact
-#
-#     hourly_rate = Decimal('20.00')
-#
-#     @factory.sequence
-#     def slug(n):
-#         return 'contact_{:02d}'.format(n)
+class IndustryFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = Industry
+
+    @factory.sequence
+    def name(n):
+        return 'name_{:02d}'.format(n)
+
+
+class CrmContactFactory(factory.django.DjangoModelFactory):
+
+    industry = factory.SubFactory(IndustryFactory)
+
+    class Meta:
+        model = CrmContact
 
 
 class PriorityFactory(factory.django.DjangoModelFactory):

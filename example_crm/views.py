@@ -1,5 +1,14 @@
 # -*- encoding: utf-8 -*-
-from django.views.generic import TemplateView
+from braces.views import LoginRequiredMixin
+from django.views.generic import DetailView, TemplateView
+
+from base.view_utils import BaseMixin
+from contact.views import ContactDetailMixin
+
+
+class ContactDetailView(
+        LoginRequiredMixin, ContactDetailMixin, BaseMixin, DetailView):
+    pass
 
 
 class HomeView(TemplateView):

@@ -3,6 +3,7 @@ crm
 
 Django CRM application
 
+
 717-django-mptt
 ===============
 
@@ -28,7 +29,7 @@ Virtual Environment
 
 ::
 
-  virtualenv --python=python3.4 venv-crm
+  virtualenv --python=python3 venv-crm
   source venv-crm/bin/activate
   pip install --upgrade pip
 
@@ -52,4 +53,4 @@ Usage
 Release
 =======
 
-https://www.pkimber.net/open/
+https://www.kbsoftware.co.uk/docs/

@@ -1,13 +1,11 @@
 # -*- encoding: utf-8 -*-
 from django.contrib import messages
-from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import (
     CreateView,
     DeleteView,
-    DetailView,
     FormView,
     ListView,
     UpdateView,
@@ -26,21 +24,17 @@ from rest_framework.views import APIView
 
 from base.view_utils import BaseMixin
 from contact.models import Contact
-from contact.views import (
-    ContactDetailMixin,
-    ContactUpdateMixin,
-)
+from contact.views import ContactDetailMixin, ContactUpdateMixin
 from crm.service import get_contact_model
 from invoice.forms import QuickTimeRecordEmptyForm
-from invoice.models import (
-    QuickTimeRecord,
-    TimeRecord,
-)
+from invoice.models import QuickTimeRecord, TimeRecord
 from .forms import (
+    CrmContactForm,
     NoteForm,
     TicketForm,
 )
 from .models import (
+    CrmContact,
     Note,
     Ticket,
 )
@@ -80,6 +74,46 @@ class ContactUpdateView(
         return reverse('crm.contact.detail', args=[self.object.slug])
 
 
+class ContactTicketListView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
+
+    paginate_by = 20
+    template_name = 'crm/contact_ticket_list.html'
+
+    def _contact(self):
+        slug = self.kwargs['slug']
+        return Contact.objects.get(slug=slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        contact = self._contact()
+        crm_contact = CrmContact.objects.get(contact=contact)
+        context.update(dict(
+            contact=contact,
+            crm_contact=crm_contact,
+        ))
+        return context
+
+    def get_queryset(self):
+        return Ticket.objects.contact(self._contact()).order_by(
+            '-complete',
+            'due',
+            'priority',
+            'created',
+        )
+
+
+class CrmContactUpdateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
+
+    model = CrmContact
+    form_class = CrmContactForm
+    slug_field = 'contact__user__username'
+
+    def get_success_url(self):
+        return self.object.contact.get_absolute_url()
+
+
 class HomeTicketListView(
         LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
 
@@ -100,14 +134,15 @@ class HomeTicketListView(
                 user_assigned=self.request.user,
             )
         else:
-            try:
-                user_contact = UserContact.objects.get(user=self.request.user)
-                result = Ticket.objects.filter(
-                    contact=user_contact.contact,
-                    complete__isnull=True,
-                )
-            except UserContact.DoesNotExist:
-                result = Ticket.objects.none()
+            # try:
+            #     user_contact = UserContact.objects.get(user=self.request.user)
+            #     result = Ticket.objects.filter(
+            #         contact=user_contact.contact,
+            #         complete__isnull=True,
+            #     )
+            # except UserContact.DoesNotExist:
+            #     result = Ticket.objects.none()
+            result = Ticket.objects.none()
         return result
 
 

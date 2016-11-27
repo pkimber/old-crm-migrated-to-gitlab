@@ -37,7 +37,7 @@ class CrmContact(TimeStampedModel):
         verbose_name_plural = 'CRM Contacts'
 
     def __str__(self):
-        return '{}'.format(self.contact.name)
+        return '{}'.format(self.contact.full_name)
 
 reversion.register(CrmContact)
 
@@ -62,11 +62,15 @@ reversion.register(Priority)
 class TicketManager(models.Manager):
 
     def contact(self, contact):
+<<<<<<< HEAD
         return self.model.objects.filter(
             contact=contact,
         ).exclude(
             deleted=True,
         )
+=======
+        return self.model.objects.filter(contact=contact)
+>>>>>>> master
 
     def current(self):
         return self.model.objects.filter(complete__isnull=True)
