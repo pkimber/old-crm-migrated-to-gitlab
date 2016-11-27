@@ -66,12 +66,12 @@ class ContactTicketListView(
         )
 
 
-class ContactUpdateView(
-        LoginRequiredMixin, StaffuserRequiredMixin,
-        ContactUpdateMixin, BaseMixin, DetailView):
-
-    def get_success_url(self):
-        return reverse('crm.contact.detail', args=[self.object.slug])
+# class ContactUpdateView(
+#         LoginRequiredMixin, StaffuserRequiredMixin,
+#         ContactUpdateMixin, BaseMixin, DetailView):
+#
+#     def get_success_url(self):
+#         return reverse('crm.contact.detail', args=[self.object.slug])
 
 
 class ContactTicketListView(
