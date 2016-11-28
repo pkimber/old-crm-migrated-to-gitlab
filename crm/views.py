@@ -24,7 +24,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from base.view_utils import BaseMixin
-from contact.models import Contact
 from contact.views import ContactDetailMixin, ContactUpdateMixin
 from crm.service import get_contact_model
 from invoice.forms import QuickTimeRecordEmptyForm
@@ -50,7 +49,7 @@ class ContactTicketListView(
 
     def _contact(self):
         slug = self.kwargs['slug']
-        return Contact.objects.get(slug=slug)
+        return get_contact_model().objects.get(slug=slug)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -83,7 +82,7 @@ class ContactTicketListView(
 
     def _contact(self):
         slug = self.kwargs['slug']
-        return Contact.objects.get(slug=slug)
+        return get_contact_model().objects.get(slug=slug)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
