@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
+from braces.views import LoginRequiredMixin, StaffuserRequiredMixin
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -11,15 +13,7 @@ from django.views.generic import (
     ListView,
     UpdateView,
 )
-
-from braces.views import (
-    LoginRequiredMixin,
-    StaffuserRequiredMixin,
-)
-from rest_framework import (
-    authentication,
-    permissions,
-)
+from rest_framework import authentication, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -28,16 +22,8 @@ from contact.views import ContactDetailMixin, ContactUpdateMixin
 from crm.service import get_contact_model
 from invoice.forms import QuickTimeRecordEmptyForm
 from invoice.models import QuickTimeRecord, TimeRecord
-from .forms import (
-    CrmContactForm,
-    NoteForm,
-    TicketForm,
-)
-from .models import (
-    CrmContact,
-    Note,
-    Ticket,
-)
+from .forms import CrmContactForm, NoteForm, TicketForm
+from .models import CrmContact, Note, Ticket
 from .serializers import TicketSerializer
 
 
@@ -97,6 +83,27 @@ class ContactTicketListView(
             'priority',
             'created',
         )
+
+
+class CrmContactDetailMixin(ContactDetailMixin):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # crm
+        try:
+            crm_contact = self.object.crmcontact
+        except ObjectDoesNotExist:
+            crm_contact = None
+        # invoice
+        try:
+            invoice_contact = self.object.invoicecontact
+        except ObjectDoesNotExist:
+            invoice_contact = None
+        context.update(dict(
+            crm_contact=crm_contact,
+            invoice_contact=invoice_contact,
+        ))
+        return context
 
 
 class CrmContactUpdateView(

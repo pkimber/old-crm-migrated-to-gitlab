@@ -2,7 +2,7 @@ bleach==1.4.3
 celery==3.1.25
 django-braces==1.9.0
 django-extensions==1.7.4
-django-mptt==0.8.3
+django-mptt==0.8.6
 django-reversion==2.0.6
 django-sendfile==0.3.11
 Django==1.10.3
