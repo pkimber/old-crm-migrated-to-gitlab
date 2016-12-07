@@ -136,19 +136,19 @@
             </a>
           {% endif %}
 
+          <!--
           {# mptt #}
           {# drilldown_tree_for_node ticket as drilldown #}
           {# for node, structure in drilldown|tree_info #}
           {# if structure.new_level #}<ul><li>{# else #}</li><li>{# endif #}
             {# ifequal node ticket #}
-              <strong>{{ node.title }}</strong>
+              <strong>{# node.title #}</strong>
               Sub-tickets
             {# else #}
               <a href="{# node.get_absolute_url #}">{# node.title #}</a>
             {# endifequal #}
             {# for level in structure.closed_levels #}</li></ul>{# endfor #}
           {# endfor #}
-
           <br>
           {# if ticket.is_leaf_node #}
             Leaf:
@@ -158,6 +158,7 @@
               Create sub-ticket...
             </a>
           {# endif #}
+          -->
 
           {% for item in quick %}
             <tr valign="top">
