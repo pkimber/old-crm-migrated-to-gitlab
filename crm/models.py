@@ -6,10 +6,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import timezone
 
-#from mptt.models import (
-#    MPTTModel,
-#    TreeForeignKey,
-#)
+# from mptt.models import MPTTModel, TreeForeignKey
 from reversion import revisions as reversion
 
 from base.model_utils import TimeStampedModel
@@ -30,44 +27,6 @@ class Industry(models.Model):
 reversion.register(Industry)
 
 
-# class Contact(TimeStampedModel):
-#
-#     name = models.CharField(max_length=100)
-#     address = models.TextField(blank=True)
-#     slug = models.SlugField(unique=True)
-#     url = models.URLField(blank=True, null=True)
-#     phone = models.CharField(max_length=100, blank=True)
-#     mail = models.EmailField(blank=True)
-#     industry = models.ForeignKey(Industry, blank=True, null=True)
-#     hourly_rate = models.DecimalField(
-#         blank=True, null=True, max_digits=8, decimal_places=2
-#     )
-#
-#     class Meta:
-#         ordering = ('slug',)
-#         verbose_name = 'Contact'
-#         verbose_name_plural = 'Contacts'
-#
-#     def __str__(self):
-#         return '{}'.format(self.name)
-#
-#     @property
-#     def deleted(self):
-#         """No actual delete (yet), so just return 'False'."""
-#         return False
-#
-#     def get_absolute_url(self):
-#         return reverse('contact.detail', args=[self.slug])
-#
-#     def get_summary_description(self):
-#         return filter(None, (
-#             self.name,
-#             self.address,
-#         ))
-#
-# reversion.register(Contact)
-
-
 class CrmContact(TimeStampedModel):
 
     contact = models.OneToOneField(settings.CONTACT_MODEL)
@@ -81,36 +40,6 @@ class CrmContact(TimeStampedModel):
         return '{}'.format(self.contact.full_name)
 
 reversion.register(CrmContact)
-
-
-# class UserContact(TimeStampedModel):
-#     """
-#     A user is linked to a single contact.
-#     More than one user can link to the same contact, but a user cannot
-#     link to more than one contact.
-#
-#     e.g.
-#     Andy - ConnexionSW
-#     Fred - ConnexionSW
-#     Kate - British Sugar
-#
-#     25/01/2016 Is not used on the KB CRM system, so we will remove it.
-#
-#     """
-#
-#     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='user')
-#     contact = models.ForeignKey(Contact)
-#     # PJK1
-#     # new_contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='usercontact_contact')
-#
-#     # contact = models.ForeignKey(settings.CONTACT_MODEL, related_name='contact')
-#     # crm_contact = models.ForeignKey(Contact)
-#     # crm_contact = models.ForeignKey(Contact) #, related_name='crm_contact_user_contact')
-#     # PJK2
-#     # contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='user_contact_contact')
-#
-#     def __str__(self):
-#         return '{} - {}'.format(self.user.username, self.contact.name)
 
 
 class Priority(models.Model):
@@ -133,7 +62,11 @@ reversion.register(Priority)
 class TicketManager(models.Manager):
 
     def contact(self, contact):
-        return self.model.objects.filter(contact=contact)
+        return self.model.objects.filter(
+            contact=contact,
+        ).exclude(
+            deleted=True,
+        )
 
     def current(self):
         return self.model.objects.filter(complete__isnull=True)
@@ -146,32 +79,12 @@ class TicketManager(models.Manager):
         )
 
 
-# mptt
-# class Ticket(MPTTModel):
-class Ticket(TimeStampedModel):
+class Ticket(models.Model): #MPTTModel):
 
-    # mptt
+    contact = models.ForeignKey(settings.CONTACT_MODEL, related_name='ticket_contact')
     # parent = TreeForeignKey(
     #     'self', null=True, blank=True, related_name='children', db_index=True
     # )
-    # created = models.DateTimeField(auto_now_add=True)
-    # modified = models.DateTimeField(auto_now=True)
-
-    # PJK3
-    # contact = models.ForeignKey(Contact)
-    # PJK2
-    # new_contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='ticket_contact')
-    # PJK3
-    # new_contact = models.ForeignKey(settings.CONTACT_MODEL, related_name='ticket_contact')
-    # PJK4
-    contact = models.ForeignKey(settings.CONTACT_MODEL, related_name='ticket_contact')
-
-    # contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True)
-    # contact = models.ForeignKey(settings.CONTACT_MODEL)
-    # crm_contact = models.ForeignKey(Contact)
-    # crm_contact = models.ForeignKey(Contact) #, related_name='crm_contact_ticket')
-    # PJK2
-    # contact = models.ForeignKey(settings.CONTACT_MODEL, blank=True, null=True, related_name='ticket_contact')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
@@ -184,6 +97,16 @@ class Ticket(TimeStampedModel):
     user_assigned = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True, related_name='+'
     )
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    deleted = models.BooleanField(default=False)
+    date_deleted = models.DateTimeField(blank=True, null=True)
+    user_deleted = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        null=True,
+        related_name='+',
+    )
     objects = TicketManager()
 
     class Meta:
@@ -191,13 +114,11 @@ class Ticket(TimeStampedModel):
         verbose_name = 'Ticket'
         verbose_name_plural = 'Tickets'
 
+    class MPTTMeta:
+        order_insertion_by = ['title']
+
     def __str__(self):
         return '{}'.format(self.title)
-
-    @property
-    def deleted(self):
-        """No actual delete (yet), so just return 'False'."""
-        return False
 
     def get_absolute_url(self):
         return reverse('crm.ticket.detail', args=[self.pk])

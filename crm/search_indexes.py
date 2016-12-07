@@ -1,21 +1,8 @@
 # -*- encoding: utf-8 -*-
 from celery_haystack.indexes import CelerySearchIndex
-
 from haystack import indexes
 
-from .models import (
-    # Contact,
-    Note,
-    Ticket,
-)
-
-
-# class ContactIndex(CelerySearchIndex, indexes.Indexable):
-#
-#     text = indexes.CharField(document=True, use_template=True)
-#
-#     def get_model(self):
-#         return Contact
+from .models import Note, Ticket
 
 
 class NoteIndex(CelerySearchIndex, indexes.Indexable):

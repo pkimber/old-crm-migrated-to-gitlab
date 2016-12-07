@@ -1,59 +1,30 @@
 # -*- encoding: utf-8 -*-
+from braces.views import LoginRequiredMixin, StaffuserRequiredMixin
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import (
     CreateView,
     DeleteView,
+    DetailView,
     FormView,
     ListView,
     UpdateView,
 )
-
-from braces.views import (
-    LoginRequiredMixin,
-    StaffuserRequiredMixin,
-)
-from rest_framework import (
-    authentication,
-    permissions,
-)
+from rest_framework import authentication, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from base.view_utils import BaseMixin
-from contact.models import Contact
+from contact.views import ContactDetailMixin, ContactUpdateMixin
 from crm.service import get_contact_model
 from invoice.forms import QuickTimeRecordEmptyForm
 from invoice.models import QuickTimeRecord, TimeRecord
-from .forms import (
-    CrmContactForm,
-    NoteForm,
-    TicketForm,
-)
-from .models import (
-    CrmContact,
-    Note,
-    Ticket,
-)
+from .forms import CrmContactForm, NoteForm, TicketForm
+from .models import CrmContact, Note, Ticket
 from .serializers import TicketSerializer
-
-
-# def check_perm(user, contact):
-#     if user.is_staff:
-#         pass
-#     elif user.usercontact.contact == contact:
-#         pass
-#     else:
-#         # the user is NOT linked to the contact
-#         raise PermissionDenied()
-
-
-# class CheckPermMixin(object):
-#
-#     def _check_perm(self, contact):
-#         check_perm(self.request.user, contact)
 
 
 class ContactTicketListView(
@@ -64,16 +35,45 @@ class ContactTicketListView(
 
     def _contact(self):
         slug = self.kwargs['slug']
-        return Contact.objects.get(slug=slug)
+        return get_contact_model().objects.get(slug=slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(dict(
+            contact=self._contact(),
+        ))
+        return context
+
+    def get_queryset(self):
+        return Ticket.objects.contact(self._contact()).order_by(
+            '-complete',
+            'due',
+            'priority',
+        )
+
+
+# class ContactUpdateView(
+#         LoginRequiredMixin, StaffuserRequiredMixin,
+#         ContactUpdateMixin, BaseMixin, DetailView):
+#
+#     def get_success_url(self):
+#         return reverse('crm.contact.detail', args=[self.object.slug])
+
+
+class ContactTicketListView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
+
+    paginate_by = 20
+    template_name = 'crm/contact_ticket_list.html'
+
+    def _contact(self):
+        slug = self.kwargs['slug']
+        return get_contact_model().objects.get(slug=slug)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         contact = self._contact()
-        crm_contact = CrmContact.objects.get(contact=contact)
-        context.update(dict(
-            contact=contact,
-            crm_contact=crm_contact,
-        ))
+        context.update(dict(contact=contact))
         return context
 
     def get_queryset(self):
@@ -83,6 +83,27 @@ class ContactTicketListView(
             'priority',
             'created',
         )
+
+
+class CrmContactDetailMixin(ContactDetailMixin):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # crm
+        try:
+            crm_contact = self.object.crmcontact
+        except ObjectDoesNotExist:
+            crm_contact = None
+        # invoice
+        try:
+            invoice_contact = self.object.invoicecontact
+        except ObjectDoesNotExist:
+            invoice_contact = None
+        context.update(dict(
+            crm_contact=crm_contact,
+            invoice_contact=invoice_contact,
+        ))
+        return context
 
 
 class CrmContactUpdateView(
@@ -137,7 +158,6 @@ class NoteCreateView(
     def _get_ticket(self):
         pk = self.kwargs.get('pk', None)
         ticket = get_object_or_404(Ticket, pk=pk)
-        # self._check_perm(ticket.contact)
         return ticket
 
     def get_context_data(self, **kwargs):
@@ -162,7 +182,6 @@ class NoteUpdateView(
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # self._check_perm(self.object.ticket.contact)
         context.update(dict(
             ticket=self.object.ticket,
         ))
@@ -200,7 +219,6 @@ class TicketAPIView(APIView):
 
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAdminUser,)
-    #permission_classes = (permissions.AllowAny,)
 
     def get(self, request, pk=None, format=None):
         if pk:
@@ -212,6 +230,33 @@ class TicketAPIView(APIView):
                 many=True
             )
         return Response(serializer.data)
+
+
+class TicketChildCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, CreateView):
+
+    form_class = TicketForm
+    model = Ticket
+
+    def _ticket(self):
+        pk = self.kwargs.get('pk', None)
+        ticket = Ticket.objects.get(pk=pk)
+        return ticket
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(dict(
+            ticket=self._ticket(),
+        ))
+        return context
+
+    def form_valid(self, form):
+        ticket = self._ticket()
+        self.object = form.save(commit=False)
+        self.object.contact = ticket.contact
+        self.object.parent = ticket
+        self.object.user = self.request.user
+        return super().form_valid(form)
 
 
 class TicketCompleteView(
@@ -246,7 +291,6 @@ class TicketCreateView(
     def _get_contact(self):
         slug = self.kwargs.get('slug', None)
         contact = get_contact_model().objects.get(slug=slug)
-        # self._check_perm(contact)
         return contact
 
     def get_context_data(self, **kwargs):
@@ -272,7 +316,6 @@ class TicketDetailView(
     def get_ticket(self):
         pk = self.kwargs.get('pk')
         ticket = Ticket.objects.get(pk=pk)
-        # self._check_perm(ticket.contact)
         return ticket
 
     def get_context_data(self, **kwargs):
@@ -315,7 +358,6 @@ class TicketUpdateView(
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # self._check_perm(self.object.contact)
         context.update(dict(
             contact=self.object.contact,
         ))

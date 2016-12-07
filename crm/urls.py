@@ -9,6 +9,7 @@ from .views import (
     NoteUpdateView,
     ProjectTicketDueListView,
     ProjectTicketPriorityListView,
+    TicketChildCreateView,
     TicketCompleteView,
     TicketCreateView,
     TicketDetailView,
@@ -26,11 +27,11 @@ urlpatterns = [
         view=ContactTicketListView.as_view(),
         name='crm.contact.ticket.list'
         ),
-    url(regex=r'^contact/(?P<slug>[-\w\d]+)/crm/edit/$',
+    url(regex=r'^contact/(?P<slug>[-\w\d]+)/update/$',
         view=CrmContactUpdateView.as_view(),
         name='crm.contact.update'
         ),
-    url(regex=r'^ticket/(?P<pk>\d+)/note/add/$',
+    url(regex=r'^ticket/(?P<pk>\d+)/note/create/$',
         view=NoteCreateView.as_view(),
         name='crm.note.create'
         ),
@@ -45,6 +46,10 @@ urlpatterns = [
     url(regex=r'^project/ticket/priority/$',
         view=ProjectTicketPriorityListView.as_view(),
         name='crm.project.ticket.priority.list'
+        ),
+    url(regex=r'^ticket/(?P<pk>\d+)/child/create/$',
+        view=TicketChildCreateView.as_view(),
+        name='crm.ticket.child.create'
         ),
     url(regex=r'^ticket/(?P<pk>\d+)/complete/$',
         view=TicketCompleteView.as_view(),

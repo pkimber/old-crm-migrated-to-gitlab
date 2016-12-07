@@ -124,7 +124,6 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (
     # 'debug_toolbar',
-    'compressor',
     # 'django_extensions',
     # 'mptt',
     'rest_framework',
@@ -180,9 +179,6 @@ LOGGING = {
 # URL where requests are redirected after login when the contrib.auth.login
 # view gets no next parameter.
 LOGIN_REDIRECT_URL = reverse_lazy('project.dash')
-
-# django-compressor
-COMPRESS_ENABLED = False # defaults to the opposite of DEBUG
 
 CONTACT_MODEL = 'contact.Contact'
 
