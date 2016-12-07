@@ -1,12 +1,9 @@
 # -*- encoding: utf-8 -*-
 from django import forms
+from django.contrib.auth import get_user_model
 
 from base.form_utils import RequiredFieldForm
-from .models import (
-    CrmContact,
-    Note,
-    Ticket,
-)
+from .models import CrmContact, Note, Ticket
 
 
 class CrmContactForm(forms.ModelForm):
@@ -65,6 +62,15 @@ class TicketForm(RequiredFieldForm):
             self.fields[name].widget.attrs.update(
                 {'class': 'pure-input-2-3'}
             )
+        qs = get_user_model().objects.filter(
+            is_active=True,
+            is_staff=True,
+        ).order_by(
+            'username'
+        )
+        f = self.fields['user_assigned']
+        f.queryset = qs
+        f.label_from_instance = user_label_from_instance
 
     class Meta:
         model = Ticket
@@ -75,3 +81,10 @@ class TicketForm(RequiredFieldForm):
             "due",
             "user_assigned",
         )
+
+
+def user_label_from_instance(obj):
+    result = obj.get_full_name()
+    if not result:
+        result = obj.username
+    return result
