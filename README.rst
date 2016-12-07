@@ -31,7 +31,6 @@ Virtual Environment
 
   virtualenv --python=python3 venv-crm
   source venv-crm/bin/activate
-  pip install --upgrade pip
 
   pip install -r requirements/local.txt
 
