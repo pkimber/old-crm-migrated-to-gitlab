@@ -33,10 +33,10 @@ setup(
             'templates/search/indexes/crm/*.*',
         ],
     },
-    version='0.1.24',
+    version='0.1.25',
     description='crm',
-    author='Patrick Kimber',
-    author_email='code@pkimber.net',
+    author='Malcolm Dinsmore',
+    author_email='zebyea@gmail.com',
     url='git@github.com:pkimber/crm.git',
     classifiers=[
         'Development Status :: 1 - Planning',
