@@ -3,12 +3,13 @@ from braces.views import LoginRequiredMixin
 from django.views.generic import DetailView, TemplateView
 
 from base.view_utils import BaseMixin
-from contact.views import ContactDetailMixin
+from crm.views import CrmContactDetailMixin
 
 
 class ContactDetailView(
-        LoginRequiredMixin, ContactDetailMixin, BaseMixin, DetailView):
-    pass
+        LoginRequiredMixin, CrmContactDetailMixin, BaseMixin, DetailView):
+
+    template_name = 'crm/contact_detail.html'
 
 
 class HomeView(TemplateView):

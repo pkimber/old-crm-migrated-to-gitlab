@@ -14,13 +14,13 @@
       <form action="" method="post">{% csrf_token %}
         <p>
           Are you sure you want to complete the ticket?
-          <br />
+          <br>
           <a href="{% url 'crm.ticket.detail' ticket.pk %}">
             <strong>{{ ticket.title }}</strong>
           </a>
           for
           <a href="{% url 'contact.detail' ticket.contact.slug %}">
-            {{ ticket.contact.name }}
+            {{ ticket.contact.full_name }}
           </a>
         </p>
         <input type="submit" value="Confirm" class="pure-button pure-button-primary" />

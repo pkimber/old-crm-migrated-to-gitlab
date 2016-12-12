@@ -27,65 +27,15 @@ from .models import CrmContact, Note, Ticket
 from .serializers import TicketSerializer
 
 
-class ContactTicketListView(
-        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
+class CrmContactDetailMixin(ContactDetailMixin):
 
-    paginate_by = 20
-    template_name = 'crm/contact_ticket_list.html'
-
-    def _contact(self):
-        slug = self.kwargs['slug']
-        return get_contact_model().objects.get(slug=slug)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update(dict(
-            contact=self._contact(),
-        ))
-        return context
-
-    def get_queryset(self):
-        return Ticket.objects.contact(self._contact()).order_by(
-            '-complete',
-            'due',
-            'priority',
-        )
-
-
-# class ContactUpdateView(
-#         LoginRequiredMixin, StaffuserRequiredMixin,
-#         ContactUpdateMixin, BaseMixin, DetailView):
-#
-#     def get_success_url(self):
-#         return reverse('crm.contact.detail', args=[self.object.slug])
-
-
-class ContactTicketListView(
-        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, ListView):
-
-    paginate_by = 20
-    template_name = 'crm/contact_ticket_list.html'
-
-    def _contact(self):
-        slug = self.kwargs['slug']
-        return get_contact_model().objects.get(slug=slug)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        contact = self._contact()
-        context.update(dict(contact=contact))
-        return context
-
-    def get_queryset(self):
-        return Ticket.objects.contact(self._contact()).order_by(
+    def _ticket_list(self):
+        return Ticket.objects.contact(self.object).order_by(
             '-complete',
             'due',
             'priority',
             'created',
         )
-
-
-class CrmContactDetailMixin(ContactDetailMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -102,8 +52,10 @@ class CrmContactDetailMixin(ContactDetailMixin):
         context.update(dict(
             crm_contact=crm_contact,
             invoice_contact=invoice_contact,
+            ticket_list=self._ticket_list(),
         ))
         return context
+
 
 
 class CrmContactUpdateView(
@@ -279,7 +231,7 @@ class TicketCompleteView(
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        return self.object.contact.get_absolute_url()
+        return reverse('contact.detail', args=[self.object.contact.slug])
 
 
 class TicketCreateView(

@@ -2,7 +2,7 @@
 from django.conf.urls import url
 
 from .views import (
-    ContactTicketListView,
+    # ContactTicketListView,
     CrmContactUpdateView,
     HomeTicketListView,
     NoteCreateView,
@@ -23,10 +23,10 @@ urlpatterns = [
         view=HomeTicketListView.as_view(),
         name='crm.ticket.home'
         ),
-    url(regex=r'^contact/(?P<slug>[-\w\d]+)/ticket/$',
-        view=ContactTicketListView.as_view(),
-        name='crm.contact.ticket.list'
-        ),
+    # url(regex=r'^contact/(?P<slug>[-\w\d]+)/$',
+    #     view=ContactDetailView.as_view(),
+    #     name='crm.contact.detail'
+    #     ),
     url(regex=r'^contact/(?P<slug>[-\w\d]+)/update/$',
         view=CrmContactUpdateView.as_view(),
         name='crm.contact.update'
