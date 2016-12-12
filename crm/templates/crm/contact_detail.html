@@ -27,7 +27,8 @@
             <td>Contact</td>
             <td>
               {% if user.is_staff %}
-                <a href="{% url 'contact.detail' contact.slug %}">
+                <a href="{% url 'contact.update' contact.user.username %}">
+                  <i class="fa fa-edit"></i>
                   <strong>{{ contact.full_name }}</strong>
                 </a>
               {% else %}
@@ -66,6 +67,8 @@
             <td></td>
           </tr>
           {% endif %}
+          {% block contact_update %}
+          {% endblock contact_update %}
           {% if ticket_list.count %}
           <tr>
             <td><strong>Tickets</strong></td>
