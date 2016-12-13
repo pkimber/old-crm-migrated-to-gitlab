@@ -24,7 +24,7 @@
       <table class="pure-table pure-table-bordered">
         <tbody>
           <tr>
-            <td>Contact</td>
+            <td>Name</td>
             <td>
               {% if user.is_staff %}
                 <a href="{% url 'contact.update' contact.user.username %}">
@@ -46,17 +46,25 @@
             <td></td>
           </tr>
           {% endif %}
-          {% if contact.phone %}
           <tr>
-            <td>Phone</td>
-            <td><strong>{{ contact.phone }}</strong></td>
+            <td>Contact</td>
+            <td>
+              {{ contact.phone }}
+              {% if contact.mobile %}
+                <strong>Mobile</strong>:
+                {{ contact.mobile }}
+              {% endif %}
+              {% if contact.user.email %}
+                <strong>Email</strong>:
+                {{ contact.user.email|urlize }}
+              {% endif %}
+            </td>
             <td></td>
           </tr>
-          {% endif %}
-          {% if contact.url %}
+          {% if contact.website %}
           <tr>
             <td>Web</td>
-            <td>{{ contact.url|urlize }}</td>
+            <td>{{ contact.website|urlize }}</td>
             <td></td>
           </tr>
           {% endif %}
