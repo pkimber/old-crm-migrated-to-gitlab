@@ -53,7 +53,10 @@ def test_note_update(perm_check):
 @pytest.mark.django_db
 def test_ticket_create(perm_check):
     contact = ContactFactory()
-    url = reverse('crm.ticket.create', kwargs={'slug': contact.slug})
+    url = reverse(
+        'crm.ticket.create',
+        kwargs={'slug': contact.user.username}
+    )
     perm_check.staff(url)
 
 

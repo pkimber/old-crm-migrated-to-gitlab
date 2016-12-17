@@ -18,10 +18,11 @@ class IndustryFactory(factory.django.DjangoModelFactory):
 
 class CrmContactFactory(factory.django.DjangoModelFactory):
 
-    industry = factory.SubFactory(IndustryFactory)
-
     class Meta:
         model = CrmContact
+
+    contact = factory.SubFactory(ContactFactory)
+    industry = factory.SubFactory(IndustryFactory)
 
 
 class PriorityFactory(factory.django.DjangoModelFactory):

@@ -53,7 +53,7 @@
             <tr valign="top">
               <td>
                 <small>
-                  <a href="{% url 'contact.detail' ticket.contact.slug %}">
+                  <a href="{% url 'contact.detail' ticket.contact.user.username %}">
                     {{ ticket.contact.name|truncatewords:3 }}
                   </a>
                 </small>

@@ -27,6 +27,23 @@ from .models import CrmContact, Note, Ticket
 from .serializers import TicketSerializer
 
 
+class CrmContactCreateView(
+        LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, CreateView):
+
+    model = CrmContact
+    form_class = CrmContactForm
+
+    def _contact(self):
+        slug = self.kwargs.get('slug')
+        contact = get_contact_model().objects.get(user__username=slug)
+        return contact
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.contact = self._contact()
+        return super().form_valid(form)
+
+
 class CrmContactDetailMixin(ContactDetailMixin):
 
     def _ticket_list(self):
@@ -57,16 +74,12 @@ class CrmContactDetailMixin(ContactDetailMixin):
         return context
 
 
-
 class CrmContactUpdateView(
         LoginRequiredMixin, StaffuserRequiredMixin, BaseMixin, UpdateView):
 
     model = CrmContact
     form_class = CrmContactForm
     slug_field = 'contact__user__username'
-
-    def get_success_url(self):
-        return self.object.contact.get_absolute_url()
 
 
 class HomeTicketListView(
@@ -231,7 +244,10 @@ class TicketCompleteView(
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse('contact.detail', args=[self.object.contact.slug])
+        return reverse(
+            'contact.detail',
+            args=[self.object.contact.user.username]
+        )
 
 
 class TicketCreateView(
@@ -242,7 +258,7 @@ class TicketCreateView(
 
     def _get_contact(self):
         slug = self.kwargs.get('slug', None)
-        contact = get_contact_model().objects.get(slug=slug)
+        contact = get_contact_model().objects.get(user__username=slug)
         return contact
 
     def get_context_data(self, **kwargs):

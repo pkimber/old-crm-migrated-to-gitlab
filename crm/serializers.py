@@ -6,7 +6,7 @@ from .models import Ticket
 
 class TicketSerializer(serializers.ModelSerializer):
 
-    contact = serializers.ReadOnlyField(source='contact.slug')
+    contact = serializers.ReadOnlyField(source='contact.user.username')
     priority = serializers.ReadOnlyField(source='priority.name')
     username = serializers.ReadOnlyField(source='user_assigned.username')
 

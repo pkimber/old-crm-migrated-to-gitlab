@@ -1,20 +1,10 @@
 # -*- encoding: utf-8 -*-
-"""Simple tests to make sure a view doesn't throw any exceptions"""
 import pytest
 
 from django.core.urlresolvers import reverse
 
-# from crm.tests.scenario import (
-#     default_scenario_crm,
-#     get_contact_farm,
-#     get_note_fence_forgot,
-#     get_ticket_fence_for_farm,
-# )
 from contact.tests.factories import ContactFactory
-from crm.tests.factories import (
-    NoteFactory,
-    TicketFactory,
-)
+from crm.tests.factories import CrmContactFactory, NoteFactory, TicketFactory
 from login.tests.factories import TEST_PASSWORD
 from login.tests.fixture import perm_check
 from login.tests.scenario import (
@@ -24,17 +14,25 @@ from login.tests.scenario import (
 )
 
 
-#class TestView(TestCase):
-#    """Make sure a staff user can access all the standard screens"""
-#
-#    def setUp(self):
-#        user_contractor()
-#        default_scenario_login()
-#        default_scenario_crm()
-#        self.contact = get_contact_farm()
-#        self.staff = get_user_staff()
-#        self.note = get_note_fence_forgot()
-#        self.ticket = get_ticket_fence_for_farm()
+@pytest.mark.django_db
+def test_crm_contact_create(perm_check):
+    contact = ContactFactory()
+    url = reverse(
+        'crm.contact.create',
+        kwargs={'slug': contact.user.username}
+    )
+    perm_check.staff(url)
+
+
+@pytest.mark.django_db
+def test_crm_contact_update(perm_check):
+    contact = ContactFactory()
+    CrmContactFactory(contact=contact)
+    url = reverse(
+        'crm.contact.update',
+        kwargs={'slug': contact.user.username}
+    )
+    perm_check.staff(url)
 
 
 @pytest.mark.django_db
@@ -61,7 +59,7 @@ def test_ticket_complete(perm_check):
 @pytest.mark.django_db
 def test_ticket_create(perm_check):
     contact = ContactFactory()
-    url = reverse('crm.ticket.create', kwargs={'slug': contact.slug})
+    url = reverse('crm.ticket.create', kwargs={'slug': contact.user.username})
     perm_check.staff(url)
 
 
