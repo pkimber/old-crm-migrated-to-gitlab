@@ -28,17 +28,16 @@ def api_client():
 
 @pytest.mark.django_db
 def test_api_ticket(api_client):
-    user = UserFactory(first_name='Andrea')
+    user = UserFactory(first_name='Andrea', username='andrea')
     t1 = TicketFactory(
-        contact=ContactFactory(slug='andrea', company_name='', user=user),
-        #crm_contact=CrmContactFactory(),
+        contact=ContactFactory(company_name='', user=user),
         priority=PriorityFactory(name='Medium'),
         title='Mow the lawn',
         user_assigned=UserFactory(username='akimber'),
     )
-    user = UserFactory(first_name='Patrick')
+    user = UserFactory(first_name='Patrick', username='patrick')
     t2 = TicketFactory(
-        contact=ContactFactory(slug='patrick', company_name='', user=user),
+        contact=ContactFactory(company_name='', user=user),
         priority=PriorityFactory(name='High'),
         title='Make a cup of tea',
         user_assigned=UserFactory(username='pkimber'),
