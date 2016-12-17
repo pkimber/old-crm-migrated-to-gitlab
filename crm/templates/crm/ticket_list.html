@@ -21,9 +21,10 @@
     <div class="pure-u-1">
       <div class="pure-menu pure-menu-horizontal">
         <ul class="pure-menu-list">
+          {% include 'crm/_menu_item_ticket_home.html' %}
           {% include 'base/_paginate.html' %}
           {% if user.is_staff %}
-            {% include 'crm/_menu.html' %}
+            {% include 'crm/_menu_ticket.html' %}
           {% endif %}
         </ul>
       </div>
@@ -89,7 +90,7 @@
         <ul class="pure-menu-list">
           {% include 'base/_paginate.html' %}
           {% if user.is_staff %}
-            {% include 'crm/_menu.html' %}
+            {% include 'crm/_menu_ticket.html' %}
           {% endif %}
         </ul>
       </div>

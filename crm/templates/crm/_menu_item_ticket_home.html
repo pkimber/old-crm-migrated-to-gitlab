@@ -1,0 +1,7 @@
+{% if not path == '/crm/' %}
+  <li class="pure-menu-item">
+    <a href="{% url 'crm.ticket.home' %}" class="pure-menu-link">
+      <i class="fa fa-reply"></i>
+    </a>
+  </li>
+{% endif %}

@@ -1,0 +1,8 @@
+{% if not path == '/crm/ticket/' %}
+  <li class="pure-menu-item">
+    <a href="{% url 'crm.ticket.list' %}" class="pure-menu-link">
+      <i class="fa fa-ticket"></i>
+      All Tickets
+    </a>
+  </li>
+{% endif %}
