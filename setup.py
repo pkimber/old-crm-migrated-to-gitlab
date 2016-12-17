@@ -33,7 +33,7 @@ setup(
             'templates/search/indexes/crm/*.*',
         ],
     },
-    version='0.1.28',
+    version='0.1.29',
     description='crm',
     author='Patrick Kimber',
     author_email='code@pkimber.net',
