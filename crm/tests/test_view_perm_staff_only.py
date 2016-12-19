@@ -14,7 +14,7 @@ from login.tests.factories import TEST_PASSWORD
 def test_contact_update(perm_check):
     contact = ContactFactory()
     crm_contact = CrmContactFactory(contact=contact)
-    url = reverse('crm.contact.update', args=[contact.user.username])
+    url = reverse('crm.contact.update', args=[crm_contact.pk])
     perm_check.staff(url)
 
 

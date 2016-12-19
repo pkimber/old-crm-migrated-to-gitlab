@@ -60,7 +60,7 @@
           <tr>
             <td>Industry</td>
             <td>
-              <a href="{% url 'crm.contact.update' contact.user.username %}">
+              <a href="{% url 'crm.contact.update' crm_contact.pk %}">
                 <i class="fa fa-edit"></i>
                 {% if crm_contact.industry %}
                   {{ crm_contact.industry.name }}
@@ -73,7 +73,7 @@
           <tr>
             <td>Hourly Rate</td>
             <td>
-              <a href="{% url 'invoice.contact.update' contact.user.username %}">
+              <a href="{% url 'invoice.contact.update' invoice_contact.pk %}">
                 <i class="fa fa-edit"></i>
                 {{ invoice_contact.hourly_rate }}
               </a>

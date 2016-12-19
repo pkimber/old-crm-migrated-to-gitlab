@@ -1,17 +1,17 @@
 <li class="pure-menu-item">
-  <a href="{% url 'crm.ticket.create' contact.user.username %}" class="pure-menu-link">
+  <a href="{% url 'crm.ticket.create' contact.pk %}" class="pure-menu-link">
     <i class="fa fa-ticket"></i>
     New Ticket
   </a>
 </li>
 <li class="pure-menu-item">
-  <a href="{% url 'invoice.contact.list' contact.user.username %}" class="pure-menu-link">
+  <a href="{% url 'invoice.contact.list' contact.pk %}" class="pure-menu-link">
     <i class="fa fa-gbp"></i>
     Invoices
   </a>
 </li>
 <li class="pure-menu-item">
-  <a href="{% url 'invoice.time.contact.list' contact.user.username %}" class="pure-menu-link">
+  <a href="{% url 'invoice.time.contact.list' contact.pk %}" class="pure-menu-link">
     <i class="fa fa-clock-o"></i>
     Time Records
   </a>

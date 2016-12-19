@@ -29,7 +29,7 @@ urlpatterns = [
     url(regex=r'^contact/',
         view=include('contact.urls')
         ),
-    url(regex=r'^contact/(?P<slug>[-\w\d]+)/$',
+    url(regex=r'^contact/(?P<pk>\d+)/$',
         view=ContactDetailView.as_view(),
         name='contact.detail'
         ),

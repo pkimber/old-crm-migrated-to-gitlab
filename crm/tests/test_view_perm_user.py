@@ -55,7 +55,7 @@ def test_ticket_create(perm_check):
     contact = ContactFactory()
     url = reverse(
         'crm.ticket.create',
-        kwargs={'slug': contact.user.username}
+        kwargs={'pk': contact.pk}
     )
     perm_check.staff(url)
 

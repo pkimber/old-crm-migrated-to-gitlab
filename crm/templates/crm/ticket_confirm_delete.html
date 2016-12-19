@@ -19,7 +19,7 @@
             <strong>{{ ticket.title }}</strong>
           </a>
           for
-          <a href="{% url 'contact.detail' ticket.contact.user.username %}">
+          <a href="{% url 'contact.detail' ticket.contact.pk %}">
             {{ ticket.contact.full_name }}
           </a>
         </p>

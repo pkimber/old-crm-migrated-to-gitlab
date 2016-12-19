@@ -23,15 +23,11 @@ urlpatterns = [
         view=HomeTicketListView.as_view(),
         name='crm.ticket.home'
         ),
-    # url(regex=r'^contact/(?P<slug>[-\w\d]+)/$',
-    #     view=ContactDetailView.as_view(),
-    #     name='crm.contact.detail'
-    #     ),
-    url(regex=r'^contact/(?P<slug>[-\w\d\.]+)/create/$',
+    url(regex=r'^contact/(?P<pk>\d+)/create/$',
         view=CrmContactCreateView.as_view(),
         name='crm.contact.create'
         ),
-    url(regex=r'^contact/(?P<slug>[-\w\d\.]+)/update/$',
+    url(regex=r'^contact/(?P<pk>\d+)/update/$',
         view=CrmContactUpdateView.as_view(),
         name='crm.contact.update'
         ),
@@ -59,7 +55,7 @@ urlpatterns = [
         view=TicketCompleteView.as_view(),
         name='crm.ticket.complete'
         ),
-    url(regex=r'^contact/(?P<slug>[-\w\d\.]+)/ticket/add/$',
+    url(regex=r'^contact/(?P<pk>\d+)/ticket/create/$',
         view=TicketCreateView.as_view(),
         name='crm.ticket.create'
         ),

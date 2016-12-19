@@ -17,21 +17,15 @@ from login.tests.scenario import (
 @pytest.mark.django_db
 def test_crm_contact_create(perm_check):
     contact = ContactFactory()
-    url = reverse(
-        'crm.contact.create',
-        kwargs={'slug': contact.user.username}
-    )
+    url = reverse('crm.contact.create', kwargs={'pk': contact.pk})
     perm_check.staff(url)
 
 
 @pytest.mark.django_db
 def test_crm_contact_update(perm_check):
     contact = ContactFactory()
-    CrmContactFactory(contact=contact)
-    url = reverse(
-        'crm.contact.update',
-        kwargs={'slug': contact.user.username}
-    )
+    crm_contact = CrmContactFactory(contact=contact)
+    url = reverse('crm.contact.update', kwargs={'pk': crm_contact.pk})
     perm_check.staff(url)
 
 
@@ -59,7 +53,7 @@ def test_ticket_complete(perm_check):
 @pytest.mark.django_db
 def test_ticket_create(perm_check):
     contact = ContactFactory()
-    url = reverse('crm.ticket.create', kwargs={'slug': contact.user.username})
+    url = reverse('crm.ticket.create', kwargs={'pk': contact.pk})
     perm_check.staff(url)
 
 

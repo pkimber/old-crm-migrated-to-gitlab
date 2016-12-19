@@ -51,7 +51,7 @@
             <tr valign="top">
               {% if user.is_staff %}
                 <td>
-                  <a href="{% url 'contact.detail' ticket.contact.user.username %}">
+                  <a href="{% url 'contact.detail' ticket.contact.pk %}">
                     {{ ticket.contact.full_name }}
                   </a>
                 </td>

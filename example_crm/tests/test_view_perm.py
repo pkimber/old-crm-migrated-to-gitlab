@@ -16,5 +16,5 @@ def test_contact_detail(perm_check):
     UserContactFactory(user=get_user_web())
     contact = ContactFactory()
     crm_contact = CrmContactFactory(contact=contact)
-    url = reverse('contact.detail', args=[contact.user.username])
+    url = reverse('contact.detail', args=[contact.pk])
     perm_check.staff(url)

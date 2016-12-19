@@ -27,7 +27,7 @@
             <td>Name</td>
             <td>
               {% if user.is_staff %}
-                <a href="{% url 'contact.update' contact.user.username %}">
+                <a href="{% url 'contact.update' contact.pk %}">
                   <i class="fa fa-edit"></i>
                   <strong>{{ contact.full_name }}</strong>
                 </a>

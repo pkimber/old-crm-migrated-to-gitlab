@@ -34,8 +34,8 @@ class CrmContactCreateView(
     form_class = CrmContactForm
 
     def _contact(self):
-        slug = self.kwargs.get('slug')
-        contact = get_contact_model().objects.get(user__username=slug)
+        pk = self.kwargs.get('pk')
+        contact = get_contact_model().objects.get(pk=pk)
         return contact
 
     def form_valid(self, form):
@@ -79,7 +79,6 @@ class CrmContactUpdateView(
 
     model = CrmContact
     form_class = CrmContactForm
-    slug_field = 'contact__user__username'
 
 
 class HomeTicketListView(
@@ -244,10 +243,7 @@ class TicketCompleteView(
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse(
-            'contact.detail',
-            args=[self.object.contact.user.username]
-        )
+        return reverse('contact.detail', args=[self.object.contact.pk])
 
 
 class TicketCreateView(
@@ -256,21 +252,21 @@ class TicketCreateView(
     form_class = TicketForm
     model = Ticket
 
-    def _get_contact(self):
-        slug = self.kwargs.get('slug', None)
-        contact = get_contact_model().objects.get(user__username=slug)
+    def _contact(self):
+        pk = self.kwargs.get('pk')
+        contact = get_contact_model().objects.get(pk=pk)
         return contact
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update(dict(
-            contact=self._get_contact(),
+            contact=self._contact(),
         ))
         return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.contact = self._get_contact()
+        self.object.contact = self._contact()
         self.object.user = self.request.user
         return super().form_valid(form)
 

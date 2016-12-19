@@ -17,14 +17,14 @@ def test_crm_contact_create(client):
     contact = ContactFactory()
     url = reverse(
         'crm.contact.create',
-        kwargs={'slug': contact.user.username}
+        kwargs={'pk': contact.pk}
     )
     data = {
         'industry': IndustryFactory(name='Agriculture').pk,
     }
     response = client.post(url, data)
     assert 302 == response.status_code
-    expect = reverse('contact.detail', args=[contact.user.username])
+    expect = reverse('contact.detail', args=[contact.pk])
     assert expect == response['Location']
     crm_contact = CrmContact.objects.get(contact=contact)
     assert 'Agriculture' == crm_contact.industry.name
@@ -35,17 +35,17 @@ def test_crm_contact_update(client):
     user = UserFactory(username='staff', is_staff=True)
     assert client.login(username=user.username, password=TEST_PASSWORD) is True
     contact = ContactFactory()
-    CrmContactFactory(contact=contact)
+    crm_contact = CrmContactFactory(contact=contact)
     url = reverse(
         'crm.contact.update',
-        kwargs={'slug': contact.user.username}
+        kwargs={'pk': crm_contact.pk}
     )
     data = {
         'industry': IndustryFactory(name='Agriculture').pk,
     }
     response = client.post(url, data)
     assert 302 == response.status_code
-    expect = reverse('contact.detail', args=[contact.user.username])
+    expect = reverse('contact.detail', args=[contact.pk])
     assert expect == response['Location']
     crm_contact = CrmContact.objects.get(contact=contact)
     assert 'Agriculture' == crm_contact.industry.name
