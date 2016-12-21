@@ -203,7 +203,7 @@
               {{ item.title }}
             {% else %}
               {% if user == item.user and user.is_staff and item.user_can_edit %}
-                <a href="{% url 'invoice.time.update' item.pk %}">
+                <a href="{% url 'invoice.time.update' item.pk %}?next={{ request.path }}">
                   <i class="fa fa-edit"></i>
                   {{ item.title }}
                 </a>
