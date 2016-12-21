@@ -2,17 +2,12 @@
 import pytest
 
 from django.core.urlresolvers import reverse
-
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
 
 from contact.tests.factories import ContactFactory
-from crm.tests.factories import (
-    #CrmContactFactory,
-    PriorityFactory,
-    TicketFactory,
-)
+from crm.tests.factories import PriorityFactory, TicketFactory
 from login.tests.factories import UserFactory
 
 

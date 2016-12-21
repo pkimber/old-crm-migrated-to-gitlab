@@ -12,6 +12,16 @@ from reversion import revisions as reversion
 from base.model_utils import TimeStampedModel
 
 
+class CrmError(Exception):
+
+    def __init__(self, value):
+        Exception.__init__(self)
+        self.value = value
+
+    def __str__(self):
+        return repr('%s, %s' % (self.__class__.__name__, self.value))
+
+
 class Industry(models.Model):
 
     name = models.CharField(max_length=100)

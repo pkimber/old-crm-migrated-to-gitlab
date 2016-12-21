@@ -23,7 +23,7 @@ from crm.service import get_contact_model
 from invoice.forms import QuickTimeRecordEmptyForm
 from invoice.models import QuickTimeRecord, TimeRecord
 from .forms import CrmContactForm, NoteForm, TicketForm
-from .models import CrmContact, Note, Ticket
+from .models import CrmContact, CrmError, Note, Ticket
 from .serializers import TicketSerializer
 
 
@@ -277,7 +277,7 @@ class TicketDetailView(
     form_class = QuickTimeRecordEmptyForm
     template_name = 'crm/ticket_detail.html'
 
-    def get_ticket(self):
+    def _ticket(self):
         pk = self.kwargs.get('pk')
         ticket = Ticket.objects.get(pk=pk)
         return ticket
@@ -285,15 +285,20 @@ class TicketDetailView(
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update(dict(
-            ticket=self.get_ticket(),
+            ticket=self._ticket(),
             quick=QuickTimeRecord.objects.quick(self.request.user),
         ))
         return context
 
     def form_valid(self, form):
         quick_pk = self.request.POST.get('quick')
-        ticket = self.get_ticket()
-        quick_time_record = QuickTimeRecord.objects.get(pk=quick_pk)
+        ticket = self._ticket()
+        try:
+            quick_time_record = QuickTimeRecord.objects.get(pk=quick_pk)
+        except QuickTimeRecord.DoesNotExist:
+            raise CrmError(
+                "Cannot find quick time record '{}'".format(quick_pk)
+            )
         TimeRecord.objects.start(ticket, quick_time_record)
         return HttpResponseRedirect(
             reverse('crm.ticket.detail', args=[ticket.pk])
