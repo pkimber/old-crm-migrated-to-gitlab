@@ -54,7 +54,7 @@
               <td>
                 <small>
                   <a href="{% url 'contact.detail' ticket.contact.pk %}">
-                    {{ ticket.contact.name|truncatewords:3 }}
+                    {{ ticket.contact.full_name|truncatewords:3 }}
                   </a>
                 </small>
               </td>
