@@ -80,6 +80,7 @@ class TicketForm(RequiredFieldForm):
             "description",
             "due",
             "user_assigned",
+            "fixed",
         )
 
 

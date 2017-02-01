@@ -106,6 +106,10 @@ class Ticket(models.Model): #MPTTModel):
     description = models.TextField(blank=True, null=True)
     priority = models.ForeignKey(Priority)
     due = models.DateField(blank=True, null=True)
+    fixed = models.BooleanField(
+        default=False,
+        help_text='Price, Sales, Support or Business Project',
+    )
     complete = models.DateTimeField(blank=True, null=True)
     complete_user = models.ForeignKey(
         settings.AUTH_USER_MODEL, blank=True, null=True, related_name='+'

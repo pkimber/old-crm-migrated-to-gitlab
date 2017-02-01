@@ -70,6 +70,18 @@
     <div class="pure-u-1 pure-u-md-1-3">
       <table class="pure-table pure-table-bordered">
         <tbody>
+          {% if ticket.fixed %}
+            <tr>
+              <td align="right">
+                <i class="fa fa-snowflake-o"></i>
+              </td>
+              <td>
+                <strong>
+                  Fixed Price
+                </strong>
+              </td>
+            </tr>
+          {% endif %}
           <tr>
             <td>Number</td>
             <td>
