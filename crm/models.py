@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-from datetime import date
+from datetime import date, timedelta
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -95,9 +95,11 @@ class TicketManager(models.Manager):
         )
 
 
-class Ticket(models.Model): #MPTTModel):
+class Ticket(models.Model):  # MPTTModel):
 
-    contact = models.ForeignKey(settings.CONTACT_MODEL, related_name='ticket_contact')
+    contact = models.ForeignKey(
+        settings.CONTACT_MODEL, related_name='ticket_contact'
+    )
     # parent = TreeForeignKey(
     #     'self', null=True, blank=True, related_name='children', db_index=True
     # )
@@ -156,6 +158,25 @@ class Ticket(models.Model): #MPTTModel):
     @property
     def time_records(self):
         return self.timerecord_set.order_by('-created')
+
+    def totals(self):
+        invoiced_total = timedelta()
+        billable_total = timedelta()
+        not_billable_total = timedelta()
+        for time_record in self.time_records:
+            if time_record.billable:
+                billable_total += time_record.delta()
+            else:
+                not_billable_total += time_record.delta()
+            if time_record.invoice_line:
+                invoiced_total += time_record.delta()
+        return dict(
+            billable=billable_total,
+            not_billable=not_billable_total,
+            total=billable_total + not_billable_total,
+            invoiced=invoiced_total,
+            pending=billable_total - invoiced_total,
+        )
 
     @property
     def is_overdue(self):
