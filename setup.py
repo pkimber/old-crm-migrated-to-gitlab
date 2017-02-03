@@ -33,7 +33,7 @@ setup(
             'templates/search/indexes/crm/*.*',
         ],
     },
-    version='0.1.33',
+    version='0.1.34',
     description='crm',
     author='Malcolm Dinsmore',
     author_email='code-md@kbsoftware.co.uk',
