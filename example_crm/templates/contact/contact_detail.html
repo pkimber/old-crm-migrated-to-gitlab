@@ -5,7 +5,7 @@
 {% endblock sub_title %}
 
 {% block sub_heading %}
-  {{ contact.full_name }}
+  {{ contact.get_full_name }}
 {% endblock sub_heading %}
 
 {% block content %}
@@ -19,10 +19,10 @@
               {% if user.is_staff %}
                 <a href="{% url 'contact.update' contact.user.username %}">
                   <i class="fa fa-edit"></i>
-                  <strong>{{ contact.full_name }}</strong>
+                  <strong>{{ contact.get_full_name }}</strong>
                 </a>
               {% else %}
-                {{ contact.full_name }}
+                {{ contact.get_full_name }}
               {% endif %}
             </td>
             <td></td>

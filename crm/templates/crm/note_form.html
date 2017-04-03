@@ -6,7 +6,7 @@
 
 {% block sub_heading %}
   Note for
-  {{ ticket.contact.full_name }}
+  {{ ticket.contact.get_full_name }}
   ticket {{ ticket.pk }}
 {% endblock sub_heading %}
 

@@ -23,7 +23,7 @@
     <div class="pure-u-1 pure-u-md-2-3">
       <div class="r-box">
         <a href="{% url 'contact.detail' ticket.contact.pk %}">
-          <strong>{{ ticket.contact.full_name }}</strong>
+          <strong>{{ ticket.contact.get_full_name }}</strong>
         </a>
         <small>
           {{ ticket.contact.address }}

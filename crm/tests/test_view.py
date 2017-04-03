@@ -5,10 +5,11 @@ from decimal import Decimal
 from django.core.urlresolvers import reverse
 
 from contact.tests.factories import ContactFactory
-from crm.models import CrmContact
+from crm.models import CrmContact, Ticket
 from crm.tests.factories import (
     CrmContactFactory,
     IndustryFactory,
+    PriorityFactory,
     TicketFactory,
 )
 from invoice.models import TimeRecord
@@ -74,3 +75,48 @@ def test_ticket_detail(client):
     assert 1 == TimeRecord.objects.count()
     time_record = TimeRecord.objects.first()
     assert quick.time_code.description == time_record.time_code.description
+
+
+@pytest.mark.django_db
+def test_ticket_create(client):
+    user = UserFactory(username='staff', is_staff=True)
+    assert client.login(username=user.username, password=TEST_PASSWORD) is True
+    contact = ContactFactory()
+    priority = PriorityFactory()
+    url = reverse('crm.ticket.create', kwargs={'pk': contact.pk})
+    data = {
+        'fixed_price': True,
+        'priority': priority.pk,
+        'title': 'Apple Juice',
+    }
+    response = client.post(url, data)
+    assert 302 == response.status_code, response.context['form'].errors
+    ticket = Ticket.objects.get(contact=contact)
+    expect = reverse('crm.ticket.detail', args=[ticket.pk])
+    assert expect == response['Location']
+    assert ticket.fixed_price is True
+    assert priority.pk == ticket.priority.pk
+    assert 'Apple Juice' == ticket.title
+
+
+@pytest.mark.django_db
+def test_ticket_update(client):
+    user = UserFactory(username='staff', is_staff=True)
+    assert client.login(username=user.username, password=TEST_PASSWORD) is True
+    priority = PriorityFactory()
+    ticket = TicketFactory()
+    assert ticket.fixed_price is False
+    url = reverse('crm.ticket.update', kwargs={'pk': ticket.pk})
+    data = {
+        'fixed_price': True,
+        'priority': priority.pk,
+        'title': 'Apple Juice',
+    }
+    response = client.post(url, data)
+    assert 302 == response.status_code, response.context['form'].errors
+    expect = reverse('crm.ticket.detail', args=[ticket.pk])
+    assert expect == response['Location']
+    ticket.refresh_from_db()
+    assert ticket.fixed_price is True
+    assert priority.pk == ticket.priority.pk
+    assert 'Apple Juice' == ticket.title

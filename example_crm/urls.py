@@ -46,7 +46,10 @@ urlpatterns = [
     url(regex=r'^token/$',
         view=views.obtain_auth_token,
         name='api.token.auth',
-    ),
+        ),
+    url(regex=r'^wizard/',
+        view=include('block.urls.wizard')
+        ),
     url(r'^home/user/$',
         view=RedirectView.as_view(url=reverse_lazy('crm.ticket.home')),
         name='project.dash'

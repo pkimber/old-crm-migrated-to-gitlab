@@ -20,7 +20,7 @@
           </a>
           for
           <a href="{% url 'contact.detail' ticket.contact.pk %}">
-            {{ ticket.contact.full_name }}
+            {{ ticket.contact.get_full_name }}
           </a>
         </p>
         <input type="submit" value="Confirm" class="pure-button pure-button-primary" />

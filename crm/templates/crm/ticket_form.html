@@ -1,7 +1,7 @@
 {% extends 'crm/base.html' %}
 
 {% block sub_title %}
-  Ticket {{ object.pk }} for {{ contact.full_name }}
+  Ticket {{ object.pk }} for {{ contact.get_full_name }}
 {% endblock sub_title %}
 
 {% block sub_heading %}
@@ -13,13 +13,13 @@
   {% if object %}
     {{ object.pk }}
   {% endif %}
-  for {{ contact.full_name }}
+  for {{ contact.get_full_name }}
 {% endblock sub_heading %}
 
 {% block content %}
   <div class="pure-g">
     <div class="pure-u-1">
-      {% include '_form.html' with legend=contact.full_name %}
+      {% include '_form.html' with legend=contact.get_full_name %}
     </div>
   </div>
 {% endblock content %}

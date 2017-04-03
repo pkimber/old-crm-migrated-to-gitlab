@@ -101,6 +101,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.i18n',
                 'django.template.context_processors.media',
+                'django.template.context_processors.request',
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
@@ -126,6 +127,8 @@ THIRD_PARTY_APPS = (
     # 'debug_toolbar',
     # 'django_extensions',
     # 'mptt',
+    'easy_thumbnails',
+    'taggit',
     'rest_framework',
     # http://www.django-rest-framework.org/api-guide/authentication#tokenauthentication
     'rest_framework.authtoken',
@@ -134,6 +137,7 @@ THIRD_PARTY_APPS = (
 
 LOCAL_APPS = (
     'base',
+    'block',
     'contact',
     'crm',
     'example_crm',
@@ -206,6 +210,8 @@ REST_FRAMEWORK = {
 # https://github.com/johnsensible/django-sendfile
 SENDFILE_BACKEND = 'sendfile.backends.development'
 SENDFILE_ROOT = 'media-private'
+
+THUMBNAIL_DEBUG = DEBUG
 
 FTP_STATIC_DIR = None
 FTP_STATIC_URL = None

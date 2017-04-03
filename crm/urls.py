@@ -47,10 +47,10 @@ urlpatterns = [
         view=ProjectTicketPriorityListView.as_view(),
         name='crm.project.ticket.priority.list'
         ),
-    url(regex=r'^ticket/(?P<pk>\d+)/child/create/$',
-        view=TicketChildCreateView.as_view(),
-        name='crm.ticket.child.create'
-        ),
+    # url(regex=r'^ticket/(?P<pk>\d+)/child/create/$',
+    #     view=TicketChildCreateView.as_view(),
+    #     name='crm.ticket.child.create'
+    #     ),
     url(regex=r'^ticket/(?P<pk>\d+)/complete/$',
         view=TicketCompleteView.as_view(),
         name='crm.ticket.complete'

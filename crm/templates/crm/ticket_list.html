@@ -52,7 +52,7 @@
               {% if user.is_staff %}
                 <td>
                   <a href="{% url 'contact.detail' ticket.contact.pk %}">
-                    {{ ticket.contact.full_name }}
+                    {{ ticket.contact.get_full_name }}
                   </a>
                 </td>
               {% endif %}

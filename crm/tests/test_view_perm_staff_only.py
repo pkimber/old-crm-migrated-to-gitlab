@@ -30,11 +30,11 @@ def test_project_ticket_priority_list(perm_check):
     perm_check.staff(url)
 
 
-@pytest.mark.django_db
-def test_ticket_child_create(perm_check):
-    ticket = TicketFactory()
-    url = reverse('crm.ticket.child.create', kwargs={'pk': ticket.pk})
-    perm_check.staff(url)
+# @pytest.mark.django_db
+# def test_ticket_child_create(perm_check):
+#     ticket = TicketFactory()
+#     url = reverse('crm.ticket.child.create', kwargs={'pk': ticket.pk})
+#     perm_check.staff(url)
 
 
 @pytest.mark.django_db

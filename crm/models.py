@@ -47,7 +47,7 @@ class CrmContact(TimeStampedModel):
         verbose_name_plural = 'CRM Contacts'
 
     def __str__(self):
-        result = '{}'.format(self.contact.full_name)
+        result = '{}'.format(self.contact.get_full_name)
         if self.industry:
             result = '{}: {}'.format(result, self.industry.name)
         return result
@@ -125,6 +125,7 @@ class Ticket(models.Model):  # MPTTModel):
         null=True,
         related_name='+',
     )
+    fixed_price = models.BooleanField(default=False)
     objects = TicketManager()
 
     class Meta:

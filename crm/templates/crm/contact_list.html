@@ -43,7 +43,7 @@
             <tr valign="top">
               <td>
                 <a href="{% url 'contact.detail' contact.pk %}">
-                  {{ contact.full_name }}
+                  {{ contact.get_full_name }}
                 </a>
               </td>
               <td>{{ contact.address }}</td>
