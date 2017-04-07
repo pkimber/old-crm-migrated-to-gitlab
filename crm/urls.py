@@ -67,7 +67,7 @@ urlpatterns = [
         view=TicketListView.as_view(),
         name='crm.ticket.list'
         ),
-    url(regex=r'^ticket/(?P<pk>\d+)/edit/$',
+    url(regex=r'^ticket/(?P<pk>\d+)/update/$',
         view=TicketUpdateView.as_view(),
         name='crm.ticket.update'
         ),
