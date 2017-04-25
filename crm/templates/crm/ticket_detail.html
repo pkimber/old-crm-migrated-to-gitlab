@@ -92,6 +92,15 @@
               </td>
             </tr>
           {% endif %}
+          {% if ticket.fixed_price %}
+            <tr>
+              <td>Pricing</td>
+              <td>
+                <i class="fa fa-handshake-o"></i>
+                Fixed Price
+              </td>
+            </tr>
+          {% endif %}
           <tr valign="top">
             <td>User</td>
             <td>
